@@ -1,0 +1,4390 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Meu Shape v7.3</title>
+<meta name="theme-color" content="#121212">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Meu Shape">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<style>
+:root {
+    --p:#00c853;
+    --s:#2962ff;
+    --accent:#00e676;
+    --bg:#121212;
+    --card:#1e1e1e;
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html {
+    background:var(--bg);
+}
+
+body {
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:var(--bg);
+    color:#fff;
+    padding-bottom:90px;
+    overscroll-behavior-y:none;
+}
+
+header {
+    background:linear-gradient(135deg,var(--p),var(--s));
+    padding:18px 15px;
+    text-align:center;
+    font-weight:700;
+    font-size:1.45rem;
+    box-shadow:0 4px 20px rgba(0,0,0,.5);
+    position:sticky;
+    top:0;
+    z-index:900;
+}
+
+.container {
+    padding:12px;
+    max-width:540px;
+    margin:auto;
+}
+
+.card {
+    background:var(--card);
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:14px;
+    box-shadow:0 6px 15px rgba(0,0,0,.4);
+}
+
+h3 {
+    margin-bottom:14px;
+    color:var(--accent);
+}
+
+button {
+    width:100%;
+    min-height:52px;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    margin:6px 0;
+    background:var(--s);
+    color:#fff;
+    font-weight:700;
+    font-size:1.05rem;
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+button:active {
+    transform:scale(.97);
+}
+
+.btn-del {
+    width:42px;
+    min-width:42px;
+    height:42px;
+    min-height:42px;
+    padding:0;
+    border-radius:12px;
+    background:#ff5252;
+    font-size:1.1rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+}
+
+.btn-secondary {
+    background:#555;
+}
+
+.btn-custom {
+    background:#7c4dff;
+}
+
+.tab {
+    display:none;
+}
+
+.active {
+    display:block;
+}
+
+nav {
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    display:flex;
+    background:#1e1e1e;
+    border-top:1px solid #333;
+    z-index:1000;
+    padding-bottom:env(safe-area-inset-bottom);
+}
+
+nav div {
+    flex:1;
+    text-align:center;
+    padding:11px 8px;
+    cursor:pointer;
+    font-size:1.7rem;
+    min-height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+nav div:active {
+    background:#252525;
+}
+
+.meal {
+    background:#252525;
+    padding:14px;
+    margin-bottom:9px;
+    border-radius:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.progress {
+    height:16px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+    margin:10px 0;
+}
+
+.progress div {
+    height:100%;
+    transition:width .5s;
+}
+
+input,
+select {
+    width:100%;
+    padding:15px;
+    border-radius:13px;
+    border:1px solid #444;
+    background:#252525;
+    color:#fff;
+    font-size:1.05rem;
+    margin-bottom:10px;
+    outline:none;
+}
+
+input:focus,
+select:focus {
+    border-color:var(--s);
+}
+
+.ex {
+    background:#252525;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:14px;
+    border-left:5px solid var(--s);
+    font-size:1.05rem;
+}
+
+.food-row {
+    padding:14px;
+    border-bottom:1px solid #333;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.food-row:active {
+    background:#303030;
+}
+
+.macros-small {
+    font-size:.92rem;
+    color:#aaa;
+}
+
+.qty-box {
+    background:#252525;
+    padding:16px;
+    border-radius:14px;
+    margin-top:12px;
+}
+
+.result-box {
+    background:#181818;
+    padding:14px;
+    border-radius:14px;
+    margin:10px 0;
+    text-align:center;
+}
+
+.notification {
+    position:fixed;
+    bottom:90px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#00e676;
+    color:#000;
+    padding:12px 20px;
+    border-radius:12px;
+    font-weight:700;
+    box-shadow:0 4px 20px rgba(0,0,0,.5);
+    display:none;
+    z-index:2000;
+    max-width:90%;
+    text-align:center;
+}
+
+.history-day {
+    background:#252525;
+    padding:15px;
+    margin-bottom:8px;
+    border-radius:14px;
+    cursor:pointer;
+}
+
+.history-content {
+    padding:8px 4px 10px 10px;
+    color:#ccc;
+}
+
+.hidden {
+    display:none;
+}
+
+/* ================= TREINO MOBILE ================= */
+
+.training-header {
+    background:linear-gradient(135deg,#151515,#202020);
+    border:1px solid #333;
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:12px;
+}
+
+.training-header-title {
+    font-size:1.35rem;
+    font-weight:800;
+    color:#fff;
+}
+
+.training-header-sub {
+    color:#aaa;
+    margin-top:5px;
+    font-size:.95rem;
+}
+
+.exercise-input {
+    font-size:1.15rem;
+    padding:17px;
+    height:58px;
+}
+
+.last-box {
+    background:#151515;
+    border:1px solid #333;
+    border-left:5px solid #00e676;
+    border-radius:14px;
+    padding:14px;
+    margin:8px 0 14px;
+}
+
+.last-title {
+    color:#00e676;
+    font-weight:800;
+    font-size:1rem;
+}
+
+.last-training-name {
+    color:#aaa;
+    font-size:.9rem;
+    margin:4px 0 10px;
+}
+
+.last-set {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid #2d2d2d;
+    font-size:1rem;
+}
+
+.last-set:last-child {
+    border-bottom:none;
+}
+
+.set-row {
+    display:grid;
+    grid-template-columns:38px minmax(0,1fr) minmax(0,1fr) 44px;
+    gap:7px;
+    align-items:center;
+    background:#252525;
+    padding:8px;
+    border-radius:13px;
+    margin-bottom:7px;
+}
+
+.set-number {
+    font-weight:800;
+    color:#aaa;
+    text-align:center;
+}
+
+.set-row input {
+    margin:0;
+    height:52px;
+    padding:10px 7px;
+    text-align:center;
+    font-size:1.1rem;
+    font-weight:600;
+}
+
+.set-delete {
+    width:42px;
+    height:42px;
+    min-height:42px;
+    background:#3a2525;
+    color:#ff5252;
+    font-size:1.05rem;
+}
+
+.add-set-button {
+    background:#303030;
+    border:1px dashed #555;
+    color:#fff;
+    min-height:50px;
+}
+
+.add-exercise-button {
+    background:#7c4dff;
+    min-height:54px;
+    font-size:1.05rem;
+}
+
+.save-training-button {
+    background:#00c853;
+    color:#000;
+    min-height:58px;
+    font-size:1.15rem;
+    margin-top:14px;
+}
+
+.cancel-training-button {
+    background:#333;
+    min-height:48px;
+}
+
+.current-exercise {
+    background:#252525;
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:9px;
+    border-left:5px solid #7c4dff;
+}
+
+.current-exercise-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+}
+
+.current-exercise-name {
+    font-weight:800;
+    font-size:1.05rem;
+}
+
+.compact-set {
+    display:flex;
+    justify-content:space-between;
+    padding:5px 0;
+    color:#ccc;
+}
+
+.history-training {
+    background:#252525;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:9px;
+}
+
+.history-training:active {
+    background:#303030;
+}
+
+.history-training-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.history-training-date {
+    font-size:1.05rem;
+    font-weight:800;
+}
+
+.history-training-name {
+    color:#aaa;
+    margin-top:3px;
+}
+
+.history-count {
+    color:#aaa;
+    white-space:nowrap;
+    font-size:.9rem;
+}
+
+.training-history-content {
+    margin-top:12px;
+    border-top:1px solid #333;
+    padding-top:10px;
+}
+
+.training-empty {
+    text-align:center;
+    color:#666;
+    padding:35px 10px;
+}
+
+/* botão editar */
+
+.edit-training-button {
+    background:#2962ff;
+    color:#fff;
+    min-height:48px;
+    font-size:.95rem;
+    margin-top:6px;
+}
+
+/* barra de ações do treino */
+
+.training-actions {
+    position:sticky;
+    bottom:68px;
+    background:linear-gradient(transparent,#121212 20%);
+    padding-top:14px;
+    z-index:20;
+}
+
+/* evita zoom acidental em inputs no iPhone */
+
+@media (max-width:600px) {
+
+    input,
+    select,
+    button {
+        font-size:16px;
+    }
+
+    .container {
+        padding:10px;
+    }
+
+    .card {
+        padding:15px;
+    }
+
+    .training-card {
+        padding:13px;
+    }
+
+}
+
+/* =========================================================
+   DESIGN NOVO — visual mais limpo e moderno
+========================================================= */
+:root{
+    --bg:#090b0d;
+    --card:#11161a;
+    --card2:#171d22;
+    --line:#273038;
+    --p:#00d26a;
+    --accent:#19f58a;
+    --s:#2563eb;
+    --muted:#8b98a4;
+}
+body{
+    background:radial-gradient(circle at 50% -10%,#17241d 0,#090b0d 34%);
+    color:#f4f7f5;
+}
+header{
+    background:rgba(9,11,13,.88);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(25,245,138,.14);
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+    font-size:1.25rem;
+    letter-spacing:.2px;
+}
+.container{padding:14px 12px 100px;}
+.card{
+    background:linear-gradient(145deg,rgba(20,27,32,.98),rgba(13,17,20,.98));
+    border:1px solid var(--line);
+    border-radius:20px;
+    box-shadow:0 12px 30px rgba(0,0,0,.28);
+}
+h3{color:#f2f7f4;font-size:1.08rem;}
+button{
+    border:1px solid rgba(255,255,255,.07);
+    background:#1b2329;
+    box-shadow:none;
+    transition:transform .12s,background .12s,border-color .12s;
+}
+button:active{transform:scale(.98);}
+button[style*="background:#2962ff"],.add-exercise-button{background:linear-gradient(135deg,#00c96b,#00a957)!important;color:#04130b!important;border-color:transparent;}
+.btn-secondary{background:#20272d;}
+.progress{background:#20282e;border:1px solid #29333a;}
+.progress>div{border-radius:999px;}
+input,select,textarea{
+    background:#0d1216!important;
+    color:#f4f7f5!important;
+    border:1px solid #2b353d!important;
+    border-radius:13px!important;
+}
+.training-card,.history-training,.current-exercise{background:#12191e!important;border:1px solid #263139!important;border-radius:17px!important;}
+.last-box{background:#0d1418!important;border:1px solid #263139!important;border-radius:15px!important;}
+#restTimer{
+    background:linear-gradient(145deg,#101a15,#0d1216)!important;
+    border:1px solid rgba(25,245,138,.28)!important;
+    border-radius:20px!important;
+    box-shadow:0 10px 28px rgba(0,0,0,.25);
+}
+#restTimerDisplay{color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:1px;}
+#restTimer button{width:calc(50% - 8px);display:inline-block;margin:5px 3px;}
+#restTimer button:first-of-type{width:100%;}
+nav,.bottom-nav{display:none!important;background:rgba(11,14,17,.92)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid #252e34!important;}
+
+/* ===== MEU SHAPE — REDESIGN PREMIUM V3 ===== */
+:root{
+  --bg:#070909;--surface:#0d1110;--surface2:#121816;--surface3:#18201d;
+  --line:rgba(255,255,255,.075);--line2:rgba(150,255,198,.16);
+  --lime:#8dffb8;--lime2:#24e878;--lime3:#0dbb59;
+  --text:#f5f8f6;--muted:#8d9992;--danger:#ff6b7a;
+}
+html{background:var(--bg);}
+body{margin:0;background:radial-gradient(900px 420px at 50% -140px,rgba(36,232,120,.18),transparent 68%),linear-gradient(180deg,#080b09 0%,#070909 55%,#060707 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,system-ui,sans-serif;letter-spacing:-.01em;}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(transparent 0,rgba(255,255,255,.012) 100%);z-index:-1;}
+.app-header{position:sticky;top:0;z-index:50;height:68px;display:flex;align-items:center;gap:11px;padding:0 16px;background:rgba(7,9,9,.72);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border-bottom:1px solid var(--line);box-shadow:0 8px 30px rgba(0,0,0,.18);}
+.brand-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#b7ffd0 0%,#37ed82 45%,#0c9d4b 100%);box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 8px 24px rgba(36,232,120,.18);color:#06120a;font-size:11px;font-weight:900;letter-spacing:-.08em;}
+.brand-mark span{transform:translateY(-1px)}
+.brand-copy{display:flex;flex-direction:column;line-height:1.05;gap:4px}.brand-copy strong{font-size:15px;letter-spacing:.08em}.brand-copy small{font-size:9px;text-transform:uppercase;color:var(--muted);letter-spacing:.16em}.header-version{margin-left:auto;font-size:10px;color:#69756e;border:1px solid var(--line);padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.025);}
+.container{padding:16px 13px 112px;max-width:760px;margin:auto;}
+.card{position:relative;background:linear-gradient(145deg,rgba(18,24,22,.96),rgba(10,14,13,.96));border:1px solid var(--line);border-radius:22px;box-shadow:0 14px 45px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025);overflow:hidden;}
+.card:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(120deg,rgba(141,255,184,.035),transparent 35%);}
+h3{font-size:17px!important;letter-spacing:-.025em;margin-bottom:13px!important}.card p{color:#b8c2bd}.card p span{color:var(--text)}
+.progress{height:9px!important;border:0!important;background:#202723!important;border-radius:999px!important;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}.progress>div{background:linear-gradient(90deg,var(--lime3),var(--lime))!important;box-shadow:0 0 16px rgba(36,232,120,.22)}
+button{border-radius:14px!important;border:1px solid var(--line)!important;background:linear-gradient(180deg,#1a211e,#141a17)!important;color:#edf4ef!important;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.16)!important;min-height:42px;}button:hover{border-color:var(--line2)!important}button:active{transform:scale(.975)!important}
+button[style*="background:#2962ff"],.add-exercise-button{background:linear-gradient(135deg,var(--lime),#2be978)!important;color:#06120a!important;box-shadow:0 8px 22px rgba(36,232,120,.18)!important;}
+input,select,textarea{background:#0a0e0d!important;color:var(--text)!important;border:1px solid var(--line)!important;border-radius:14px!important;min-height:42px;box-sizing:border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}input:focus,select:focus,textarea:focus{outline:none!important;border-color:rgba(141,255,184,.48)!important;box-shadow:0 0 0 3px rgba(36,232,120,.08)!important}
+label{color:#8e9b94!important;font-size:11px!important;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.training-card,.history-training,.current-exercise{background:linear-gradient(145deg,#111715,#0b100e)!important;border:1px solid var(--line)!important;border-radius:19px!important;box-shadow:0 10px 30px rgba(0,0,0,.18)!important}
+.last-box{background:#0b100e!important;border:1px solid var(--line2)!important;border-radius:16px!important}
+#restTimer{background:radial-gradient(circle at 50% 0,rgba(36,232,120,.12),transparent 55%),linear-gradient(145deg,#101815,#0b100e)!important;border:1px solid rgba(141,255,184,.22)!important;border-radius:22px!important;box-shadow:0 14px 38px rgba(0,0,0,.3)!important;padding:16px!important}
+#restTimerDisplay{color:var(--lime)!important;font-size:46px!important;letter-spacing:-.05em!important;font-variant-numeric:tabular-nums;text-shadow:0 0 22px rgba(36,232,120,.18)}
+#restTimer button{width:calc(50% - 8px);display:inline-block;margin:5px 3px}.modern-nav{position:fixed;left:12px;right:12px;bottom:12px;z-index:100;height:68px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;background:rgba(12,16,14,.86)!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:22px!important;backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:0 16px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.035);}
+.modern-nav>div{height:54px;margin:7px 4px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#68736d;cursor:pointer;transition:.18s ease}.modern-nav>div:hover,.modern-nav>div.active{color:var(--lime);background:rgba(141,255,184,.07)}.modern-nav .nav-icon{font-size:22px;line-height:20px;font-weight:500}.modern-nav small{font-size:9px;font-weight:800;letter-spacing:.03em}.notification{border-radius:14px!important;background:rgba(16,22,19,.94)!important;border:1px solid var(--line2)!important;backdrop-filter:blur(18px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+@media (min-width:700px){.container{padding-left:20px;padding-right:20px}.modern-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.app-header{padding-left:24px;padding-right:24px}}
+
+
+/* ================= HOME HUB — V4 ================= */
+.home-header{height:58px!important;min-height:58px!important;padding:0 16px!important;}
+.home-header .brand-mark{width:38px;height:38px;font-size:.78rem;}
+.header-spacer{flex:1;}
+.header-profile{width:40px!important;height:40px!important;min-height:40px!important;padding:0!important;border-radius:14px!important;background:#151c21!important;border:1px solid #29343b!important;color:#cbd5d1!important;font-size:1.35rem!important;}
+.home-section-label{margin:20px 3px 10px;color:#7f8d96;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;font-weight:800;}
+.home-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.home-tile{width:100%!important;min-height:78px!important;display:grid!important;grid-template-columns:48px 1fr 18px;align-items:center;gap:12px;text-align:left!important;padding:13px 14px!important;border-radius:20px!important;background:linear-gradient(145deg,#141b20,#101519)!important;border:1px solid #263139!important;color:#f5f8f6!important;}
+.home-tile:active{transform:scale(.985);}
+.home-tile .tile-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:#1b252b;border:1px solid #2b383f;color:#b9c7c0;font-size:1.25rem;font-weight:800;}
+.home-tile strong{display:block;font-size:1rem;letter-spacing:.01em;}
+.home-tile small{display:block;margin-top:4px;color:#7f8c95;font-size:.78rem;font-weight:500;}
+.home-tile>b{font-size:1.4rem;color:#53616a;font-weight:400;}
+.home-tile-primary .tile-icon{background:rgba(0,210,106,.11);border-color:rgba(0,210,106,.2);color:#31e991;}
+.home-tile-training .tile-icon{background:rgba(37,99,235,.11);border-color:rgba(37,99,235,.2);color:#6d9cff;}
+.data-chart-card{padding-bottom:14px!important;}
+.data-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.data-heading h3{margin-bottom:4px!important;}
+.data-heading p{margin:0;color:#7f8c95;font-size:.82rem;}
+.data-chip{font-size:.62rem;font-weight:800;letter-spacing:.1em;color:#65e7a8;background:rgba(0,210,106,.08);border:1px solid rgba(0,210,106,.18);padding:7px 9px;border-radius:999px;white-space:nowrap;}
+.weight-entry{display:flex;gap:8px;margin-top:12px;}
+.weight-entry input{flex:1;min-width:0;}
+.weight-entry button{width:auto!important;padding:0 16px!important;}
+@media(max-width:600px){.home-grid{gap:9px}.home-tile{min-height:74px!important}.home-tile small{font-size:.75rem}.modern-nav small{font-size:.58rem!important}}
+
+/* ===== AJUSTES V6 — SAFE AREA + VOLTAR AO INÍCIO ===== */
+body{
+    padding-top:env(safe-area-inset-top);
+}
+.container{
+    padding-top:calc(22px + env(safe-area-inset-top)) !important;
+}
+.tab-back-home{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:auto !important;
+    min-height:42px !important;
+    margin:0 0 14px 0 !important;
+    padding:9px 14px !important;
+    border:1px solid rgba(141,255,184,.16) !important;
+    border-radius:13px !important;
+    background:rgba(255,255,255,.045) !important;
+    color:#a8b4ad !important;
+    font-size:.82rem !important;
+    font-weight:750 !important;
+    box-shadow:none !important;
+}
+.tab-back-home:active{
+    transform:scale(.97);
+    background:rgba(141,255,184,.08) !important;
+}
+
+/* ===== HOME V5 — HUB MODERNO ===== */
+body{background:#070908!important;color:#f5f7f6!important;}
+.container{max-width:760px;margin:0 auto;padding:22px 16px 40px!important;}
+.home-hero{position:relative;overflow:hidden;padding:26px 20px 18px;border:1px solid rgba(255,255,255,.07);border-radius:28px;background:radial-gradient(circle at 85% 0%,rgba(93,255,159,.13),transparent 38%),linear-gradient(145deg,#111713,#0c100e 70%);box-shadow:0 20px 55px rgba(0,0,0,.35);}
+.home-hero:after{content:"";position:absolute;width:170px;height:170px;right:-80px;bottom:-90px;border:1px solid rgba(93,255,159,.12);border-radius:50%;}
+.hero-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;}
+.eyebrow{font-size:.68rem;letter-spacing:.22em;font-weight:900;color:#73e9a2;}
+.home-hero h1{font-size:2rem;line-height:1.05;letter-spacing:-.055em;margin:9px 0 0;font-weight:850;}
+.home-hero h1 span{color:#8dffb8;}
+.hero-date{text-align:right;font-size:.8rem;color:#c8d0cb;font-weight:700;padding-top:2px;}.hero-date small{display:block;color:#68736d;font-size:.58rem;letter-spacing:.16em;margin-top:4px;}
+.daily-strip{display:flex;align-items:center;margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);}
+.daily-strip>div:not(.strip-divider){flex:1}.daily-strip small{display:block;color:#718078;font-size:.58rem;letter-spacing:.13em;font-weight:800;margin-bottom:5px}.daily-strip strong{font-size:1.35rem;letter-spacing:-.03em}.daily-strip em{font-size:.75rem;color:#718078;font-style:normal;font-weight:600;margin-left:5px}.strip-divider{width:1px;height:34px;background:rgba(255,255,255,.09);margin:0 18px;}
+.hero-status{margin:12px 0 0!important;color:#8dffb8!important;font-size:.78rem!important;font-weight:700!important;}
+.home-label{margin:28px 4px 12px;color:#87938c;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;}
+.home-grid-v5{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.home-card-v5{position:relative;min-height:158px!important;padding:19px!important;border:1px solid rgba(255,255,255,.075)!important;border-radius:23px!important;text-align:left!important;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,.24);transition:transform .15s,border-color .15s,background .15s;}
+.home-card-v5:active{transform:scale(.975);}.home-card-v5:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.045),transparent 50%);pointer-events:none;}
+.home-card-v5.food{background:linear-gradient(145deg,#14241b,#0e1511)!important}.home-card-v5.workout{background:linear-gradient(145deg,#151c28,#0e1218)!important}.home-card-v5.data{background:linear-gradient(145deg,#19161f,#111016)!important}.home-card-v5.profile{background:linear-gradient(145deg,#1a1d19,#111410)!important}
+.home-card-v5 .card-icon{position:absolute;top:17px;left:18px;width:39px;height:39px;border-radius:13px;display:grid;place-items:center;font-size:21px;background:rgba(255,255,255,.06);color:#8dffb8;border:1px solid rgba(255,255,255,.07);}.home-card-v5.workout .card-icon{color:#8eb7ff}.home-card-v5.data .card-icon{color:#d2a7ff}.home-card-v5.profile .card-icon{color:#d7e69d}
+.card-arrow{position:absolute;right:16px;top:17px;color:#59645e;font-size:19px;}.home-card-v5 strong{font-size:1.08rem;letter-spacing:-.02em;position:relative}.home-card-v5 span:not(.card-icon){font-size:.72rem;line-height:1.4;color:#87938c;margin-top:5px;position:relative;}
+@media(max-width:430px){.home-hero h1{font-size:1.75rem}.home-card-v5{min-height:145px!important;padding:16px!important}.home-grid-v5{gap:10px}.daily-strip strong{font-size:1.18rem}}
+
+/* ================= HOME V7 — METAS DO DIA ================= */
+.home-metrics{padding:20px 0 0}
+.home-metrics-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:0 2px 14px}
+.home-date{margin-top:4px;color:#dce5df;font-size:1.02rem;font-weight:800;text-transform:capitalize}
+.home-goal-label{color:#66736b;font-size:.62rem;letter-spacing:.13em;font-weight:850;text-align:right}
+.metric-grid-v7{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric-card-v7{position:relative;overflow:hidden;min-height:184px;padding:17px;border-radius:22px;border:1px solid rgba(255,255,255,.075);background:linear-gradient(145deg,#121916,#0c110f);box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.metric-card-v7.protein{background:linear-gradient(145deg,#131a22,#0d1117)}
+.metric-top{display:flex;justify-content:space-between;align-items:center;color:#7e8b84;font-size:.62rem;letter-spacing:.12em;font-weight:850}
+.metric-dot{width:7px;height:7px;border-radius:50%;background:#8dffb8;box-shadow:0 0 12px rgba(141,255,184,.55)}
+.protein .metric-dot{background:#8eb7ff;box-shadow:0 0 12px rgba(142,183,255,.45)}
+.metric-main{display:flex;align-items:baseline;gap:5px;margin-top:19px}
+.metric-main strong{font-size:2rem;line-height:1;letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.metric-main>span{color:#7e8b84;font-size:.78rem;font-weight:700}
+.metric-sub{margin-top:9px;color:#68756d;font-size:.7rem}
+.metric-sub b{color:#aebbb3;font-weight:750}
+.metric-remaining{margin-top:13px;color:#8dffb8;font-size:.72rem;font-weight:800}
+.protein .metric-remaining{color:#9abfff}
+.metric-progress{position:absolute;left:17px;right:17px;bottom:16px;height:5px;border-radius:99px;overflow:hidden;background:#202823}
+.metric-progress>div{width:0%;height:100%;border-radius:99px;background:linear-gradient(90deg,#36e878,#8dffb8);transition:width .25s ease}
+.protein .metric-progress>div{background:linear-gradient(90deg,#4d8cff,#9abfff)}
+@media(max-width:430px){.metric-card-v7{min-height:174px;padding:15px}.metric-main strong{font-size:1.8rem}.metric-progress{left:15px;right:15px;bottom:14px}}
+
+
+/* ===== TREINO V8 — AÇÕES E ÍCONES PREMIUM ===== */
+.training-actions{
+    position:static!important;
+    bottom:auto!important;
+    z-index:auto!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+    margin-top:18px!important;
+    padding:14px 0 0!important;
+    background:transparent!important;
+    border-top:1px solid rgba(255,255,255,.07);
+}
+.action-card-button{
+    width:100%!important;
+    min-height:58px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:10px!important;
+    font-size:.98rem!important;
+    letter-spacing:.01em!important;
+}
+.save-training-button{
+    background:linear-gradient(135deg,#b9ffd2,#48ee91)!important;
+    color:#06120a!important;
+    border-color:transparent!important;
+    box-shadow:0 10px 28px rgba(36,232,120,.18)!important;
+}
+.add-exercise-button{
+    background:linear-gradient(145deg,#18211d,#111713)!important;
+    color:#eafff1!important;
+    border:1px solid rgba(141,255,184,.20)!important;
+    box-shadow:0 8px 24px rgba(0,0,0,.22)!important;
+}
+.ui-icon{
+    width:34px;height:34px;border-radius:11px;display:inline-grid;place-items:center;
+    flex:0 0 34px;font-weight:900;font-size:18px;line-height:1;
+}
+.ui-icon svg{width:19px;height:19px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ui-icon-lg svg{width:22px;height:22px}
+.ui-icon-solid svg{fill:currentColor;stroke:none}
+.icon-action{width:38px;height:38px;border-radius:12px;display:inline-grid;place-items:center;flex:0 0 38px;background:rgba(141,255,184,.09);border:1px solid rgba(141,255,184,.16);color:#8dffb8}
+.icon-action svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+.ui-icon-plus{background:rgba(141,255,184,.10);border:1px solid rgba(141,255,184,.20);color:#8dffb8;font-size:24px;font-weight:500}
+.ui-icon-check{background:rgba(0,0,0,.10);border:1px solid rgba(6,18,10,.12);color:#06120a;font-size:20px}
+.section-title-icon{display:flex!important;align-items:center;gap:10px}
+.ui-icon-history{background:rgba(141,255,184,.08);border:1px solid rgba(141,255,184,.17);color:#8dffb8;font-size:21px}
+.timer-heading{display:flex;align-items:center;justify-content:center;gap:8px;color:#829089;font-size:.72rem;font-weight:900;letter-spacing:.16em}
+.timer-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(141,255,184,.08);border:1px solid rgba(141,255,184,.16);color:#8dffb8;font-size:20px;line-height:1}
+#restTimer button{border-radius:13px!important}
+#restTimer button:first-of-type{background:linear-gradient(135deg,#b9ffd2,#48ee91)!important;color:#06120a!important;border-color:transparent!important;font-weight:850}
+@media(min-width:500px){.training-actions{grid-template-columns:1fr 1fr!important}.training-actions .cancel-training-button{grid-column:auto}}
+
+.food-search-count{display:block;margin-top:-8px;margin-bottom:14px;color:var(--muted);font-size:.78rem;font-weight:700;}
+.food-search-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:28px 14px;color:#84908a;text-align:center;border:1px dashed rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.018);}
+.food-search-empty strong{color:#cbd4cf;font-size:.95rem;}
+.food-search-empty small{color:#68736d;font-size:.8rem;}
+.food-search-empty .icon-pill{margin-bottom:2px;}
+
+/* V13 additions */
+.quick-meal-builder{margin-top:12px;padding:14px;border-radius:17px;background:#0f1512;border:1px solid rgba(141,255,184,.13)}.quick-builder-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.quick-builder-items{display:grid;gap:7px;margin:10px 0}.quick-builder-item{display:flex;gap:9px;padding:10px;border-radius:13px;background:#151c18}.quick-builder-item input{width:18px;height:18px}.quick-builder-item strong{display:block;font-size:.82rem}.quick-builder-item small{display:block;margin-top:3px;color:#718078}.suggestion-card{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:17px;background:linear-gradient(145deg,#121b16,#0d120f);border:1px solid rgba(141,255,184,.14)}.suggestion-card>div{min-width:0}.suggestion-label{display:block;font-size:.62rem;color:#6f7d75;letter-spacing:.1em;font-weight:800}.suggestion-card strong{display:block;margin-top:5px}.suggestion-card small{display:block;margin-top:4px;color:#78857e;font-size:.72rem;line-height:1.4}.suggestion-card button{width:44px!important;min-width:44px;padding:0!important}.suggestion-empty,.suggestion-done{padding:5px 0}.suggestion-empty small,.suggestion-done small{display:block;margin-top:5px;color:#718078;line-height:1.4}.pr-card{margin-top:12px;padding:14px;border-radius:17px;background:#101613;border:1px solid rgba(255,255,255,.07)}.pr-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.pr-row:last-child{border-bottom:0}.pr-row strong{display:block;font-size:.82rem}.pr-row small{display:block;margin-top:4px;color:#718078;font-size:.67rem}.pr-row>span{font-weight:800;font-size:.75rem}.pr-empty,.phase-empty{color:#718078;font-size:.78rem;padding:14px 2px}.training-summary-card{border-color:rgba(141,255,184,.18)}.training-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.training-summary-grid>div{padding:12px;border-radius:14px;background:#101613;border:1px solid rgba(255,255,255,.06)}.training-summary-grid span,.training-comparison>span{display:block;color:#68756d;font-size:.61rem;letter-spacing:.1em;font-weight:800}.training-summary-grid strong{display:block;margin-top:5px;font-size:.95rem}.training-comparison{margin-top:10px;padding:12px;border-radius:14px;background:rgba(141,255,184,.045)}.training-comparison strong{display:block;margin-top:5px;font-size:.78rem;line-height:1.45}.current-phase{padding:14px;border-radius:16px;background:linear-gradient(145deg,#121a16,#0d120f);border:1px solid rgba(141,255,184,.14)}.phase-status{display:block;color:#718078;font-size:.62rem;letter-spacing:.1em;font-weight:800}.current-phase>strong{display:block;margin-top:6px}.current-phase small{display:block;margin-top:5px;color:#718078;line-height:1.4}.phase-form{margin-top:14px}.phase-history{margin-top:12px}.phase-history-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.phase-history-row strong{display:block;font-size:.8rem}.phase-history-row small{display:block;margin-top:3px;color:#718078}.phase-history-row>span{font-size:.68rem;color:#8dffb8;font-weight:800}.diet-history-toggle{margin-top:0!important}
+</style>
+
+<style>
+.home-metrics-single{position:relative;overflow:hidden;padding:20px 18px 8px;border:1px solid rgba(255,255,255,.075);border-radius:26px;background:linear-gradient(145deg,#111713,#0b0f0d 72%);box-shadow:0 18px 45px rgba(0,0,0,.32);}
+.home-metrics-single .home-metrics-head{display:flex;justify-content:space-between;align-items:flex-start;padding:0 2px 13px;}
+.daily-macro-row{position:relative;display:grid;grid-template-columns:42px minmax(0,1fr) auto;column-gap:12px;align-items:center;padding:13px 2px 17px;}
+.macro-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.07);font-size:22px;color:#8dffb8;}
+.daily-macro-row.protein .macro-icon{color:#b9c6ff;}
+.macro-title{font-size:.62rem;letter-spacing:.14em;font-weight:850;color:#78847d;margin-bottom:2px;}
+.macro-value{display:flex;align-items:baseline;gap:3px;line-height:1;}
+.macro-value strong{font-size:1.55rem;letter-spacing:-.04em;}
+.macro-value span{font-size:.72rem;color:#76817b;font-weight:700;}
+.macro-goal{text-align:right;min-width:104px;}
+.macro-goal span{display:block;color:#68736d;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;}
+.macro-goal strong{display:block;font-size:.78rem;margin-top:2px;}
+.macro-goal small{display:block;color:#8dffb8;font-size:.62rem;font-weight:750;margin-top:4px;}
+.macro-separator{height:1px;background:rgba(255,255,255,.07);margin:0 2px;}
+.macro-progress{position:absolute;left:56px;right:2px;bottom:7px;height:3px;border-radius:99px;background:#202a24;overflow:hidden;}
+.macro-progress>div{height:100%;border-radius:99px;background:linear-gradient(90deg,#00c96b,#8dffb8);width:0%;transition:width .25s ease;}
+@media(max-width:430px){.daily-macro-row{grid-template-columns:38px minmax(0,1fr) auto;column-gap:10px}.macro-icon{width:38px;height:38px}.macro-value strong{font-size:1.4rem}.macro-goal{min-width:96px}.macro-progress{left:50px}.home-metrics-single{padding-left:15px;padding-right:15px;}}
+.icon-text{display:inline-flex;align-items:center;gap:7px}.icon-text svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.icon-action.danger{color:#ff8f8f;background:rgba(255,82,82,.09);border-color:rgba(255,82,82,.18)}.food-custom-mark{display:inline-grid;vertical-align:-3px;margin-right:3px;color:#8dffb8}.food-custom-mark svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* ===== V11 — SISTEMA DE ÍCONES SVG / PAINÉIS RECOLHÍVEIS ===== */
+.icon-svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icon-svg.lg{width:22px;height:22px}
+.icon-svg.xl{width:24px;height:24px}
+.icon-pill{width:38px;height:38px;border-radius:12px;display:inline-grid;place-items:center;flex:0 0 38px;background:rgba(141,255,184,.08);border:1px solid rgba(141,255,184,.16);color:#8dffb8}
+.icon-pill.blue{color:#a9bcff;background:rgba(82,120,255,.08);border-color:rgba(120,145,255,.16)}
+.icon-pill.danger{color:#ff9b9b;background:rgba(255,82,82,.08);border-color:rgba(255,82,82,.16)}
+.icon-button-wrap{display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.home-card-v5 .card-icon,.home-card-v5 .card-arrow{display:grid;place-items:center}
+.home-card-v5 .card-icon{font-size:0}
+.home-card-v5 .card-icon .icon-svg{width:23px;height:23px}
+.home-card-v5 .card-arrow{font-size:0}
+.home-card-v5 .card-arrow .icon-svg{width:17px;height:17px}
+.tab-back-home{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+.tab-back-home .icon-svg{width:17px;height:17px}
+.macro-icon{font-size:0!important}
+.macro-icon .icon-svg{width:21px;height:21px}
+.timer-icon{font-size:0!important}
+.timer-icon .icon-svg{width:18px;height:18px}
+#restTimer .rest-start-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+#restTimer .rest-start-btn .icon-svg{width:17px;height:17px}
+.action-card-button .ui-icon{font-size:0!important}
+.action-card-button .ui-icon .icon-svg{width:19px;height:19px}
+.section-title-icon .ui-icon{font-size:0!important}
+.section-title-icon .ui-icon .icon-svg{width:18px;height:18px}
+.inline-action-icon{display:inline-flex;vertical-align:-4px;margin-right:5px}
+.inline-action-icon .icon-svg{width:17px;height:17px}
+.btn-del{font-size:0!important}
+.btn-del .icon-svg{width:18px;height:18px}
+.weight-history-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:34px 10px;color:#707b75;text-align:center}
+.weight-history-empty .icon-pill{margin:0 auto}
+.weight-history-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.weight-history-row:last-child{border-bottom:0}
+.weight-history-date{display:flex;flex-direction:column;gap:3px}
+.weight-history-date strong{font-size:1rem}
+.weight-history-date span{font-size:.72rem;color:#6f7b74;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.weight-history-value{text-align:right;display:flex;flex-direction:column;gap:3px}
+.weight-history-value strong{font-size:1.02rem}
+.weight-history-value small{font-size:.72rem;font-weight:800}
+.weight-history-value small.down{color:#8dffb8}
+.weight-history-value small.up{color:#ff9b9b}
+.weight-history-value small.same{color:#8b9790}
+.custom-foods-card-toggle{margin-top:9px!important;background:linear-gradient(145deg,#171e1a,#101512)!important;border:1px solid rgba(141,255,184,.18)!important;color:#eafff1!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;min-height:56px!important}
+.custom-foods-card-toggle .toggle-chevron{transition:transform .2s ease}
+.custom-foods-card-toggle.open .toggle-chevron{transform:rotate(180deg)}
+.custom-foods-panel{display:none;margin-top:12px;padding-top:2px}
+.custom-foods-panel.open{display:block}
+.weight-history-card,.data-chart-card{overflow:hidden}
+@media(max-width:430px){.weight-history-row{grid-template-columns:minmax(0,1fr) auto}.weight-history-value strong{font-size:.98rem}}
+
+
+/* ===== V12 — CENTRAL DE EVOLUÇÃO + ATALHOS ===== */
+.data-overview{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.evo-stat{padding:15px;border-radius:17px;background:linear-gradient(145deg,#121916,#0c110f);border:1px solid rgba(255,255,255,.07)}.evo-stat .label{font-size:.62rem;color:#718078;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.evo-stat strong{display:block;margin-top:7px;font-size:1.3rem;letter-spacing:-.03em}.evo-stat small{display:block;margin-top:4px;color:#718078;font-size:.68rem}.evo-stat.accent strong{color:#8dffb8}.evo-stat.blue{background:linear-gradient(145deg,#111821,#0c1015)}.evo-stat.blue strong{color:#9abfff}.evo-stat.purple{background:linear-gradient(145deg,#17121e,#0e0b12)}.evo-stat.purple strong{color:#d1a7ff}.evo-section-title{margin:22px 2px 10px;color:#87938c;font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;font-weight:850}.recent-foods{margin-top:12px}.recent-foods-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.recent-foods-head span{font-size:.68rem;color:#78857e;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.recent-foods-list{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}.recent-food{flex:0 0 auto;width:150px;text-align:left;padding:11px 12px;border-radius:15px;background:#111815;border:1px solid rgba(255,255,255,.07)}.recent-food strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.82rem}.recent-food small{display:block;margin-top:4px;color:#718078;font-size:.66rem}.quick-meals-grid{display:grid;gap:9px}.quick-meal{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px;border-radius:16px;background:#101613;border:1px solid rgba(255,255,255,.07)}.quick-meal-info{min-width:0}.quick-meal-info strong{display:block;font-size:.9rem}.quick-meal-info small{display:block;margin-top:4px;color:#718078}.quick-meal-actions{display:flex;gap:6px}.quick-meal-actions button{min-width:42px;width:auto!important;padding:0 11px!important;min-height:40px}.autosave-status{display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:15px;background:rgba(141,255,184,.045);border:1px solid rgba(141,255,184,.11);color:#aebbb3;font-size:.76rem}.autosave-status strong{color:#8dffb8}.weight-history-empty{padding:28px 10px;text-align:center;color:#69766e}.weight-history-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.055)}.weight-history-row:last-child{border-bottom:0}.weight-history-date strong{display:block;font-size:.88rem}.weight-history-date span{display:block;margin-top:3px;color:#68756d;font-size:.66rem}.weight-history-value{text-align:right}.weight-history-value strong{display:block;font-size:1rem}.weight-history-value small{display:block;margin-top:3px;font-weight:800}.weight-history-value small.down{color:#8dffb8}.weight-history-value small.up{color:#ff9a9a}.weight-history-value small.same{color:#89958e}.exercise-progress-card{margin-top:12px;padding:14px;border-radius:17px;background:#101613;border:1px solid rgba(255,255,255,.07)}.exercise-progress-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.045)}.exercise-progress-row:last-child{border-bottom:0}.exercise-progress-row span{color:#8d9992;font-size:.78rem}.exercise-progress-row strong{font-size:.8rem}.
+@media(max-width:430px){.data-overview{gap:8px}.evo-stat{padding:13px}.evo-stat strong{font-size:1.15rem}.recent-food{width:140px}}
+</style>
+</head>
+
+<body>
+
+
+
+<div id="notification" class="notification"></div>
+
+<div class="container">
+
+<!-- ================= DASHBOARD — V11 ================= -->
+
+<div id="dash" class="tab active">
+
+    <section class="home-metrics-single">
+        <div class="home-metrics-head">
+            <div>
+                <span class="eyebrow">HOJE</span>
+                <div id="dateToday" class="home-date"></div>
+            </div>
+            <div class="home-goal-label">METAS DIÁRIAS</div>
+        </div>
+
+        <div class="daily-macro-row kcal">
+            <div class="macro-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5.5 7.5c1.4-1.2 2.8-1.8 4.3-1.8 1.9 0 3.1 1.1 4.8 1.1 1.2 0 2.4-.4 3.9-1.4"/><path d="M5.5 16.5c1.4-1.2 2.8-1.8 4.3-1.8 1.9 0 3.1 1.1 4.8 1.1 1.2 0 2.4-.4 3.9-1.4"/></svg></div>
+            <div class="macro-info">
+                <div class="macro-title">CALORIAS</div>
+                <div class="macro-value"><strong id="kcalToday">0</strong><span> kcal</span></div>
+            </div>
+            <div class="macro-goal">
+                <span>Meta</span><strong><span id="metaKDisplay">2800</span> kcal</strong>
+                <small id="kcalRemaining">Faltam 2800 kcal</small>
+            </div>
+            <div class="macro-progress"><div id="barK"></div></div>
+        </div>
+
+        <div class="macro-separator"></div>
+
+        <div class="daily-macro-row protein">
+            <div class="macro-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5.5 7.5c1.4-1.2 2.8-1.8 4.3-1.8 1.9 0 3.1 1.1 4.8 1.1 1.2 0 2.4-.4 3.9-1.4"/><path d="M5.5 16.5c1.4-1.2 2.8-1.8 4.3-1.8 1.9 0 3.1 1.1 4.8 1.1 1.2 0 2.4-.4 3.9-1.4"/></svg></div>
+            <div class="macro-info">
+                <div class="macro-title">PROTEÍNA</div>
+                <div class="macro-value"><strong id="protToday">0</strong><span> g</span></div>
+            </div>
+            <div class="macro-goal">
+                <span>Meta</span><strong><span id="metaPDisplay">170</span> g</strong>
+                <small id="proteinRemaining">Faltam 170 g</small>
+            </div>
+            <div class="macro-progress"><div id="barP"></div></div>
+        </div>
+    </section>
+
+    <div class="home-label">Acesso rápido</div>
+
+    <div class="home-grid-v5">
+        <button class="home-card-v5 food" type="button" onclick="showTab('diet')">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 6h14v12H5z"/><path d="M8 3v4M16 3v4M8 11h8M8 15h5"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
+            <strong>Alimentação</strong><span>Registrar refeições<br>e acompanhar macros</span>
+        </button>
+        <button class="home-card-v5 workout" type="button" onclick="showTab('training')">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M7 6v12M17 6v12M4 9v6M20 9v6M7 12h10"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
+            <strong>Treino</strong><span>A1 · B1 · A2 · B2<br>e histórico de cargas</span>
+        </button>
+        <button class="home-card-v5 data" type="button" onclick="showTab('data')">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 3-3 3 2 5-6"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
+            <strong>Dados</strong><span>Peso, evolução<br>e histórico completo</span>
+        </button>
+        <button class="home-card-v5 profile" type="button" onclick="showTab('profile')">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-3.4 3.2-5 7-5s6.2 1.6 7 5"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
+            <strong>Perfil</strong><span>Metas, informações<br>e configurações</span>
+        </button>
+    </div>
+</div>
+
+
+<!-- ================= DIETA ================= -->
+
+<div id="diet" class="tab">
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+
+    <div class="card">
+        <div class="data-heading">
+            <div><h3>Refeições rápidas</h3><p>Salve combinações que você repete e adicione com um toque.</p></div>
+            <span class="data-chip">ATALHOS</span>
+        </div>
+        <div id="quickMeals" class="quick-meals-grid"></div>
+        <button type="button" onclick="openQuickMealBuilder()" style="margin-top:10px;">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4M8 16h8"/></svg></span><span>Criar refeição rápida</span>
+        </button>
+        <div id="quickMealBuilder" class="quick-meal-builder" style="display:none"></div>
+    </div>
+
+    <div class="card">
+
+        <h3>
+            Adicionar alimento
+            <span class="food-search-count" id="foodCount">0 opções disponíveis</span>
+        </h3>
+
+        <input
+            type="text"
+            id="foodSearch"
+            placeholder="Buscar alimento..."
+            onkeyup="filterFoods()"
+            autocomplete="off">
+
+        <div
+            id="foodResults"
+            style="max-height:340px;overflow-y:auto;background:transparent;border-radius:12px;margin-top:8px;">
+        </div>
+
+        <div
+            id="qtyBox"
+            class="qty-box"
+            style="display:none;">
+
+            <strong id="foodNameSelected"></strong><br>
+
+            <span
+                id="foodInfoSelected"
+                class="macros-small">
+            </span>
+
+            <input
+                type="text"
+                id="qtyInput"
+                placeholder="Quantidade"
+                inputmode="decimal">
+
+            <small
+                id="unitHint"
+                style="color:#aaa;display:block;margin-top:8px;">
+            </small>
+
+            <button onclick="confirmAddFood()">
+                <span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Adicionar
+            </button>
+
+            <button
+                onclick="cancelAddFood()"
+                class="btn-secondary">
+                Cancelar
+            </button>
+
+        </div>
+
+        <button
+            onclick="toggleCustomFoodBox()"
+            class="btn-custom"
+            style="margin-top:14px;">
+            <span class="icon-action"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>Cadastrar Alimento Personalizado</span>
+        </button>
+
+        <div
+            id="customFoodBox"
+            class="qty-box"
+            style="display:none;">
+
+            <label>Nome do alimento</label>
+
+            <input
+                type="text"
+                id="customName"
+                placeholder="Ex: Coxa de frango">
+
+            <label>Unidade de medida</label>
+
+            <select id="customUnit">
+
+                <option value="gramas">
+                    Gramas (por 100g)
+                </option>
+
+                <option value="unidade">
+                    Unidade
+                </option>
+
+                <option value="porção">
+                    Porção
+                </option>
+
+                <option value="scoop">
+                    Scoop
+                </option>
+
+                <option value="copo">
+                    Copo
+                </option>
+
+                <option value="fatia">
+                    Fatia
+                </option>
+
+                <option value="colher">
+                    Colher
+                </option>
+
+            </select>
+
+            <label id="customKcalLabel">
+                Calorias (por 100g)
+            </label>
+
+            <input
+                type="number"
+                id="customKcal"
+                placeholder="Ex: 167"
+                step="0.1"
+                inputmode="decimal">
+
+            <label id="customProtLabel">
+                Proteína em g (por 100g)
+            </label>
+
+            <input
+                type="number"
+                id="customProt"
+                placeholder="Ex: 26.9"
+                step="0.1"
+                inputmode="decimal">
+
+            <button onclick="saveCustomFood()">
+                <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4"/><path d="M8 20v-6h8v6"/></svg></span><span>Salvar Alimento</span>
+            </button>
+
+            <button
+                onclick="toggleCustomFoodBox()"
+                class="btn-secondary">
+                Cancelar
+            </button>
+
+        </div>
+
+        <button type="button" class="custom-foods-card-toggle" id="customFoodsToggle" onclick="toggleCustomFoodsList()">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 7h6l2 2h8v10H4z"/><path d="M4 7V5h6l2 2"/></svg></span>
+            <span>Meus alimentos personalizados</span>
+            <svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <div id="customFoodsPanel" class="custom-foods-panel">
+            <div id="customFoodsList"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Refeições de Hoje</h3>
+
+        <div id="mealsToday"></div>
+
+    </div>
+
+    <div class="card"><div id="nextMealSuggestion"></div></div>
+
+</div>
+
+<!-- ================= TREINO ================= -->
+
+<div id="training" class="tab">
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+
+    <!-- INICIAR TREINO -->
+
+    <div
+        id="trainingStartCard"
+        class="card training-card">
+
+        <div class="training-header">
+
+            <div class="training-header-title">
+                Registro de Treino
+            </div>
+
+            <div class="training-header-sub">
+                Registre exatamente o que você fez.
+            </div>
+
+        </div>
+
+        <label>Data</label>
+
+        <input
+            type="date"
+            id="trainingDate">
+
+        <label>Nome do treino</label>
+
+        <input
+            type="text"
+            id="trainingName"
+            placeholder="Ex: Superior, Pull, Peito...">
+
+        <label>Rotina</label>
+
+        <select id="trainingRoutine">
+            <option value="">Treino livre</option>
+            <option value="A1">A1 — Upper 1</option>
+            <option value="B1">B1 — Lower 1</option>
+            <option value="A2">A2 — Upper 2</option>
+            <option value="B2">B2 — Lower 2</option>
+        </select>
+
+        <button
+            onclick="startTraining()"
+            style="background:#00c853;color:#000;min-height:58px;font-size:1.15rem;">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg></span><span>Começar Treino</span>
+        </button>
+
+    </div>
+
+    <!-- EDITOR -->
+
+    <div
+        id="trainingEditor"
+        class="card training-card"
+        style="display:none;">
+
+        <div class="training-header">
+
+            <div
+                id="trainingEditorTitle"
+                class="training-header-title">
+                Treino
+            </div>
+
+            <div class="training-header-sub">
+                Registre carga e repetições.
+            </div>
+
+        </div>
+
+        <label>Exercício</label>
+
+        <input
+            type="text"
+            id="exerciseName"
+            class="exercise-input"
+            placeholder="Ex: Crucifixo na máquina"
+            autocomplete="off"
+            autocapitalize="sentences"
+            oninput="showLastExercise()">
+
+        <!-- ÚLTIMO REGISTRO -->
+
+        <div
+            id="lastExerciseBox"
+            class="last-box"
+            style="display:none;">
+        </div>
+
+        <!-- SÉRIES -->
+
+        <div id="trainingSets"></div>
+
+        <div id="restTimer" style="margin:14px 0;padding:14px;border:1px solid #333;border-radius:14px;background:#181818;text-align:center;">
+            <div class="timer-heading"><span class="timer-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M9 3h6M12 6V3M15.5 7.5 18 5"/><path d="M12 13v-3M12 13l3 2"/></svg></span><span>DESCANSO</span></div>
+            <div id="restTimerDisplay" style="font-size:2rem;font-weight:800;margin:4px 0;">02:00</div>
+            <button type="button" onclick="startRestTimer()" class="rest-start-btn" style="min-height:44px;background:#2962ff;color:#fff;"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M9 3h6M12 6V3M12 13v-3M12 13l3 2"/></svg><span>Iniciar</span></button>
+            <button type="button" onclick="startRestTimer(90)" style="min-height:44px;">1:30</button>
+            <button type="button" onclick="startRestTimer(120)" style="min-height:44px;">2:00</button>
+            <button type="button" onclick="startRestTimer(180)" style="min-height:44px;">3:00</button>
+            <button type="button" onclick="stopRestTimer()" style="min-height:44px;">Parar</button>
+        </div>
+
+        <button
+            onclick="addTrainingSet()"
+            class="add-set-button">
+            <span class="icon-button-wrap"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg><span>Adicionar Série</span></span>
+        </button>
+
+        <button
+            onclick="addExerciseToTraining()"
+            class="add-exercise-button action-card-button">
+            <span class="ui-icon ui-icon-plus"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 7h6l2 2h8v10H4z"/><path d="M12 7v9M8.5 11.5h7"/></svg></span>
+            <span>Adicionar Exercício</span>
+        </button>
+
+        <!-- EXERCÍCIOS JÁ ADICIONADOS -->
+
+        <div
+            id="currentTrainingExercises"
+            style="margin-top:18px;">
+        </div>
+
+        <!-- AÇÕES -->
+
+        <div class="training-actions">
+
+            <button
+                onclick="saveTraining()"
+                class="save-training-button action-card-button">
+                <span class="ui-icon ui-icon-check"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg></span>
+                <span>Salvar Treino</span>
+            </button>
+
+            <button
+                onclick="cancelTraining()"
+                class="cancel-training-button">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="trainingSaveSummary" class="card training-summary-card" style="display:none"></div>
+
+</div>
+
+<!-- ================= HISTÓRICO DA DIETA ================= -->
+
+<div id="data" class="tab">
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+
+    <div class="card">
+        <div class="data-heading"><div><h3>Central de evolução</h3><p>Resumo do seu progresso registrado no app.</p></div><span class="data-chip">EVOLUÇÃO</span></div>
+        <div id="evolutionOverview" class="data-overview"></div>
+        <div id="personalRecordsOverview"></div>
+    </div>
+
+    <div class="card data-chart-card">
+        <div class="data-heading">
+            <div>
+                <h3>Evolução</h3>
+                <p>Seu peso ao longo do tempo.</p>
+            </div>
+            <span class="data-chip">PROGRESSO</span>
+        </div>
+
+        <canvas id="chartWeight" height="180"></canvas>
+
+        <div class="weight-entry">
+            <input type="number" id="newWeight" placeholder="Peso atual (kg)" step="0.1" inputmode="decimal">
+            <button type="button" onclick="addWeight()">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="card weight-history-card">
+        <button type="button" class="custom-foods-card-toggle diet-history-toggle" id="weightHistoryToggle" onclick="toggleWeightHistory()">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 18h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+            <span>Histórico completo de peso</span>
+            <svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div id="weightHistoryPanel" class="custom-foods-panel">
+            <div id="weightHistoryList"></div>
+        </div>
+    </div>
+
+    <div class="card"><button type="button" class="custom-foods-card-toggle diet-history-toggle" id="dietHistoryToggle" onclick="toggleDietHistory()"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span>Histórico da alimentação</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div id="dietHistoryPanel" class="custom-foods-panel"><div id="historyList"></div></div></div>
+
+    <div class="card">
+        <button type="button" class="custom-foods-card-toggle diet-history-toggle" id="trainingHistoryToggle" onclick="toggleTrainingHistoryPanel()">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 8h14M5 16h14"/><path d="M8 5v14M16 5v14"/></svg></span>
+            <span>Histórico de treinos</span>
+            <svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div id="trainingHistoryPanel" class="custom-foods-panel">
+            <div id="trainingHistory"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= PERFIL ================= -->
+
+<div id="profile" class="tab">
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+
+    <div class="card">
+
+        <h3>Calculadora Inteligente de Dieta</h3>
+
+        <label>Sexo</label>
+
+        <select id="sexo">
+
+            <option value="M">
+                Homem
+            </option>
+
+            <option value="F">
+                Mulher
+            </option>
+
+        </select>
+
+        <label>Idade (anos)</label>
+
+        <input
+            type="number"
+            id="idade"
+            value="24">
+
+        <label>Peso atual (kg)</label>
+
+        <input
+            type="number"
+            id="peso"
+            value="75"
+            step="0.1">
+
+        <label>Altura (cm)</label>
+
+        <input
+            type="number"
+            id="altura"
+            value="170">
+
+        <label>Nível de Atividade</label>
+
+        <select id="atividade">
+
+            <option value="1.2">
+                Sedentário
+            </option>
+
+            <option value="1.375" selected>
+                Leve
+            </option>
+
+            <option value="1.55">
+                Moderado
+            </option>
+
+            <option value="1.725">
+                Intenso
+            </option>
+
+            <option value="1.9">
+                Muito Intenso
+            </option>
+
+        </select>
+
+        <label>Objetivo</label>
+
+        <select id="objetivo">
+
+            <option value="0">
+                Manutenção
+            </option>
+
+            <option value="0.15" selected>
+                Bulk Leve (+15%)
+            </option>
+
+            <option value="0.20">
+                Bulk Agressivo
+            </option>
+
+            <option value="-0.15">
+                Cut Leve
+            </option>
+
+            <option value="-0.20">
+                Cut Agressivo
+            </option>
+
+        </select>
+
+        <button
+            onclick="calcularMetas()"
+            style="background:#00e676;margin-top:15px;">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span><span>Calcular e Aplicar Metas</span>
+        </button>
+
+        <div
+            id="resultadoCalc"
+            class="result-box"
+            style="display:none;">
+        </div>
+
+    </div>
+
+    <div class="card phase-card">
+        <div class="data-heading"><div><h3>Fase atual</h3><p>Guarde objetivo, metas e peso-alvo sem perder o histórico.</p></div><span class="data-chip">FASES</span></div>
+        <div id="currentPhaseBox"></div>
+        <div class="phase-form"><label>Nome da fase</label><input type="text" id="phaseName" placeholder="Ex: Cut até 72 kg"><label>Objetivo</label><input type="text" id="phaseObjective" placeholder="Ex: Secar mantendo massa"><label>Calorias</label><input type="number" id="phaseKcal" step="1"><label>Proteína (g)</label><input type="number" id="phaseProtein" step="1"><label>Peso-alvo (kg)</label><input type="number" id="phaseTargetWeight" step="0.1" placeholder="Ex: 72"><button type="button" onclick="startNewPhase()"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>Iniciar nova fase</span></button></div>
+        <div id="phaseHistory"></div>
+    </div>
+
+    <div class="card">
+
+        <h3>Metas Atuais</h3>
+
+        <label>Calorias diárias</label>
+
+        <input
+            type="number"
+            id="metaK"
+            value="2800">
+
+        <label>Proteína diária (g)</label>
+
+        <input
+            type="number"
+            id="metaP"
+            value="170">
+
+        <button onclick="saveMetas()">
+            <span class="icon-button-wrap"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4"/><path d="M8 20v-6h8v6"/></svg></span><span>Salvar Metas</span></span>
+        </button>
+
+    </div>
+
+    <div class="card">
+        <div class="data-heading"><div><h3>Backup local automático</h3><p>Uma cópia dos seus dados fica atualizada neste dispositivo.</p></div><span class="data-chip">LOCAL</span></div>
+        <div id="autosaveStatus" class="autosave-status" style="margin-top:12px;"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg></span><span>Salvamento automático ativo.</span></div>
+    </div>
+
+    <div class="card">
+
+        <button
+            onclick="exportData()"
+            style="background:#00c853;">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 9 5-5 5 5"/><path d="M5 14v5h14v-5"/></svg></span><span>Exportar Backup</span>
+        </button>
+
+        <button
+            onclick="document.getElementById('backupFileInput').click()"
+            style="background:#2979ff;margin-top:10px;">
+            <span class="icon-pill blue"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 14v5h14v-5"/></svg></span><span>Importar Backup</span>
+        </button>
+
+        <input
+            type="file"
+            id="backupFileInput"
+            accept=".json,application/json"
+            style="display:none;"
+            onchange="importData(event)">
+
+        <button
+            onclick="clearAllData()"
+            style="background:#ff5252;margin-top:10px;">
+            <span class="icon-pill danger"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M7 7l1 13h8l1-13"/><path d="M10 11v5M14 11v5"/></svg></span><span>Apagar Todos os Dados</span>
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- ================= NAVEGAÇÃO ================= -->
+
+
+
+<script>
+
+/* =========================================================
+   BANCO DE ALIMENTOS
+========================================================= */
+
+const foodsDB = [{"name":"Arroz, integral, cozido","kcal":123.53,"prot":2.59,"unit":"gramas"},{"name":"Arroz, integral, cru","kcal":359.68,"prot":7.32,"unit":"gramas"},{"name":"Arroz, tipo 1, cozido","kcal":128.26,"prot":2.52,"unit":"gramas"},{"name":"Arroz, tipo 1, cru","kcal":357.79,"prot":7.16,"unit":"gramas"},{"name":"Arroz, tipo 2, cozido","kcal":130.12,"prot":2.57,"unit":"gramas"},{"name":"Arroz, tipo 2, cru","kcal":358.12,"prot":7.24,"unit":"gramas"},{"name":"Aveia, flocos, crua","kcal":393.82,"prot":13.92,"unit":"gramas"},{"name":"Biscoito, doce, maisena","kcal":442.82,"prot":8.07,"unit":"gramas"},{"name":"Biscoito, doce, recheado com chocolate","kcal":471.82,"prot":6.4,"unit":"gramas"},{"name":"Biscoito, doce, recheado com morango","kcal":471.17,"prot":5.72,"unit":"gramas"},{"name":"Biscoito, doce, wafer, recheado de chocolate","kcal":502.46,"prot":5.56,"unit":"gramas"},{"name":"Biscoito, doce, wafer, recheado de morango","kcal":513.45,"prot":4.52,"unit":"gramas"},{"name":"Biscoito, salgado, cream cracker","kcal":431.73,"prot":10.06,"unit":"gramas"},{"name":"Bolo, mistura para","kcal":418.63,"prot":6.16,"unit":"gramas"},{"name":"Bolo, pronto, aipim","kcal":323.85,"prot":4.42,"unit":"gramas"},{"name":"Bolo, pronto, chocolate","kcal":410.01,"prot":6.22,"unit":"gramas"},{"name":"Bolo, pronto, coco","kcal":333.44,"prot":5.67,"unit":"gramas"},{"name":"Bolo, pronto, milho","kcal":311.39,"prot":4.8,"unit":"gramas"},{"name":"Canjica, branca, crua","kcal":357.6,"prot":7.2,"unit":"gramas"},{"name":"Canjica, com leite integral","kcal":112.46,"prot":2.36,"unit":"gramas"},{"name":"Cereais, milho, flocos, com sal","kcal":369.6,"prot":7.29,"unit":"gramas"},{"name":"Cereais, milho, flocos, sem sal","kcal":363.34,"prot":6.88,"unit":"gramas"},{"name":"Cereais, mingau, milho, infantil","kcal":394.43,"prot":6.43,"unit":"gramas"},{"name":"Cereais, mistura para vitamina, trigo, cevada e aveia","kcal":381.13,"prot":8.9,"unit":"gramas"},{"name":"Cereal matinal, milho","kcal":365.35,"prot":7.16,"unit":"gramas"},{"name":"Cereal matinal, milho, açúcar","kcal":376.56,"prot":4.74,"unit":"gramas"},{"name":"Creme de arroz, pó","kcal":386.0,"prot":7.03,"unit":"gramas"},{"name":"Creme de milho, pó","kcal":333.03,"prot":4.82,"unit":"gramas"},{"name":"Curau, milho verde","kcal":78.43,"prot":2.36,"unit":"gramas"},{"name":"Curau, milho verde, mistura para","kcal":402.29,"prot":2.22,"unit":"gramas"},{"name":"Farinha, de arroz, enriquecida","kcal":363.06,"prot":1.27,"unit":"gramas"},{"name":"Farinha, de centeio, integral","kcal":335.78,"prot":12.52,"unit":"gramas"},{"name":"Farinha, de milho, amarela","kcal":350.59,"prot":7.19,"unit":"gramas"},{"name":"Farinha, de rosca","kcal":370.58,"prot":11.38,"unit":"gramas"},{"name":"Farinha, de trigo","kcal":360.47,"prot":9.79,"unit":"gramas"},{"name":"Farinha, láctea, de cereais","kcal":414.85,"prot":11.88,"unit":"gramas"},{"name":"Lasanha, massa fresca, cozida","kcal":163.76,"prot":5.81,"unit":"gramas"},{"name":"Lasanha, massa fresca, crua","kcal":220.31,"prot":7.01,"unit":"gramas"},{"name":"Macarrão, instantâneo","kcal":435.86,"prot":8.79,"unit":"gramas"},{"name":"Macarrão, trigo, cru","kcal":371.12,"prot":10.0,"unit":"gramas"},{"name":"Macarrão, trigo, cru, com ovos","kcal":370.57,"prot":10.32,"unit":"gramas"},{"name":"Milho, amido, cru","kcal":361.37,"prot":0.6,"unit":"gramas"},{"name":"Milho, fubá, cru","kcal":353.48,"prot":7.21,"unit":"gramas"},{"name":"Milho, verde, cru","kcal":138.17,"prot":6.59,"unit":"gramas"},{"name":"Milho, verde, enlatado, drenado","kcal":97.56,"prot":3.23,"unit":"gramas"},{"name":"Mingau tradicional, pó","kcal":373.42,"prot":0.58,"unit":"gramas"},{"name":"Pamonha, barra para cozimento, pré-cozida","kcal":171.22,"prot":2.55,"unit":"gramas"},{"name":"Pão, aveia, forma","kcal":343.09,"prot":12.35,"unit":"gramas"},{"name":"Pão, de soja","kcal":308.73,"prot":11.34,"unit":"gramas"},{"name":"Pão, glúten, forma","kcal":252.99,"prot":11.95,"unit":"gramas"},{"name":"Pão, milho, forma","kcal":292.01,"prot":8.3,"unit":"gramas"},{"name":"Pão, trigo, forma, integral","kcal":253.19,"prot":9.43,"unit":"gramas"},{"name":"Pão, trigo, francês","kcal":299.81,"prot":7.95,"unit":"gramas"},{"name":"Pão, trigo, sovado","kcal":310.96,"prot":8.4,"unit":"gramas"},{"name":"Pastel, de carne, cru","kcal":288.7,"prot":10.74,"unit":"gramas"},{"name":"Pastel, de carne, frito","kcal":388.37,"prot":10.1,"unit":"gramas"},{"name":"Pastel, de queijo, cru","kcal":308.47,"prot":9.85,"unit":"gramas"},{"name":"Pastel, de queijo, frito","kcal":422.11,"prot":8.71,"unit":"gramas"},{"name":"Pastel, massa, crua","kcal":310.2,"prot":6.9,"unit":"gramas"},{"name":"Pastel, massa, frita","kcal":569.67,"prot":6.02,"unit":"gramas"},{"name":"Pipoca, com óleo de soja, sem sal","kcal":448.33,"prot":9.93,"unit":"gramas"},{"name":"Polenta, pré-cozida","kcal":102.74,"prot":2.29,"unit":"gramas"},{"name":"Torrada, pão francês","kcal":377.42,"prot":10.52,"unit":"gramas"},{"name":"Abóbora, cabotian, cozida","kcal":48.04,"prot":1.44,"unit":"gramas"},{"name":"Abóbora, cabotian, crua","kcal":38.6,"prot":1.75,"unit":"gramas"},{"name":"Abóbora, menina brasileira, crua","kcal":13.61,"prot":0.61,"unit":"gramas"},{"name":"Abóbora, moranga, crua","kcal":12.36,"prot":0.96,"unit":"gramas"},{"name":"Abóbora, moranga, refogada","kcal":29.0,"prot":0.39,"unit":"gramas"},{"name":"Abóbora, pescoço, crua","kcal":24.47,"prot":0.67,"unit":"gramas"},{"name":"Abobrinha, italiana, cozida","kcal":15.04,"prot":1.12,"unit":"gramas"},{"name":"Abobrinha, italiana, crua","kcal":19.28,"prot":1.14,"unit":"gramas"},{"name":"Abobrinha, italiana, refogada","kcal":24.43,"prot":1.07,"unit":"gramas"},{"name":"Abobrinha, paulista, crua","kcal":30.81,"prot":0.64,"unit":"gramas"},{"name":"Acelga, crua","kcal":20.94,"prot":1.44,"unit":"gramas"},{"name":"Agrião, cru","kcal":16.58,"prot":2.69,"unit":"gramas"},{"name":"Aipo, cru","kcal":19.09,"prot":0.76,"unit":"gramas"},{"name":"Alface, americana, crua","kcal":8.79,"prot":0.61,"unit":"gramas"},{"name":"Alface, crespa, crua","kcal":10.68,"prot":1.35,"unit":"gramas"},{"name":"Alface, lisa, crua","kcal":13.82,"prot":1.69,"unit":"gramas"},{"name":"Alface, roxa, crua","kcal":12.72,"prot":0.91,"unit":"gramas"},{"name":"Alfavaca, crua","kcal":29.18,"prot":2.66,"unit":"gramas"},{"name":"Alho, cru","kcal":113.13,"prot":7.01,"unit":"gramas"},{"name":"Alho-poró, cru","kcal":31.51,"prot":1.41,"unit":"gramas"},{"name":"Almeirão, cru","kcal":18.03,"prot":1.77,"unit":"gramas"},{"name":"Almeirão, refogado","kcal":65.08,"prot":1.7,"unit":"gramas"},{"name":"Batata, baroa, cozida","kcal":80.12,"prot":0.85,"unit":"gramas"},{"name":"Batata, baroa, crua","kcal":100.98,"prot":1.05,"unit":"gramas"},{"name":"Batata, doce, cozida","kcal":76.76,"prot":0.64,"unit":"gramas"},{"name":"Batata, doce, crua","kcal":118.24,"prot":1.26,"unit":"gramas"},{"name":"Batata, frita, tipo chips, industrializada","kcal":542.73,"prot":5.58,"unit":"gramas"},{"name":"Batata, inglesa, cozida","kcal":51.59,"prot":1.16,"unit":"gramas"},{"name":"Batata, inglesa, crua","kcal":64.37,"prot":1.77,"unit":"gramas"},{"name":"Batata, inglesa, frita","kcal":267.16,"prot":4.97,"unit":"gramas"},{"name":"Batata, inglesa, sauté","kcal":67.89,"prot":1.29,"unit":"gramas"},{"name":"Berinjela, cozida","kcal":18.85,"prot":0.68,"unit":"gramas"},{"name":"Berinjela, crua","kcal":19.63,"prot":1.22,"unit":"gramas"},{"name":"Beterraba, cozida","kcal":32.15,"prot":1.29,"unit":"gramas"},{"name":"Beterraba, crua","kcal":48.83,"prot":1.95,"unit":"gramas"},{"name":"Biscoito, polvilho doce","kcal":437.55,"prot":1.29,"unit":"gramas"},{"name":"Brócolis, cozido","kcal":24.64,"prot":2.13,"unit":"gramas"},{"name":"Brócolis, cru","kcal":25.5,"prot":3.64,"unit":"gramas"},{"name":"Cará, cozido","kcal":77.58,"prot":1.53,"unit":"gramas"},{"name":"Cará, cru","kcal":95.63,"prot":2.28,"unit":"gramas"},{"name":"Caruru, cru","kcal":34.03,"prot":3.2,"unit":"gramas"},{"name":"Catalonha, crua","kcal":23.89,"prot":1.87,"unit":"gramas"},{"name":"Catalonha, refogada","kcal":63.45,"prot":1.95,"unit":"gramas"},{"name":"Cebola, crua","kcal":39.42,"prot":1.71,"unit":"gramas"},{"name":"Cebolinha, crua","kcal":19.52,"prot":1.87,"unit":"gramas"},{"name":"Cenoura, cozida","kcal":29.86,"prot":0.85,"unit":"gramas"},{"name":"Cenoura, crua","kcal":34.14,"prot":1.32,"unit":"gramas"},{"name":"Chicória, crua","kcal":13.84,"prot":1.14,"unit":"gramas"},{"name":"Chuchu, cozido","kcal":18.54,"prot":0.41,"unit":"gramas"},{"name":"Chuchu, cru","kcal":16.98,"prot":0.7,"unit":"gramas"},{"name":"Coentro, folhas desidratadas","kcal":309.07,"prot":20.88,"unit":"gramas"},{"name":"Couve, manteiga, crua","kcal":27.06,"prot":2.87,"unit":"gramas"},{"name":"Couve, manteiga, refogada","kcal":90.34,"prot":1.67,"unit":"gramas"},{"name":"Couve-flor, crua","kcal":22.56,"prot":1.91,"unit":"gramas"},{"name":"Couve-flor, cozida","kcal":19.11,"prot":1.24,"unit":"gramas"},{"name":"Espinafre, Nova Zelândia, cru","kcal":16.1,"prot":2.0,"unit":"gramas"},{"name":"Espinafre, Nova Zelândia, refogado","kcal":67.25,"prot":2.72,"unit":"gramas"},{"name":"Farinha, de mandioca, crua","kcal":360.87,"prot":1.55,"unit":"gramas"},{"name":"Farinha, de mandioca, torrada","kcal":365.27,"prot":1.23,"unit":"gramas"},{"name":"Farinha, de puba","kcal":360.18,"prot":1.62,"unit":"gramas"},{"name":"Fécula, de mandioca","kcal":330.85,"prot":0.52,"unit":"gramas"},{"name":"Feijão, broto, cru","kcal":38.72,"prot":4.17,"unit":"gramas"},{"name":"Inhame, cru","kcal":96.7,"prot":2.05,"unit":"gramas"},{"name":"Jiló, cru","kcal":27.37,"prot":1.4,"unit":"gramas"},{"name":"Jurubeba, crua","kcal":125.81,"prot":4.41,"unit":"gramas"},{"name":"Mandioca, cozida","kcal":125.36,"prot":0.57,"unit":"gramas"},{"name":"Mandioca, crua","kcal":151.42,"prot":1.13,"unit":"gramas"},{"name":"Mandioca, farofa, temperada","kcal":405.69,"prot":2.06,"unit":"gramas"},{"name":"Mandioca, frita","kcal":300.06,"prot":1.38,"unit":"gramas"},{"name":"Manjericão, cru","kcal":21.15,"prot":1.99,"unit":"gramas"},{"name":"Maxixe, cru","kcal":13.75,"prot":1.39,"unit":"gramas"},{"name":"Mostarda, folha, crua","kcal":18.11,"prot":2.11,"unit":"gramas"},{"name":"Nhoque, batata, cozido","kcal":180.78,"prot":5.86,"unit":"gramas"},{"name":"Nabo, cru","kcal":18.19,"prot":1.2,"unit":"gramas"},{"name":"Palmito, juçara, em conserva","kcal":23.2,"prot":1.79,"unit":"gramas"},{"name":"Palmito, pupunha, em conserva","kcal":29.43,"prot":2.46,"unit":"gramas"},{"name":"Pão, de queijo, assado","kcal":363.08,"prot":5.12,"unit":"gramas"},{"name":"Pão, de queijo, cru","kcal":294.54,"prot":3.65,"unit":"gramas"},{"name":"Pepino, cru","kcal":9.53,"prot":0.87,"unit":"gramas"},{"name":"Pimentão, amarelo, cru","kcal":27.93,"prot":1.22,"unit":"gramas"},{"name":"Pimentão, verde, cru","kcal":21.29,"prot":1.05,"unit":"gramas"},{"name":"Pimentão, vermelho, cru","kcal":23.28,"prot":1.04,"unit":"gramas"},{"name":"Polvilho, doce","kcal":351.23,"prot":0.43,"unit":"gramas"},{"name":"Quiabo, cru","kcal":29.94,"prot":1.92,"unit":"gramas"},{"name":"Rabanete, cru","kcal":13.74,"prot":1.39,"unit":"gramas"},{"name":"Repolho, branco, cru","kcal":17.12,"prot":0.88,"unit":"gramas"},{"name":"Repolho, roxo, cru","kcal":30.91,"prot":1.91,"unit":"gramas"},{"name":"Repolho, roxo, refogado","kcal":41.77,"prot":1.8,"unit":"gramas"},{"name":"Rúcula, crua","kcal":13.13,"prot":1.77,"unit":"gramas"},{"name":"Salsa, crua","kcal":33.42,"prot":3.26,"unit":"gramas"},{"name":"Seleta de legumes, enlatada","kcal":56.53,"prot":3.42,"unit":"gramas"},{"name":"Serralha, crua","kcal":30.4,"prot":2.67,"unit":"gramas"},{"name":"Taioba, crua","kcal":34.21,"prot":2.9,"unit":"gramas"},{"name":"Tomate, com semente, cru","kcal":15.34,"prot":1.1,"unit":"gramas"},{"name":"Tomate, extrato","kcal":60.93,"prot":2.43,"unit":"gramas"},{"name":"Tomate, molho industrializado","kcal":38.45,"prot":1.38,"unit":"gramas"},{"name":"Tomate, purê","kcal":27.94,"prot":1.36,"unit":"gramas"},{"name":"Tomate, salada","kcal":20.55,"prot":0.81,"unit":"gramas"},{"name":"Vagem, crua","kcal":24.9,"prot":1.79,"unit":"gramas"},{"name":"Abacate, cru","kcal":96.15,"prot":1.24,"unit":"gramas"},{"name":"Abacaxi, cru","kcal":48.32,"prot":0.86,"unit":"gramas"},{"name":"Abacaxi, polpa, congelada","kcal":30.59,"prot":0.47,"unit":"gramas"},{"name":"Abiu, cru","kcal":62.42,"prot":0.83,"unit":"gramas"},{"name":"Açaí, polpa, com xarope de guaraná e glucose","kcal":110.3,"prot":0.72,"unit":"gramas"},{"name":"Açaí, polpa, congelada","kcal":58.05,"prot":0.8,"unit":"gramas"},{"name":"Acerola, crua","kcal":33.46,"prot":0.91,"unit":"gramas"},{"name":"Acerola, polpa, congelada","kcal":21.94,"prot":0.59,"unit":"gramas"},{"name":"Ameixa, calda, enlatada","kcal":182.85,"prot":0.41,"unit":"gramas"},{"name":"Ameixa, crua","kcal":52.54,"prot":0.77,"unit":"gramas"},{"name":"Ameixa, em calda, enlatada, drenada","kcal":177.36,"prot":1.02,"unit":"gramas"},{"name":"Atemóia, crua","kcal":96.97,"prot":0.97,"unit":"gramas"},{"name":"Banana, da terra, crua","kcal":128.02,"prot":1.43,"unit":"gramas"},{"name":"Banana, doce em barra","kcal":280.11,"prot":2.17,"unit":"gramas"},{"name":"Banana, figo, crua","kcal":105.08,"prot":1.13,"unit":"gramas"},{"name":"Banana, maçã, crua","kcal":86.81,"prot":1.75,"unit":"gramas"},{"name":"Banana, nanica, crua","kcal":91.53,"prot":1.4,"unit":"gramas"},{"name":"Banana, ouro, crua","kcal":112.37,"prot":1.48,"unit":"gramas"},{"name":"Banana, pacova, crua","kcal":77.91,"prot":1.23,"unit":"gramas"},{"name":"Banana, prata, crua","kcal":98.25,"prot":1.27,"unit":"gramas"},{"name":"Cacau, cru","kcal":74.29,"prot":0.95,"unit":"gramas"},{"name":"Cajá-Manga, cru","kcal":45.58,"prot":1.28,"unit":"gramas"},{"name":"Cajá, polpa, congelada","kcal":26.33,"prot":0.59,"unit":"gramas"},{"name":"Caju, cru","kcal":43.07,"prot":0.97,"unit":"gramas"},{"name":"Caju, polpa, congelada","kcal":36.57,"prot":0.48,"unit":"gramas"},{"name":"Caju, suco concentrado, envasado","kcal":45.11,"prot":0.4,"unit":"gramas"},{"name":"Caqui, chocolate, cru","kcal":71.35,"prot":0.36,"unit":"gramas"},{"name":"Carambola, crua","kcal":45.74,"prot":0.87,"unit":"gramas"},{"name":"Ciriguela, crua","kcal":75.59,"prot":1.4,"unit":"gramas"},{"name":"Cupuaçu, cru","kcal":49.42,"prot":1.16,"unit":"gramas"},{"name":"Cupuaçu, polpa, congelada","kcal":48.8,"prot":0.84,"unit":"gramas"},{"name":"Figo, cru","kcal":41.45,"prot":0.97,"unit":"gramas"},{"name":"Figo, enlatado, em calda","kcal":184.36,"prot":0.56,"unit":"gramas"},{"name":"Fruta-pão, crua","kcal":67.05,"prot":1.08,"unit":"gramas"},{"name":"Goiaba, branca, com casca, crua","kcal":51.74,"prot":0.9,"unit":"gramas"},{"name":"Goiaba, doce em pasta","kcal":268.96,"prot":0.58,"unit":"gramas"},{"name":"Goiaba, doce, cascão","kcal":285.59,"prot":0.41,"unit":"gramas"},{"name":"Goiaba, vermelha, com casca, crua","kcal":54.17,"prot":1.09,"unit":"gramas"},{"name":"Graviola, crua","kcal":61.62,"prot":0.85,"unit":"gramas"},{"name":"Graviola, polpa, congelada","kcal":38.27,"prot":0.57,"unit":"gramas"},{"name":"Jabuticaba, crua","kcal":58.05,"prot":0.61,"unit":"gramas"},{"name":"Jaca, crua","kcal":87.92,"prot":1.4,"unit":"gramas"},{"name":"Jambo, cru","kcal":26.91,"prot":0.89,"unit":"gramas"},{"name":"Jamelão, cru","kcal":41.01,"prot":0.55,"unit":"gramas"},{"name":"Kiwi, cru","kcal":51.14,"prot":1.34,"unit":"gramas"},{"name":"Laranja, baía, crua","kcal":45.44,"prot":0.98,"unit":"gramas"},{"name":"Laranja, baía, suco","kcal":36.65,"prot":0.65,"unit":"gramas"},{"name":"Laranja, da terra, crua","kcal":51.47,"prot":1.08,"unit":"gramas"},{"name":"Laranja, da terra, suco","kcal":40.96,"prot":0.67,"unit":"gramas"},{"name":"Laranja, lima, crua","kcal":45.7,"prot":1.06,"unit":"gramas"},{"name":"Laranja, lima, suco","kcal":39.34,"prot":0.71,"unit":"gramas"},{"name":"Laranja, pêra, crua","kcal":36.77,"prot":1.04,"unit":"gramas"},{"name":"Laranja, pêra, suco","kcal":32.71,"prot":0.74,"unit":"gramas"},{"name":"Laranja, valência, crua","kcal":46.11,"prot":0.77,"unit":"gramas"},{"name":"Laranja, valência, suco","kcal":36.2,"prot":0.48,"unit":"gramas"},{"name":"Limão, cravo, suco","kcal":14.1,"prot":0.33,"unit":"gramas"},{"name":"Limão, galego, suco","kcal":22.23,"prot":0.57,"unit":"gramas"},{"name":"Limão, tahiti, cru","kcal":31.82,"prot":0.94,"unit":"gramas"},{"name":"Maçã, Argentina, com casca, crua","kcal":62.53,"prot":0.23,"unit":"gramas"},{"name":"Maçã, Fuji, com casca, crua","kcal":55.52,"prot":0.29,"unit":"gramas"},{"name":"Macaúba, crua","kcal":404.28,"prot":2.08,"unit":"gramas"},{"name":"Mamão, doce em calda, drenado","kcal":195.63,"prot":0.19,"unit":"gramas"},{"name":"Mamão, Formosa, cru","kcal":45.34,"prot":0.82,"unit":"gramas"},{"name":"Mamão, Papaia, cru","kcal":40.16,"prot":0.46,"unit":"gramas"},{"name":"Mamão verde, doce em calda, drenado","kcal":209.38,"prot":0.32,"unit":"gramas"},{"name":"Manga, Haden, crua","kcal":63.5,"prot":0.41,"unit":"gramas"},{"name":"Manga, Palmer, crua","kcal":72.49,"prot":0.41,"unit":"gramas"},{"name":"Manga, polpa, congelada","kcal":48.31,"prot":0.38,"unit":"gramas"},{"name":"Manga, Tommy Atkins, crua","kcal":50.69,"prot":0.86,"unit":"gramas"},{"name":"Maracujá, cru","kcal":68.44,"prot":1.99,"unit":"gramas"},{"name":"Maracujá, polpa, congelada","kcal":38.76,"prot":0.81,"unit":"gramas"},{"name":"Maracujá, suco concentrado, envasado","kcal":41.97,"prot":0.77,"unit":"gramas"},{"name":"Melancia, crua","kcal":32.61,"prot":0.88,"unit":"gramas"},{"name":"Melão, cru","kcal":29.37,"prot":0.68,"unit":"gramas"},{"name":"Mexerica, Murcote, crua","kcal":57.59,"prot":0.88,"unit":"gramas"},{"name":"Mexerica, Rio, crua","kcal":36.87,"prot":0.65,"unit":"gramas"},{"name":"Morango, cru","kcal":30.15,"prot":0.89,"unit":"gramas"},{"name":"Nêspera, crua","kcal":42.54,"prot":0.31,"unit":"gramas"},{"name":"Pequi, cru","kcal":204.97,"prot":2.34,"unit":"gramas"},{"name":"Pêra, Park, crua","kcal":60.59,"prot":0.24,"unit":"gramas"},{"name":"Pêra, Williams, crua","kcal":53.31,"prot":0.57,"unit":"gramas"},{"name":"Pêssego, Aurora, cru","kcal":36.33,"prot":0.82,"unit":"gramas"},{"name":"Pêssego, enlatado, em calda","kcal":63.14,"prot":0.71,"unit":"gramas"},{"name":"Pinha, crua","kcal":88.47,"prot":1.49,"unit":"gramas"},{"name":"Pitanga, crua","kcal":41.42,"prot":0.93,"unit":"gramas"},{"name":"Pitanga, polpa, congelada","kcal":19.11,"prot":0.29,"unit":"gramas"},{"name":"Romã, crua","kcal":55.74,"prot":0.4,"unit":"gramas"},{"name":"Tamarindo, cru","kcal":275.7,"prot":3.21,"unit":"gramas"},{"name":"Tangerina, Poncã, crua","kcal":37.83,"prot":0.85,"unit":"gramas"},{"name":"Tangerina, Poncã, suco","kcal":36.11,"prot":0.52,"unit":"gramas"},{"name":"Tucumã, cru","kcal":262.02,"prot":2.09,"unit":"gramas"},{"name":"Umbu, cru","kcal":37.02,"prot":0.84,"unit":"gramas"},{"name":"Umbu, polpa, congelada","kcal":33.94,"prot":0.51,"unit":"gramas"},{"name":"Uva, Itália, crua","kcal":52.87,"prot":0.75,"unit":"gramas"},{"name":"Uva, Rubi, crua","kcal":49.06,"prot":0.61,"unit":"gramas"},{"name":"Uva, suco concentrado, envasado","kcal":57.66,"prot":0.0,"unit":"gramas"},{"name":"Azeite, de dendê","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Azeite, de oliva, extra virgem","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Manteiga, com sal","kcal":725.97,"prot":0.41,"unit":"gramas"},{"name":"Manteiga, sem sal","kcal":757.54,"prot":0.4,"unit":"gramas"},{"name":"Margarina, com óleo hidrogenado, com sal (65% de lipídeos)","kcal":596.12,"prot":0.0,"unit":"gramas"},{"name":"Margarina, com óleo hidrogenado, sem sal (80% de lipídeos)","kcal":722.53,"prot":0.0,"unit":"gramas"},{"name":"Margarina, com óleo interesterificado, com sal (65%de lipídeos)","kcal":594.45,"prot":0.0,"unit":"gramas"},{"name":"Margarina, com óleo interesterificado, sem sal (65% de lipídeos)","kcal":593.14,"prot":0.0,"unit":"gramas"},{"name":"Óleo, de babaçu","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Óleo, de canola","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Óleo, de girassol","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Óleo, de milho","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Óleo, de pequi","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Óleo, de soja","kcal":884.0,"prot":0.0,"unit":"gramas"},{"name":"Abadejo, filé, congelado, assado","kcal":111.62,"prot":23.52,"unit":"gramas"},{"name":"Abadejo, filé, congelado,cozido","kcal":91.1,"prot":19.35,"unit":"gramas"},{"name":"Abadejo, filé, congelado, cru","kcal":59.11,"prot":13.08,"unit":"gramas"},{"name":"Abadejo, filé, congelado, grelhado","kcal":129.64,"prot":27.61,"unit":"gramas"},{"name":"Atum, conserva em óleo","kcal":165.91,"prot":26.19,"unit":"gramas"},{"name":"Atum, fresco, cru","kcal":117.5,"prot":25.68,"unit":"gramas"},{"name":"Bacalhau, salgado, cru","kcal":135.89,"prot":29.04,"unit":"gramas"},{"name":"Bacalhau, salgado, refogado","kcal":139.66,"prot":23.98,"unit":"gramas"},{"name":"Cação, posta, com farinha de trigo, frita","kcal":208.33,"prot":24.95,"unit":"gramas"},{"name":"Cação, posta, cozida","kcal":116.01,"prot":25.59,"unit":"gramas"},{"name":"Cação, posta, crua","kcal":83.33,"prot":17.85,"unit":"gramas"},{"name":"Camarão, Rio Grande, grande, cozido","kcal":90.01,"prot":18.97,"unit":"gramas"},{"name":"Camarão, Rio Grande, grande, cru","kcal":47.18,"prot":9.99,"unit":"gramas"},{"name":"Camarão, Sete Barbas, sem cabeça, com casca, frito","kcal":231.25,"prot":18.39,"unit":"gramas"},{"name":"Caranguejo, cozido","kcal":82.72,"prot":18.48,"unit":"gramas"},{"name":"Corimba, cru","kcal":128.16,"prot":17.37,"unit":"gramas"},{"name":"Corimbatá, assado","kcal":261.45,"prot":19.9,"unit":"gramas"},{"name":"Corimbatá, cozido","kcal":238.7,"prot":20.13,"unit":"gramas"},{"name":"Corvina de água doce, crua","kcal":101.01,"prot":18.92,"unit":"gramas"},{"name":"Corvina do mar, crua","kcal":94.0,"prot":18.57,"unit":"gramas"},{"name":"Corvina grande, assada","kcal":146.53,"prot":26.77,"unit":"gramas"},{"name":"Corvina grande, cozida","kcal":100.08,"prot":23.44,"unit":"gramas"},{"name":"Dourada de água doce, fresca","kcal":131.21,"prot":18.81,"unit":"gramas"},{"name":"Lambari, congelado, cru","kcal":130.84,"prot":16.81,"unit":"gramas"},{"name":"Lambari, congelado, frito","kcal":326.87,"prot":28.43,"unit":"gramas"},{"name":"Lambari, fresco, cru","kcal":151.6,"prot":15.65,"unit":"gramas"},{"name":"Manjuba, com farinha de trigo, frita","kcal":343.55,"prot":23.45,"unit":"gramas"},{"name":"Manjuba, frita","kcal":349.33,"prot":30.14,"unit":"gramas"},{"name":"Merluza, filé, assado","kcal":121.91,"prot":26.6,"unit":"gramas"},{"name":"Merluza, filé, cru","kcal":89.13,"prot":16.61,"unit":"gramas"},{"name":"Merluza, filé, frito","kcal":191.63,"prot":26.93,"unit":"gramas"},{"name":"Pescada, branca, crua","kcal":110.88,"prot":16.26,"unit":"gramas"},{"name":"Pescada, branca, frita","kcal":223.04,"prot":27.36,"unit":"gramas"},{"name":"Pescada, filé, com farinha de trigo, frito","kcal":283.43,"prot":21.44,"unit":"gramas"},{"name":"Pescada, filé, cru","kcal":107.21,"prot":16.65,"unit":"gramas"},{"name":"Pescada, filé, frito","kcal":154.27,"prot":28.59,"unit":"gramas"},{"name":"Pescada, filé, molho escabeche","kcal":141.96,"prot":11.75,"unit":"gramas"},{"name":"Pescadinha, crua","kcal":76.41,"prot":15.48,"unit":"gramas"},{"name":"Pintado, assado","kcal":191.56,"prot":36.45,"unit":"gramas"},{"name":"Pintado, cru","kcal":91.08,"prot":18.56,"unit":"gramas"},{"name":"Pintado, grelhado","kcal":152.19,"prot":30.8,"unit":"gramas"},{"name":"Porquinho, cru","kcal":93.02,"prot":20.49,"unit":"gramas"},{"name":"Salmão, filé, com pele, fresco,  grelhado","kcal":228.73,"prot":23.92,"unit":"gramas"},{"name":"Salmão, sem pele, fresco, cru","kcal":169.78,"prot":19.25,"unit":"gramas"},{"name":"Salmão, sem pele, fresco, grelhado","kcal":242.71,"prot":26.14,"unit":"gramas"},{"name":"Sardinha, assada","kcal":164.35,"prot":32.18,"unit":"gramas"},{"name":"Sardinha, conserva em óleo","kcal":284.98,"prot":15.94,"unit":"gramas"},{"name":"Sardinha, frita","kcal":257.04,"prot":33.38,"unit":"gramas"},{"name":"Sardinha, inteira, crua","kcal":113.9,"prot":21.08,"unit":"gramas"},{"name":"Tucunaré, filé, congelado, cru","kcal":87.69,"prot":17.96,"unit":"gramas"},{"name":"Apresuntado","kcal":128.86,"prot":13.45,"unit":"gramas"},{"name":"Caldo de carne, tablete","kcal":240.62,"prot":7.82,"unit":"gramas"},{"name":"Caldo de galinha, tablete","kcal":251.45,"prot":6.28,"unit":"gramas"},{"name":"Carne, bovina, acém, moído, cozido","kcal":212.42,"prot":26.69,"unit":"gramas"},{"name":"Carne, bovina, acém, moído, cru","kcal":136.56,"prot":19.42,"unit":"gramas"},{"name":"Carne, bovina, acém, sem gordura, cozido","kcal":214.61,"prot":27.27,"unit":"gramas"},{"name":"Carne, bovina, acém, sem gordura, cru","kcal":144.03,"prot":20.82,"unit":"gramas"},{"name":"Carne, bovina, almôndegas, cruas","kcal":189.26,"prot":12.31,"unit":"gramas"},{"name":"Carne, bovina, almôndegas, fritas","kcal":271.81,"prot":18.16,"unit":"gramas"},{"name":"Carne, bovina, bucho, cozido","kcal":133.02,"prot":21.64,"unit":"gramas"},{"name":"Carne, bovina, bucho, cru","kcal":137.3,"prot":20.53,"unit":"gramas"},{"name":"Carne, bovina, capa de contra-filé, com gordura, crua","kcal":216.91,"prot":19.2,"unit":"gramas"},{"name":"Carne, bovina, capa de contra-filé, com gordura, grelhada","kcal":311.7,"prot":30.69,"unit":"gramas"},{"name":"Carne, bovina, capa de contra-filé, sem gordura, crua","kcal":131.06,"prot":21.54,"unit":"gramas"},{"name":"Carne, bovina, capa de contra-filé, sem gordura, grelhada","kcal":239.44,"prot":35.06,"unit":"gramas"},{"name":"Carne, bovina, charque, cozido","kcal":262.78,"prot":36.36,"unit":"gramas"},{"name":"Carne, bovina, charque, cru","kcal":248.86,"prot":22.71,"unit":"gramas"},{"name":"Carne, bovina, contra-filé, à milanesa","kcal":351.59,"prot":20.61,"unit":"gramas"},{"name":"Carne, bovina, contra-filé de costela, cru","kcal":202.44,"prot":19.8,"unit":"gramas"},{"name":"Carne, bovina, contra-filé de costela, grelhado","kcal":274.91,"prot":29.88,"unit":"gramas"},{"name":"Carne, bovina, contra-filé, com gordura, cru","kcal":205.86,"prot":21.15,"unit":"gramas"},{"name":"Carne, bovina, contra-filé, com gordura, grelhado","kcal":278.05,"prot":32.4,"unit":"gramas"},{"name":"Carne, bovina, contra-filé, sem gordura, cru","kcal":156.62,"prot":24.0,"unit":"gramas"},{"name":"Carne, bovina, contra-filé, sem gordura, grelhado","kcal":193.69,"prot":35.88,"unit":"gramas"},{"name":"Carne, bovina, costela, assada","kcal":373.04,"prot":28.81,"unit":"gramas"},{"name":"Carne, bovina, costela, crua","kcal":357.72,"prot":16.71,"unit":"gramas"},{"name":"Carne, bovina, coxão duro, sem gordura, cozido","kcal":216.62,"prot":31.88,"unit":"gramas"},{"name":"Carne, bovina, coxão duro, sem gordura, cru","kcal":147.97,"prot":21.51,"unit":"gramas"},{"name":"Carne, bovina, coxão mole, sem gordura, cozido","kcal":218.68,"prot":32.38,"unit":"gramas"},{"name":"Carne, bovina, coxão mole, sem gordura, cru","kcal":169.07,"prot":21.23,"unit":"gramas"},{"name":"Carne, bovina, cupim, assado","kcal":330.1,"prot":28.63,"unit":"gramas"},{"name":"Carne, bovina, cupim, cru","kcal":221.4,"prot":19.54,"unit":"gramas"},{"name":"Carne, bovina, fígado, cru","kcal":141.05,"prot":20.71,"unit":"gramas"},{"name":"Carne, bovina, fígado, grelhado","kcal":225.03,"prot":29.86,"unit":"gramas"},{"name":"Carne, bovina, filé mingnon, sem gordura, cru","kcal":142.86,"prot":21.6,"unit":"gramas"},{"name":"Carne, bovina, filé mingnon, sem gordura, grelhado","kcal":219.7,"prot":32.8,"unit":"gramas"},{"name":"Carne, bovina, flanco, sem gordura, cozido","kcal":195.58,"prot":29.38,"unit":"gramas"},{"name":"Carne, bovina, flanco, sem gordura, cru","kcal":141.46,"prot":20.0,"unit":"gramas"},{"name":"Carne, bovina, fraldinha, com gordura, cozida","kcal":338.45,"prot":24.24,"unit":"gramas"},{"name":"Carne, bovina, fraldinha, com gordura, crua","kcal":220.72,"prot":17.58,"unit":"gramas"},{"name":"Carne, bovina, lagarto, cozido","kcal":222.47,"prot":32.86,"unit":"gramas"},{"name":"Carne, bovina, lagarto, cru","kcal":134.86,"prot":20.54,"unit":"gramas"},{"name":"Carne, bovina, língua, cozida","kcal":314.9,"prot":21.37,"unit":"gramas"},{"name":"Carne, bovina, língua, crua","kcal":215.25,"prot":17.09,"unit":"gramas"},{"name":"Carne, bovina, maminha, crua","kcal":152.77,"prot":20.93,"unit":"gramas"},{"name":"Carne, bovina, maminha, grelhada","kcal":153.09,"prot":30.74,"unit":"gramas"},{"name":"Carne, bovina, miolo de alcatra, sem gordura, cru","kcal":162.87,"prot":21.61,"unit":"gramas"},{"name":"Carne, bovina, miolo de alcatra, sem gordura, grelhado","kcal":241.36,"prot":31.93,"unit":"gramas"},{"name":"Carne, bovina, músculo, sem gordura, cozido","kcal":193.8,"prot":31.23,"unit":"gramas"},{"name":"Carne, bovina, músculo, sem gordura, cru","kcal":141.58,"prot":21.56,"unit":"gramas"},{"name":"Carne, bovina, paleta, com gordura, crua","kcal":158.71,"prot":21.41,"unit":"gramas"},{"name":"Carne, bovina, paleta, sem gordura, cozida","kcal":193.65,"prot":29.72,"unit":"gramas"},{"name":"Carne, bovina, paleta, sem gordura, crua","kcal":140.94,"prot":21.03,"unit":"gramas"},{"name":"Carne, bovina, patinho, sem gordura, cru","kcal":133.47,"prot":21.72,"unit":"gramas"},{"name":"Carne, bovina, patinho, sem gordura, grelhado","kcal":219.26,"prot":35.9,"unit":"gramas"},{"name":"Carne, bovina, peito, sem gordura, cozido","kcal":338.47,"prot":22.25,"unit":"gramas"},{"name":"Carne, bovina, peito, sem gordura, cru","kcal":259.28,"prot":17.56,"unit":"gramas"},{"name":"Carne, bovina, picanha, com gordura, crua","kcal":212.88,"prot":18.82,"unit":"gramas"},{"name":"Carne, bovina, picanha, com gordura, grelhada","kcal":288.77,"prot":26.42,"unit":"gramas"},{"name":"Carne, bovina, picanha, sem gordura, crua","kcal":133.52,"prot":21.25,"unit":"gramas"},{"name":"Carne, bovina, picanha, sem gordura, grelhada","kcal":238.47,"prot":31.91,"unit":"gramas"},{"name":"Carne, bovina, seca, cozida","kcal":312.8,"prot":26.93,"unit":"gramas"},{"name":"Carne, bovina, seca, crua","kcal":312.75,"prot":19.66,"unit":"gramas"},{"name":"Coxinha de frango, frita","kcal":283.05,"prot":9.61,"unit":"gramas"},{"name":"Croquete, de carne, cru","kcal":245.77,"prot":12.04,"unit":"gramas"},{"name":"Croquete, de carne, frito","kcal":346.74,"prot":16.86,"unit":"gramas"},{"name":"Empada de frango, pré-cozida, assada","kcal":358.19,"prot":6.94,"unit":"gramas"},{"name":"Empada, de frango, pré-cozida","kcal":377.48,"prot":7.34,"unit":"gramas"},{"name":"Frango, asa, com pele, crua","kcal":213.19,"prot":18.1,"unit":"gramas"},{"name":"Frango, caipira, inteiro, com pele, cozido","kcal":242.89,"prot":23.88,"unit":"gramas"},{"name":"Frango, caipira, inteiro, sem pele, cozido","kcal":195.76,"prot":29.57,"unit":"gramas"},{"name":"Frango, coração, cru","kcal":221.5,"prot":12.58,"unit":"gramas"},{"name":"Frango, coração, grelhado","kcal":207.27,"prot":22.44,"unit":"gramas"},{"name":"Frango, coxa, com pele, assada","kcal":215.12,"prot":28.49,"unit":"gramas"},{"name":"Frango, coxa, com pele, crua","kcal":161.47,"prot":17.09,"unit":"gramas"},{"name":"Frango, coxa, sem pele, cozida","kcal":167.43,"prot":26.86,"unit":"gramas"},{"name":"Frango, coxa, sem pele, crua","kcal":119.95,"prot":17.81,"unit":"gramas"},{"name":"Frango, fígado, cru","kcal":106.48,"prot":17.59,"unit":"gramas"},{"name":"Frango, filé, à milanesa","kcal":220.87,"prot":28.46,"unit":"gramas"},{"name":"Frango, inteiro, com pele, cru","kcal":226.32,"prot":16.44,"unit":"gramas"},{"name":"Frango, inteiro, sem pele, assado","kcal":187.34,"prot":28.02,"unit":"gramas"},{"name":"Frango, inteiro, sem pele, cozido","kcal":170.39,"prot":24.99,"unit":"gramas"},{"name":"Frango, inteiro, sem pele, cru","kcal":129.1,"prot":20.59,"unit":"gramas"},{"name":"Frango, peito, com pele, assado","kcal":211.68,"prot":33.42,"unit":"gramas"},{"name":"Frango, peito, com pele, cru","kcal":149.47,"prot":20.78,"unit":"gramas"},{"name":"Frango, peito, sem pele, cozido","kcal":162.87,"prot":31.47,"unit":"gramas"},{"name":"Frango, peito, sem pele, cru","kcal":119.16,"prot":21.53,"unit":"gramas"},{"name":"Frango, peito, sem pele, grelhado","kcal":159.19,"prot":32.03,"unit":"gramas"},{"name":"Frango, sobrecoxa, com pele, assada","kcal":259.6,"prot":28.7,"unit":"gramas"},{"name":"Frango, sobrecoxa, com pele, crua","kcal":254.53,"prot":15.46,"unit":"gramas"},{"name":"Frango, sobrecoxa, sem pele, assada","kcal":232.88,"prot":29.18,"unit":"gramas"},{"name":"Frango, sobrecoxa, sem pele, crua","kcal":161.8,"prot":17.57,"unit":"gramas"},{"name":"Hambúrguer, bovino, cru","kcal":214.84,"prot":13.16,"unit":"gramas"},{"name":"Hambúrguer, bovino, frito","kcal":258.28,"prot":19.97,"unit":"gramas"},{"name":"Hambúrguer, bovino, grelhado","kcal":209.83,"prot":13.16,"unit":"gramas"},{"name":"Lingüiça, frango, crua","kcal":218.11,"prot":14.24,"unit":"gramas"},{"name":"Lingüiça, frango, frita","kcal":245.46,"prot":18.32,"unit":"gramas"},{"name":"Lingüiça, frango, grelhada","kcal":243.66,"prot":18.19,"unit":"gramas"},{"name":"Lingüiça, porco, crua","kcal":227.2,"prot":16.06,"unit":"gramas"},{"name":"Lingüiça, porco, frita","kcal":279.54,"prot":20.45,"unit":"gramas"},{"name":"Lingüiça, porco, grelhada","kcal":296.49,"prot":23.17,"unit":"gramas"},{"name":"Mortadela","kcal":268.82,"prot":11.95,"unit":"gramas"},{"name":"Peru, congelado, assado","kcal":163.07,"prot":26.2,"unit":"gramas"},{"name":"Peru, congelado, cru","kcal":93.72,"prot":18.08,"unit":"gramas"},{"name":"Porco, bisteca, crua","kcal":164.12,"prot":21.5,"unit":"gramas"},{"name":"Porco, bisteca, frita","kcal":311.17,"prot":33.75,"unit":"gramas"},{"name":"Porco, bisteca, grelhada","kcal":280.08,"prot":28.89,"unit":"gramas"},{"name":"Porco, costela, assada","kcal":402.17,"prot":30.22,"unit":"gramas"},{"name":"Porco, costela, crua","kcal":255.61,"prot":18.0,"unit":"gramas"},{"name":"Porco, lombo, assado","kcal":210.23,"prot":35.73,"unit":"gramas"},{"name":"Porco, lombo, cru","kcal":175.63,"prot":22.6,"unit":"gramas"},{"name":"Porco, orelha, salgada, crua","kcal":258.49,"prot":18.52,"unit":"gramas"},{"name":"Porco, pernil, assado","kcal":262.26,"prot":32.13,"unit":"gramas"},{"name":"Porco, pernil, cru","kcal":186.06,"prot":20.12,"unit":"gramas"},{"name":"Porco, rabo, salgado, cru","kcal":377.42,"prot":15.58,"unit":"gramas"},{"name":"Presunto, com capa de gordura","kcal":127.85,"prot":14.37,"unit":"gramas"},{"name":"Presunto, sem capa de gordura","kcal":93.74,"prot":14.29,"unit":"gramas"},{"name":"Quibe, assado","kcal":136.23,"prot":14.59,"unit":"gramas"},{"name":"Quibe, cru","kcal":109.49,"prot":12.35,"unit":"gramas"},{"name":"Quibe, frito","kcal":253.83,"prot":14.89,"unit":"gramas"},{"name":"Salame","kcal":397.84,"prot":25.81,"unit":"gramas"},{"name":"Toucinho, cru","kcal":592.53,"prot":11.48,"unit":"gramas"},{"name":"Toucinho, frito","kcal":696.56,"prot":27.28,"unit":"gramas"},{"name":"Bebida láctea, pêssego","kcal":55.16,"prot":2.13,"unit":"gramas"},{"name":"Creme de Leite","kcal":221.48,"prot":1.51,"unit":"gramas"},{"name":"Iogurte, natural","kcal":51.49,"prot":4.06,"unit":"gramas"},{"name":"Iogurte, natural, desnatado","kcal":41.49,"prot":3.83,"unit":"gramas"},{"name":"Iogurte, sabor abacaxi","kcal":0.0,"prot":0.0,"unit":"gramas"},{"name":"Iogurte, sabor morango","kcal":69.57,"prot":2.71,"unit":"gramas"},{"name":"Iogurte, sabor pêssego","kcal":67.85,"prot":2.53,"unit":"gramas"},{"name":"Leite, condensado","kcal":312.57,"prot":7.67,"unit":"gramas"},{"name":"Leite, de cabra","kcal":66.42,"prot":3.07,"unit":"gramas"},{"name":"Leite, de vaca, achocolatado","kcal":82.82,"prot":2.1,"unit":"gramas"},{"name":"Leite, de vaca, desnatado, pó","kcal":361.61,"prot":34.69,"unit":"gramas"},{"name":"Leite, de vaca, desnatado, UHT","kcal":0.0,"prot":0.0,"unit":"gramas"},{"name":"Leite, de vaca, integral","kcal":0.0,"prot":0.0,"unit":"gramas"},{"name":"Leite, de vaca, integral, pó","kcal":496.65,"prot":25.42,"unit":"gramas"},{"name":"Leite, fermentado","kcal":69.62,"prot":1.89,"unit":"gramas"},{"name":"Queijo, minas, frescal","kcal":264.27,"prot":17.41,"unit":"gramas"},{"name":"Queijo, minas, meia cura","kcal":320.72,"prot":21.21,"unit":"gramas"},{"name":"Queijo, mozarela","kcal":329.87,"prot":22.65,"unit":"gramas"},{"name":"Queijo, parmesão","kcal":452.96,"prot":35.55,"unit":"gramas"},{"name":"Queijo, pasteurizado","kcal":303.08,"prot":9.36,"unit":"gramas"},{"name":"Queijo, petit suisse, morango","kcal":121.11,"prot":5.79,"unit":"gramas"},{"name":"Queijo, prato","kcal":359.88,"prot":22.66,"unit":"gramas"},{"name":"Queijo, requeijão, cremoso","kcal":256.58,"prot":9.63,"unit":"gramas"},{"name":"Queijo, ricota","kcal":139.73,"prot":12.6,"unit":"gramas"},{"name":"Bebida isotônica, sabores variados","kcal":25.61,"prot":0.0,"unit":"gramas"},{"name":"Café, infusão 10%","kcal":9.07,"prot":0.71,"unit":"gramas"},{"name":"Cana, aguardente 1","kcal":215.66,"prot":0.0,"unit":"gramas"},{"name":"Cana, caldo de","kcal":65.34,"prot":0.0,"unit":"gramas"},{"name":"Cerveja, pilsen 2","kcal":40.72,"prot":0.56,"unit":"gramas"},{"name":"Chá, erva-doce, infusão 5%","kcal":1.4,"prot":0.0,"unit":"gramas"},{"name":"Chá, mate, infusão 5%","kcal":2.73,"prot":0.0,"unit":"gramas"},{"name":"Chá, preto, infusão 5%","kcal":2.25,"prot":0.0,"unit":"gramas"},{"name":"Coco, água de","kcal":21.51,"prot":0.0,"unit":"gramas"},{"name":"Refrigerante, tipo água tônica","kcal":30.78,"prot":0.0,"unit":"gramas"},{"name":"Refrigerante, tipo cola","kcal":33.51,"prot":0.0,"unit":"gramas"},{"name":"Refrigerante, tipo guaraná","kcal":38.7,"prot":0.0,"unit":"gramas"},{"name":"Refrigerante, tipo laranja","kcal":45.63,"prot":0.0,"unit":"gramas"},{"name":"Refrigerante, tipo limão","kcal":39.72,"prot":0.0,"unit":"gramas"},{"name":"Omelete, de queijo","kcal":268.01,"prot":15.57,"unit":"gramas"},{"name":"Ovo, de codorna, inteiro, cru","kcal":176.89,"prot":13.69,"unit":"gramas"},{"name":"Ovo, de galinha, clara, cozida/10minutos","kcal":59.44,"prot":13.45,"unit":"gramas"},{"name":"Ovo, de galinha, gema, cozida/10minutos","kcal":352.67,"prot":15.9,"unit":"gramas"},{"name":"Ovo, de galinha, inteiro, cozido/10minutos","kcal":145.7,"prot":13.29,"unit":"gramas"},{"name":"Ovo, de galinha, inteiro, cru","kcal":143.11,"prot":13.03,"unit":"gramas"},{"name":"Ovo, de galinha, inteiro, frito","kcal":240.19,"prot":15.62,"unit":"gramas"},{"name":"Achocolatado, pó","kcal":401.02,"prot":4.2,"unit":"gramas"},{"name":"Açúcar, cristal","kcal":386.85,"prot":0.32,"unit":"gramas"},{"name":"Açúcar, mascavo","kcal":368.55,"prot":0.76,"unit":"gramas"},{"name":"Açúcar, refinado","kcal":386.57,"prot":0.32,"unit":"gramas"},{"name":"Chocolate, ao leite","kcal":539.59,"prot":7.22,"unit":"gramas"},{"name":"Chocolate, ao leite, com castanha do Pará","kcal":558.88,"prot":7.41,"unit":"gramas"},{"name":"Chocolate, ao leite, dietético","kcal":556.82,"prot":6.9,"unit":"gramas"},{"name":"Chocolate, meio amargo","kcal":474.92,"prot":4.86,"unit":"gramas"},{"name":"Cocada branca","kcal":448.85,"prot":1.12,"unit":"gramas"},{"name":"Doce, de abóbora, cremoso","kcal":198.94,"prot":0.92,"unit":"gramas"},{"name":"Doce, de leite, cremoso","kcal":306.31,"prot":5.48,"unit":"gramas"},{"name":"Geléia, mocotó, natural","kcal":106.09,"prot":2.12,"unit":"gramas"},{"name":"Glicose de milho","kcal":292.12,"prot":0.0,"unit":"gramas"},{"name":"Maria mole","kcal":301.24,"prot":3.81,"unit":"gramas"},{"name":"Maria mole, coco queimado","kcal":306.63,"prot":3.93,"unit":"gramas"},{"name":"Marmelada","kcal":257.24,"prot":0.4,"unit":"gramas"},{"name":"Mel, de abelha","kcal":309.24,"prot":0.0,"unit":"gramas"},{"name":"Melado","kcal":296.51,"prot":0.0,"unit":"gramas"},{"name":"Quindim","kcal":411.35,"prot":4.74,"unit":"gramas"},{"name":"Rapadura","kcal":351.96,"prot":0.99,"unit":"gramas"},{"name":"Café, pó, torrado","kcal":418.62,"prot":14.7,"unit":"gramas"},{"name":"Capuccino, pó","kcal":417.41,"prot":11.31,"unit":"gramas"},{"name":"Fermento em pó, químico","kcal":89.72,"prot":0.48,"unit":"gramas"},{"name":"Fermento, biológico, levedura, tablete","kcal":89.79,"prot":16.96,"unit":"gramas"},{"name":"Gelatina, sabores variados, pó","kcal":380.22,"prot":8.89,"unit":"gramas"},{"name":"Sal, dietético","kcal":0.0,"prot":0.0,"unit":"gramas"},{"name":"Sal, grosso","kcal":0.0,"prot":0.0,"unit":"gramas"},{"name":"Shoyu","kcal":60.93,"prot":3.31,"unit":"gramas"},{"name":"Tempero a base de sal","kcal":21.33,"prot":2.67,"unit":"gramas"},{"name":"Azeitona, preta, conserva","kcal":194.15,"prot":1.16,"unit":"gramas"},{"name":"Azeitona, verde, conserva","kcal":136.94,"prot":0.95,"unit":"gramas"},{"name":"Chantilly, spray, com gordura vegetal","kcal":314.96,"prot":0.53,"unit":"gramas"},{"name":"Leite, de coco","kcal":166.16,"prot":1.01,"unit":"gramas"},{"name":"Maionese, tradicional com ovos","kcal":302.15,"prot":0.58,"unit":"gramas"},{"name":"Acarajé","kcal":289.21,"prot":8.35,"unit":"gramas"},{"name":"Arroz carreteiro","kcal":153.77,"prot":10.83,"unit":"gramas"},{"name":"Baião de dois, arroz e feijão-de-corda","kcal":135.68,"prot":6.24,"unit":"gramas"},{"name":"Barreado","kcal":164.98,"prot":18.27,"unit":"gramas"},{"name":"Bife à cavalo, com contra filé","kcal":291.23,"prot":23.66,"unit":"gramas"},{"name":"Bolinho de arroz","kcal":273.51,"prot":8.04,"unit":"gramas"},{"name":"Camarão à baiana","kcal":100.78,"prot":7.94,"unit":"gramas"},{"name":"Charuto, de repolho","kcal":78.23,"prot":6.78,"unit":"gramas"},{"name":"Cuscuz, de milho, cozido com sal","kcal":113.46,"prot":2.16,"unit":"gramas"},{"name":"Cuscuz, paulista","kcal":142.12,"prot":2.56,"unit":"gramas"},{"name":"Cuxá, molho","kcal":80.09,"prot":5.64,"unit":"gramas"},{"name":"Dobradinha","kcal":124.5,"prot":19.77,"unit":"gramas"},{"name":"Estrogonofe de carne","kcal":173.14,"prot":15.03,"unit":"gramas"},{"name":"Estrogonofe de frango","kcal":156.81,"prot":17.55,"unit":"gramas"},{"name":"Feijão tropeiro mineiro","kcal":151.56,"prot":10.17,"unit":"gramas"},{"name":"L","kcal":116.93,"prot":8.67,"unit":"gramas"},{"name":"Frango, com açafrão","kcal":112.78,"prot":9.7,"unit":"gramas"},{"name":"Macarrão, molho bolognesa","kcal":119.53,"prot":4.93,"unit":"gramas"},{"name":"Maniçoba","kcal":134.22,"prot":9.96,"unit":"gramas"},{"name":"Quibebe","kcal":86.35,"prot":8.56,"unit":"gramas"},{"name":"Salada, de legumes, com maionese","kcal":96.1,"prot":1.05,"unit":"gramas"},{"name":"Salada, de legumes, cozida no vapor","kcal":35.41,"prot":2.01,"unit":"gramas"},{"name":"Salpicão, de frango","kcal":147.86,"prot":13.93,"unit":"gramas"},{"name":"Sarapatel","kcal":122.98,"prot":18.47,"unit":"gramas"},{"name":"Tabule","kcal":57.45,"prot":2.05,"unit":"gramas"},{"name":"Tacacá","kcal":46.89,"prot":6.96,"unit":"gramas"},{"name":"Tapioca, com manteiga","kcal":347.83,"prot":0.09,"unit":"gramas"},{"name":"Tucupi, com pimenta-de-cheiro","kcal":27.18,"prot":2.06,"unit":"gramas"},{"name":"Vaca atolada","kcal":144.9,"prot":5.12,"unit":"gramas"},{"name":"Vatapá","kcal":254.89,"prot":6.0,"unit":"gramas"},{"name":"Virado à paulista","kcal":306.95,"prot":10.18,"unit":"gramas"},{"name":"Yakisoba","kcal":112.8,"prot":7.52,"unit":"gramas"},{"name":"Amendoim, grão, cru","kcal":544.05,"prot":27.19,"unit":"gramas"},{"name":"Amendoim, torrado, salgado","kcal":605.78,"prot":22.48,"unit":"gramas"},{"name":"Ervilha, em vagem","kcal":88.09,"prot":7.45,"unit":"gramas"},{"name":"Ervilha, enlatada, drenada","kcal":73.84,"prot":4.6,"unit":"gramas"},{"name":"Feijão, carioca, cozido","kcal":76.42,"prot":4.78,"unit":"gramas"},{"name":"Feijão, carioca, cru","kcal":329.03,"prot":19.98,"unit":"gramas"},{"name":"Feijão, fradinho, cozido","kcal":78.01,"prot":5.09,"unit":"gramas"},{"name":"Feijão, fradinho, cru","kcal":339.16,"prot":20.21,"unit":"gramas"},{"name":"Feijão, jalo, cozido","kcal":92.74,"prot":6.14,"unit":"gramas"},{"name":"Feijão, jalo, cru","kcal":327.91,"prot":20.1,"unit":"gramas"},{"name":"Feijão, preto, cozido","kcal":77.03,"prot":4.48,"unit":"gramas"},{"name":"Feijão, preto, cru","kcal":323.57,"prot":21.34,"unit":"gramas"},{"name":"Feijão, rajado, cozido","kcal":84.7,"prot":5.54,"unit":"gramas"},{"name":"Feijão, rajado, cru","kcal":325.84,"prot":17.27,"unit":"gramas"},{"name":"Feijão, rosinha, cozido","kcal":67.87,"prot":4.54,"unit":"gramas"},{"name":"Feijão, rosinha, cru","kcal":336.96,"prot":20.92,"unit":"gramas"},{"name":"Feijão, roxo, cozido","kcal":76.89,"prot":5.72,"unit":"gramas"},{"name":"Feijão, roxo, cru","kcal":331.41,"prot":22.17,"unit":"gramas"},{"name":"Grão-de-bico, cru","kcal":354.7,"prot":21.23,"unit":"gramas"},{"name":"Guandu, cru","kcal":344.13,"prot":18.96,"unit":"gramas"},{"name":"Lentilha, cozida","kcal":92.64,"prot":6.31,"unit":"gramas"},{"name":"Lentilha, crua","kcal":339.14,"prot":23.15,"unit":"gramas"},{"name":"Paçoca, amendoim","kcal":486.93,"prot":16.0,"unit":"gramas"},{"name":"Pé-de-moleque, amendoim","kcal":503.19,"prot":13.16,"unit":"gramas"},{"name":"Soja, farinha","kcal":403.96,"prot":36.03,"unit":"gramas"},{"name":"Soja, extrato solúvel, natural, fluido","kcal":39.1,"prot":2.38,"unit":"gramas"},{"name":"Soja, extrato solúvel, pó","kcal":458.9,"prot":35.69,"unit":"gramas"},{"name":"Soja, queijo (tofu)","kcal":64.49,"prot":6.55,"unit":"gramas"},{"name":"Tremoço, cru","kcal":381.28,"prot":33.58,"unit":"gramas"},{"name":"Tremoço, em conserva","kcal":120.64,"prot":11.11,"unit":"gramas"},{"name":"Amêndoa, torrada, salgada","kcal":580.75,"prot":18.55,"unit":"gramas"},{"name":"Castanha-de-caju, torrada, salgada","kcal":570.17,"prot":18.51,"unit":"gramas"},{"name":"Castanha-do-Brasil, crua","kcal":642.96,"prot":14.54,"unit":"gramas"},{"name":"Coco, cru","kcal":406.49,"prot":3.69,"unit":"gramas"},{"name":"Coco,  verde, cru","kcal":0.0,"prot":0.0,"unit":"gramas"},{"name":"Farinha, de mesocarpo de babaçu, crua","kcal":328.77,"prot":1.41,"unit":"gramas"},{"name":"Gergelim, semente","kcal":583.55,"prot":21.16,"unit":"gramas"},{"name":"Linhaça, semente","kcal":495.1,"prot":14.08,"unit":"gramas"},{"name":"Pinhão, cozido","kcal":174.37,"prot":2.98,"unit":"gramas"},{"name":"Pupunha, cozida","kcal":218.53,"prot":2.52,"unit":"gramas"},{"name":"Noz, crua","kcal":620.06,"prot":13.97,"unit":"gramas"}];
+
+/* =========================================================
+   DADOS
+========================================================= */
+
+let customFoods = [];
+try { customFoods = JSON.parse(localStorage.getItem('customFoodsV1') || '[]') || []; }
+catch(e) { console.warn('Alimentos personalizados corrompidos; iniciando vazio.', e); }
+
+let db = { diet:[], weight:[], training:[] };
+try {
+    const savedDB = JSON.parse(localStorage.getItem('shapeMasterDBv7') || 'null');
+    if (savedDB && typeof savedDB === 'object') db = savedDB;
+} catch(e) {
+    console.warn('Banco local corrompido; iniciando banco vazio.', e);
+}
+
+if (!db.diet) db.diet = [];
+if (!db.weight) db.weight = [];
+if (!db.training) db.training = [];
+
+let META_K =
+    parseFloat(localStorage.getItem('metaK')) || 2800;
+
+let META_P =
+    parseFloat(localStorage.getItem('metaP')) || 170;
+
+let selectedFood = null;
+let weightChart = null;
+
+let currentTraining = null;
+
+const TRAINING_DRAFT_KEY = 'trainingDraftV1';
+const QUICK_MEALS_KEY = 'quickMealsV1';
+const RECENT_FOODS_KEY = 'recentFoodsV1';
+const AUTOBACKUP_KEY = 'shapeMasterAutoBackupV1';
+const PHASES_KEY = 'shapePhasesV1';
+let quickMeals = [];
+let recentFoods = [];
+let phases = [];
+let currentPhaseId = null;
+try { quickMeals = JSON.parse(localStorage.getItem(QUICK_MEALS_KEY) || '[]') || []; } catch(e) {}
+try { recentFoods = JSON.parse(localStorage.getItem(RECENT_FOODS_KEY) || '[]') || []; } catch(e) {}
+try { phases = JSON.parse(localStorage.getItem(PHASES_KEY) || '[]') || []; } catch(e) {}
+try { currentPhaseId = localStorage.getItem('currentPhaseIdV1') || null; } catch(e) {}
+function touchAutoBackup(){
+  try {
+    const snapshot={db,customFoods,META_K,META_P,savedAt:new Date().toISOString()};
+    localStorage.setItem(AUTOBACKUP_KEY,JSON.stringify(snapshot));
+    const el=document.getElementById('autosaveStatus');
+    if(el){ const d=new Date(snapshot.savedAt); el.innerHTML=`<span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg></span><span>Salvamento automático ativo. <strong>Último: ${d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}</strong></span>`; }
+  } catch(e) { console.warn('Falha no backup local automático',e); }
+}
+function saveQuickMeals(){ localStorage.setItem(QUICK_MEALS_KEY,JSON.stringify(quickMeals)); }
+function saveRecentFoods(){ localStorage.setItem(RECENT_FOODS_KEY,JSON.stringify(recentFoods)); }
+
+/* =========================================================
+   FUNÇÕES GERAIS
+========================================================= */
+
+function getToday() {
+
+    const d = new Date();
+
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+}
+
+function saveDB() {
+
+    localStorage.setItem(
+        'shapeMasterDBv7',
+        JSON.stringify(db)
+    );
+    touchAutoBackup();
+
+}
+
+function saveCustomFoods() {
+
+    localStorage.setItem(
+        'customFoodsV1',
+        JSON.stringify(customFoods)
+    );
+    touchAutoBackup();
+
+}
+
+function cleanFoodName(name) {
+    let n = String(name || '')
+        .replace(/\s*,\s*/g, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+
+    // Nomes mais naturais para busca no dia a dia.
+    n = n.replace(/^Arroz tipo 1 cozido$/i, 'Arroz branco cozido');
+    n = n.replace(/^Arroz polido cozido$/i, 'Arroz branco cozido');
+    n = n.replace(/^Arroz branco cozido$/i, 'Arroz branco cozido');
+    n = n.replace(/^Arroz integral cozido$/i, 'Arroz integral cozido');
+
+    n = n.replace(/^Feijão carioca cozido$/i, 'Feijão carioca cozido');
+    n = n.replace(/^Feijão preto cozido$/i, 'Feijão preto cozido');
+
+    n = n.replace(/^Biscoito doce recheado(?: com)? chocolate$/i, 'Biscoito recheado com chocolate');
+    n = n.replace(/^Biscoito recheado chocolate$/i, 'Biscoito recheado com chocolate');
+    n = n.replace(/^Biscoito doce recheado$/i, 'Biscoito recheado');
+    n = n.replace(/^Biscoito doce wafer$/i, 'Biscoito wafer');
+
+    n = n.replace(/^Bolo pronto (chocolate|coco|milho|aipim)$/i, 'Bolo pronto de $1');
+
+    // Retira especificações técnicas que não ajudam na busca.
+    n = n.replace(/\btipo\s+\d+\b/gi, '').replace(/\s{2,}/g, ' ').trim();
+
+    // Mantém "farinha de ..." legível.
+    n = n.replace(/^Farinha de (.+)$/i, 'Farinha de $1');
+
+    // Padroniza carnes/frango sem alterar o preparo.
+    n = n.replace(/^Frango inteiro assado$/i, 'Frango inteiro assado');
+    n = n.replace(/^Frango inteiro cozido$/i, 'Frango inteiro cozido');
+    n = n.replace(/^Coxa de frango cozida$/i, 'Coxa de frango cozida');
+    n = n.replace(/^Coxa de frango assada$/i, 'Coxa de frango assada');
+    n = n.replace(/^Peito de frango cozido$/i, 'Peito de frango cozido');
+    n = n.replace(/^Peito de frango assado$/i, 'Peito de frango assado');
+
+    return n.replace(/\s{2,}/g, ' ').trim();
+}
+
+const foodsDBClean = foodsDB
+    // O usuário não utiliza alimentos crus na busca do app.
+    .filter(food => !/\bcru(?:a|o|as|os)?\b/i.test(food.name))
+    .map(food => ({...food, name:cleanFoodName(food.name)}));
+
+function getAllFoods() {
+    return foodsDBClean.concat(customFoods);
+}
+
+function showNotification(text) {
+
+    const notif =
+        document.getElementById('notification');
+
+    notif.textContent = text;
+    notif.style.display = 'block';
+
+    clearTimeout(window.notificationTimer);
+
+    window.notificationTimer =
+        setTimeout(() => {
+            notif.style.display = 'none';
+        },2200);
+
+}
+
+let appNavigationReady = false;
+let handlingBrowserBack = false;
+
+function showTab(tab, fromBrowserHistory = false) {
+
+    if (!fromBrowserHistory && appNavigationReady) {
+        const current = history.state && history.state.shapeTab;
+        if (current !== tab) {
+            history.pushState({ shapeTab: tab }, '', window.location.href.split('#')[0] + '#' + tab);
+        }
+    }
+
+    document
+        .querySelectorAll('.tab')
+        .forEach(t => t.classList.remove('active'));
+
+    document
+        .getElementById(tab)
+        .classList.add('active');
+
+    window.scrollTo(0, 0);
+
+    if (tab === 'dash') {
+        renderDashboard();
+    }
+
+    if (tab === 'diet') {
+        filterFoods();
+        renderMealsToday();
+        renderCustomFoodsList();
+        renderQuickMeals();
+        renderNextMealSuggestion();
+    }
+
+    if (tab === 'training') {
+        initTrainingDate();
+    }
+
+    if (tab === 'data') {
+        renderEvolutionOverview();
+        renderPersonalRecords();
+        renderWeightChart();
+        renderWeightHistory();
+        renderHistory();
+        renderTrainingHistory();
+    }
+
+    if (tab === 'history') {
+        renderHistory();
+    }
+
+}
+
+/* =========================================================
+   DIETA
+========================================================= */
+
+/* =========================================================
+   NAVEGAÇÃO INTERNA / GESTO DE VOLTAR DO ANDROID
+========================================================= */
+
+function initAppNavigation() {
+    const initialTab = document.querySelector('.tab.active')?.id || 'dash';
+
+    // Cria um estado real do navegador para cada aba.
+    // Assim o gesto de voltar do Android retorna para a aba anterior
+    // em vez de navegar para uma página vazia/estado anterior do PWA.
+    history.replaceState({ shapeTab: initialTab }, '', window.location.href.split('#')[0] + '#' + initialTab);
+    appNavigationReady = true;
+
+    window.addEventListener('popstate', event => {
+        const tab = event.state && event.state.shapeTab;
+
+        if (tab) {
+            handlingBrowserBack = true;
+            showTab(tab, true);
+            handlingBrowserBack = false;
+            return;
+        }
+
+        // Fallback: se o Android voltar sem estado do app, mantém o usuário
+        // dentro da Home em vez de deixar o PWA cair em uma tela vazia.
+        history.replaceState({ shapeTab: 'dash' }, '', window.location.href.split('#')[0] + '#dash');
+        handlingBrowserBack = true;
+        showTab('dash', true);
+        handlingBrowserBack = false;
+    });
+}
+
+function filterFoods() {
+
+    const input = document.getElementById('foodSearch');
+    if (!input) return;
+
+    const query = input.value.toLowerCase().trim();
+    const container = document.getElementById('foodResults');
+    const count = document.getElementById('foodCount');
+    const allFoods = getAllFoods();
+
+    container.innerHTML = '';
+
+    if (!query) {
+        count.textContent = `${allFoods.length} opções disponíveis`;
+        container.innerHTML = `<div class="food-search-empty"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg></span><strong>Digite um alimento para buscar</strong><small>Ex.: arroz, frango, carne, pão</small></div>`;
+        return;
+    }
+
+    const results = allFoods.filter(food =>
+        food.name.toLowerCase().includes(query)
+    );
+
+    count.textContent = `${results.length} ${results.length === 1 ? 'resultado' : 'resultados'}`;
+
+    if (!results.length) {
+        container.innerHTML = `<div class="food-search-empty"><strong>Nenhum alimento encontrado</strong><small>Tente outro termo de busca.</small></div>`;
+        return;
+    }
+
+    results.forEach(food => {
+        const div = document.createElement('div');
+        div.className = 'food-row';
+        const tag = food.custom ? ' <span class="food-custom-mark" aria-label="Personalizado"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg></span>' : '';
+        div.innerHTML = `<div><strong>${food.name}${tag}</strong><br><span class="macros-small">${food.kcal} kcal • ${food.prot}g prot / ${food.unit}</span></div>`;
+        div.onclick = () => selectFood(food);
+        container.appendChild(div);
+    });
+}
+
+function renderRecentFoods(){
+  const c=document.getElementById('recentFoods'); if(!c) return;
+  if(!recentFoods.length){ c.innerHTML=''; return; }
+  c.innerHTML=`<div class="recent-foods-head"><span>Usados recentemente</span></div><div class="recent-foods-list">${recentFoods.slice(0,8).map((f,i)=>`<button type="button" class="recent-food" onclick="selectRecentFood(${i})"><strong>${f.name}</strong><small>${f.kcal} kcal • ${f.prot}g prot / ${f.unit}</small></button>`).join('')}</div>`;
+}
+function selectRecentFood(index){ const r=recentFoods[index]; if(!r) return; const food=getAllFoods().find(f=>f.name===r.name && !!f.custom===!!r.custom) || r; selectFood(food); }
+
+function selectFood(food) {
+
+    selectedFood = food;
+    recentFoods = [{name:food.name,kcal:food.kcal,prot:food.prot,unit:food.unit,custom:!!food.custom}, ...recentFoods.filter(f => !(f.name===food.name && !!f.custom===!!food.custom))].slice(0,12);
+    saveRecentFoods();
+    renderRecentFoods();
+
+    document.getElementById('foodNameSelected')
+        .textContent = food.name;
+
+    document.getElementById('foodInfoSelected')
+        .textContent =
+        `${food.kcal} kcal • ${food.prot}g proteína por ${food.unit}`;
+
+    const perGram =
+        food.unit === 'gramas' ||
+        food.unit === '100g';
+
+    document.getElementById('unitHint')
+        .textContent =
+        perGram
+        ? 'Digite a quantidade em gramas'
+        : `Digite a quantidade em ${food.unit}`;
+
+    document.getElementById('qtyBox')
+        .style.display = 'block';
+
+    document.getElementById('qtyInput')
+        .value = '';
+
+    document.getElementById('qtyInput')
+        .focus();
+
+}
+
+function confirmAddFood() {
+
+    if (!selectedFood) return;
+
+    const qty =
+        parseFloat(
+            document.getElementById('qtyInput').value
+        );
+
+    if (!qty || qty <= 0) {
+
+        showNotification(
+            'Digite uma quantidade válida!'
+        );
+
+        return;
+    }
+
+    const perGram =
+        selectedFood.unit === 'gramas' ||
+        selectedFood.unit === '100g';
+
+    const finalKcal =
+        perGram
+        ? Math.round((selectedFood.kcal / 100) * qty)
+        : Math.round(selectedFood.kcal * qty);
+
+    const finalProt =
+        perGram
+        ? (selectedFood.prot / 100) * qty
+        : selectedFood.prot * qty;
+
+    db.diet.push({
+
+        id:Date.now(),
+
+        name:selectedFood.name,
+
+        qty:qty,
+
+        unit:selectedFood.unit,
+
+        k:finalKcal,
+
+        p:parseFloat(finalProt.toFixed(1)),
+
+        d:getToday()
+
+    });
+
+    saveDB();
+
+    renderDashboard();
+    renderMealsToday();
+
+    cancelAddFood();
+
+    showNotification(
+        `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> ${selectedFood?.name || 'Alimento'} adicionado`
+    );
+
+}
+
+function cancelAddFood() {
+
+    selectedFood = null;
+
+    document.getElementById('qtyBox')
+        .style.display = 'none';
+
+    document.getElementById('qtyInput')
+        .value = '';
+
+}
+
+/* =========================================================
+   ALIMENTOS PERSONALIZADOS
+========================================================= */
+
+function toggleDietHistory(){const p=document.getElementById('dietHistoryPanel'),b=document.getElementById('dietHistoryToggle');if(!p||!b)return;p.classList.toggle('open');b.classList.toggle('open');}
+function toggleWeightHistory(){const p=document.getElementById('weightHistoryPanel'),b=document.getElementById('weightHistoryToggle');if(!p||!b)return;p.classList.toggle('open');b.classList.toggle('open');}
+function toggleTrainingHistoryPanel(){const p=document.getElementById('trainingHistoryPanel'),b=document.getElementById('trainingHistoryToggle');if(!p||!b)return;p.classList.toggle('open');b.classList.toggle('open');}
+
+function toggleCustomFoodsList() {
+
+    const panel = document.getElementById('customFoodsPanel');
+    const button = document.getElementById('customFoodsToggle');
+
+    if (!panel || !button) return;
+
+    const open = panel.classList.toggle('open');
+    button.classList.toggle('open', open);
+
+}
+
+function toggleCustomFoodBox() {
+
+    const box =
+        document.getElementById('customFoodBox');
+
+    box.style.display =
+        box.style.display === 'none'
+        ? 'block'
+        : 'none';
+
+    if (box.style.display === 'block') {
+
+        document.getElementById('customName').value = '';
+        document.getElementById('customKcal').value = '';
+        document.getElementById('customProt').value = '';
+        document.getElementById('customUnit').value = 'gramas';
+
+        updateCustomLabels();
+
+        document.getElementById('customName')
+            .focus();
+
+    }
+
+}
+
+function updateCustomLabels() {
+
+    const unit =
+        document.getElementById('customUnit').value;
+
+    const perGram =
+        unit === 'gramas';
+
+    document.getElementById('customKcalLabel')
+        .textContent =
+        perGram
+        ? 'Calorias (por 100g)'
+        : `Calorias (por ${unit})`;
+
+    document.getElementById('customProtLabel')
+        .textContent =
+        perGram
+        ? 'Proteína em g (por 100g)'
+        : `Proteína em g (por ${unit})`;
+
+}
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        const unitSelect =
+            document.getElementById('customUnit');
+
+        if (unitSelect) {
+
+            unitSelect.addEventListener(
+                'change',
+                updateCustomLabels
+            );
+
+        }
+
+    }
+);
+
+function saveCustomFood() {
+
+    const name =
+        document.getElementById('customName')
+            .value.trim();
+
+    const unit =
+        document.getElementById('customUnit')
+            .value;
+
+    const kcal =
+        parseFloat(
+            document.getElementById('customKcal')
+                .value
+        );
+
+    const prot =
+        parseFloat(
+            document.getElementById('customProt')
+                .value
+        );
+
+    if (!name)
+        return showNotification(
+            'Digite um nome para o alimento!'
+        );
+
+    if (isNaN(kcal) || kcal < 0)
+        return showNotification(
+            'Digite as calorias corretamente!'
+        );
+
+    if (isNaN(prot) || prot < 0)
+        return showNotification(
+            'Digite a proteína corretamente!'
+        );
+
+    customFoods.push({
+
+        name,
+        kcal,
+        prot,
+        unit,
+        custom:true,
+        id:Date.now()
+
+    });
+
+    saveCustomFoods();
+
+    toggleCustomFoodBox();
+
+    filterFoods();
+    renderCustomFoodsList();
+
+    showNotification(
+        `<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg> ${name} cadastrado!</span>`
+    );
+
+}
+
+function deleteCustomFood(id) {
+
+    customFoods =
+        customFoods.filter(f => f.id !== id);
+
+    saveCustomFoods();
+
+    filterFoods();
+    renderCustomFoodsList();
+
+    showNotification(
+        '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13"/></svg> Alimento removido</span>'
+    );
+
+}
+
+function renderCustomFoodsList() {
+
+    const container =
+        document.getElementById('customFoodsList');
+
+    if (!container) return;
+
+    if (customFoods.length === 0) {
+
+        container.innerHTML =
+            `<p style="text-align:center;color:#666;padding:10px;">
+                Nenhum alimento personalizado ainda.
+            </p>`;
+
+        return;
+    }
+
+    container.innerHTML = '';
+
+    customFoods.forEach(f => {
+
+        const div =
+            document.createElement('div');
+
+        div.className = 'meal';
+
+        div.innerHTML =
+            `<div>
+                <strong><span class="food-custom-mark"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5z"/><path d="M4 7.5 12 11l8-3.5M12 11v9"/></svg></span> ${f.name}</strong><br>
+                <span class="macros-small">
+                    ${f.kcal} kcal • ${f.prot}g proteína / ${f.unit}
+                </span>
+            </div>`;
+
+        const btn =
+            document.createElement('button');
+
+        btn.className = 'btn-del';
+        btn.innerHTML = '<svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+        btn.onclick =
+            () => deleteCustomFood(f.id);
+
+        div.appendChild(btn);
+
+        container.appendChild(div);
+
+    });
+
+}
+
+function renderQuickMeals(){const c=document.getElementById('quickMeals');if(!c)return;if(!quickMeals.length){c.innerHTML='<p style="text-align:center;color:#68756d;padding:18px 8px;">Nenhuma refeição rápida salva ainda.</p>';return;}c.innerHTML=quickMeals.map((m,i)=>`<div class="quick-meal"><div class="quick-meal-info"><strong>${m.name}</strong><small>${m.k} kcal • ${m.p.toFixed(1)} g proteína • ${m.items.length} item${m.items.length===1?'':'s'} • usada ${m.useCount||0} vez${(m.useCount||0)===1?'':'es'}</small></div><div class="quick-meal-actions"><button type="button" onclick="addQuickMeal(${i})"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" onclick="deleteQuickMeal(${i})"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div>`).join('');}
+function openQuickMealBuilder(){const c=document.getElementById('quickMealBuilder');if(!c)return;const meals=db.diet.filter(m=>m.d===getToday());if(!meals.length){showNotification('Adicione os alimentos da refeição hoje primeiro!');return;}c.style.display='block';c.innerHTML=`<div class="quick-builder-head"><strong>Nova refeição rápida</strong><button type="button" class="btn-del" onclick="closeQuickMealBuilder()"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><input id="quickMealName" type="text" placeholder="Nome da refeição (ex: Almoço)"><div class="quick-builder-items">${meals.map((m,i)=>`<label class="quick-builder-item"><input type="checkbox" class="quick-builder-check" value="${i}" checked><span><strong>${m.qty}${m.unit==='gramas'||m.unit==='100g'?'g':m.unit} ${m.name}</strong><small>${Number(m.k).toFixed(0)} kcal • ${Number(m.p).toFixed(1)} g proteína</small></span></label>`).join('')}</div><button type="button" onclick="saveQuickMealFromBuilder()"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4M8 16h8"/></svg></span><span>Salvar refeição</span></button>`;c.scrollIntoView({behavior:'smooth',block:'center'});}
+function closeQuickMealBuilder(){const c=document.getElementById('quickMealBuilder');if(c){c.style.display='none';c.innerHTML='';}}
+function saveQuickMealFromBuilder(){const name=document.getElementById('quickMealName')?.value.trim(),checks=[...document.querySelectorAll('.quick-builder-check:checked')],meals=db.diet.filter(m=>m.d===getToday()),selected=checks.map(x=>meals[Number(x.value)]).filter(Boolean);if(!name){showNotification('Dê um nome para a refeição!');return;}if(!selected.length){showNotification('Selecione pelo menos um alimento!');return;}const meal={id:Date.now(),name,k:selected.reduce((a,m)=>a+Number(m.k||0),0),p:selected.reduce((a,m)=>a+Number(m.p||0),0),items:selected.map(m=>({name:m.name,qty:m.qty,unit:m.unit,k:m.k,p:m.p})),useCount:0};quickMeals.unshift(meal);quickMeals=quickMeals.slice(0,12);saveQuickMeals();renderQuickMeals();closeQuickMealBuilder();showNotification('Refeição rápida salva!');}
+function saveTodayAsQuickMeal(){openQuickMealBuilder();}
+function addQuickMeal(index){const meal=quickMeals[index];if(!meal)return;meal.items.forEach((item,n)=>db.diet.push({id:Date.now()+Math.random()+n,name:item.name,qty:item.qty,unit:item.unit,k:item.k,p:item.p,d:getToday()}));meal.useCount=(meal.useCount||0)+1;saveQuickMeals();saveDB();renderDashboard();renderMealsToday();renderQuickMeals();renderNextMealSuggestion();showNotification('Refeição rápida adicionada!');}
+function deleteQuickMeal(index){quickMeals.splice(index,1);saveQuickMeals();renderQuickMeals();renderNextMealSuggestion();}
+function renderNextMealSuggestion(){const c=document.getElementById('nextMealSuggestion');if(!c)return;const today=db.diet.filter(m=>m.d===getToday()),kcalToday=today.reduce((a,m)=>a+Number(m.k||0),0),protToday=today.reduce((a,m)=>a+Number(m.p||0),0),kcalLeft=META_K-kcalToday,protLeft=META_P-protToday;if(kcalLeft<=0&&protLeft<=0){c.innerHTML='<div class="suggestion-done"><strong>Metas do dia praticamente fechadas.</strong><small>Não há necessidade de encaixar outra refeição agora.</small></div>';return;}if(!quickMeals.length){c.innerHTML='<div class="suggestion-empty"><strong>Próxima refeição sugerida</strong><small>Crie suas refeições rápidas para o app sugerir uma opção com base no que você mais usa.</small></div>';return;}const ranked=[...quickMeals].sort((a,b)=>(b.useCount||0)-(a.useCount||0)),fitting=ranked.filter(m=>Number(m.k)<=Math.max(kcalLeft,0)+80&&Number(m.p)<=Math.max(protLeft,0)+20),pick=fitting[0]||ranked[0];c.innerHTML=`<div class="suggestion-card"><div><span class="suggestion-label">PRÓXIMA REFEIÇÃO SUGERIDA</span><strong>${pick.name}</strong><small>${pick.k} kcal • ${pick.p.toFixed(1)} g proteína • faltam ${Math.max(0,Math.round(kcalLeft))} kcal e ${Math.max(0,Math.round(protLeft))} g de proteína</small></div><button type="button" onclick="addQuickMeal(${quickMeals.indexOf(pick)})"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>`;}
+
+function renderMealsToday() {
+
+    const container =
+        document.getElementById('mealsToday');
+
+    const hoje = getToday();
+
+    const todayMeals =
+        db.diet.filter(m => m.d === hoje);
+
+    let html = '';
+
+    todayMeals.forEach(meal => {
+
+        const u =
+            meal.unit === 'gramas' ||
+            meal.unit === '100g'
+            ? 'g'
+            : meal.unit;
+
+        html +=
+            `<div class="meal">
+                <div>
+                    <strong>${meal.qty}${u} ${meal.name}</strong><br>
+                    <span class="macros-small">
+                        ${meal.k} kcal • ${meal.p}g proteína
+                    </span>
+                </div>
+
+                <button
+                    class="btn-del"
+                    onclick="deleteMeal(${meal.id})">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                </button>
+            </div>`;
+
+    });
+
+    container.innerHTML =
+        html ||
+        `<p style="text-align:center;color:#666;padding:30px;">
+            Nenhuma refeição hoje ainda.
+        </p>`;
+
+}
+
+function deleteMeal(id) {
+
+    db.diet =
+        db.diet.filter(m => m.id !== id);
+
+    saveDB();
+
+    renderDashboard();
+    renderMealsToday();
+
+    showNotification(
+        '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13"/></svg> Refeição removida</span>'
+    );
+
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard() {
+
+    const hoje = getToday();
+
+    const todayMeals =
+        db.diet.filter(m => m.d === hoje);
+
+    const totalK =
+        todayMeals.reduce(
+            (sum,m) => sum + Number(m.k || 0),
+            0
+        );
+
+    const totalP =
+        todayMeals.reduce(
+            (sum,m) => sum + Number(m.p || 0),
+            0
+        );
+
+    const percK =
+        META_K > 0 ? Math.min((totalK / META_K) * 100, 100) : 0;
+
+    const percP =
+        META_P > 0 ? Math.min((totalP / META_P) * 100, 100) : 0;
+
+    const barK = document.getElementById('barK');
+    const barP = document.getElementById('barP');
+
+    if (barK) barK.style.width = percK + '%';
+    if (barP) barP.style.width = percP + '%';
+
+    const kcalToday = document.getElementById('kcalToday');
+    const protToday = document.getElementById('protToday');
+    const metaKDisplay = document.getElementById('metaKDisplay');
+    const metaPDisplay = document.getElementById('metaPDisplay');
+
+    if (kcalToday) kcalToday.textContent = Math.round(totalK);
+    if (protToday) protToday.textContent = totalP.toFixed(1);
+    if (metaKDisplay) metaKDisplay.textContent = Math.round(META_K);
+    if (metaPDisplay) metaPDisplay.textContent = Math.round(META_P);
+
+    const kcalRemaining = document.getElementById('kcalRemaining');
+    const proteinRemaining = document.getElementById('proteinRemaining');
+
+    if (kcalRemaining) {
+        kcalRemaining.textContent =
+            totalK >= META_K
+            ? `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Meta atingida${totalK > META_K ? ` • +${Math.round(totalK - META_K)} kcal` : ''}`
+            : `Faltam ${Math.round(Math.max(0, META_K - totalK))} kcal`;
+    }
+
+    if (proteinRemaining) {
+        proteinRemaining.textContent =
+            totalP >= META_P
+            ? `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Meta atingida${totalP > META_P ? ` • +${(totalP - META_P).toFixed(1)} g` : ''}`
+            : `Faltam ${Math.max(0, META_P - totalP).toFixed(1)} g`;
+    }
+
+    const dateToday = document.getElementById('dateToday');
+    if (dateToday) {
+        dateToday.textContent =
+            new Date().toLocaleDateString(
+                'pt-BR',
+                {weekday:'long', day:'numeric', month:'short'}
+            );
+    }
+
+    renderMealsToday();
+    renderEvolutionOverview();
+    renderPersonalRecords();
+}
+
+/* =========================================================
+   PESO
+========================================================= */
+
+function addWeight() {
+
+    const val =
+        parseFloat(
+            document.getElementById('newWeight').value
+        );
+
+    if (!val || val <= 0) {
+
+        showNotification(
+            'Digite um peso válido!'
+        );
+
+        return;
+    }
+
+    db.weight.push({
+        d:getToday(),
+        w:val
+    });
+
+    saveDB();
+
+    document.getElementById('newWeight')
+        .value = '';
+
+    renderWeightChart();
+    renderWeightHistory();
+
+    showNotification(
+        `<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M4 18l6-6 4 4 6-8"/><path d="M16 8h4v4"/></svg> Peso ${val} kg registrado</span>`
+    );
+
+}
+
+function renderWeightHistory() {
+    const container = document.getElementById('weightHistoryList');
+    if (!container) return;
+
+    const weights = [...(db.weight || [])].sort((a,b) => {
+        if (a.d !== b.d) return b.d.localeCompare(a.d);
+        return 0;
+    });
+
+    if (!weights.length) {
+        container.innerHTML = `<div class="weight-history-empty"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 18l6-6 4 4 6-8"/><path d="M16 8h4v4"/></svg></span><p>Nenhuma pesagem registrada ainda.</p></div>`;
+        return;
+    }
+
+    let previous = null;
+    container.innerHTML = weights.map((entry, index) => {
+        const delta = index < weights.length - 1 ? entry.w - weights[index + 1].w : null;
+        const deltaText = delta === null ? '' : `${delta > 0 ? '+' : ''}${delta.toFixed(1)} kg`;
+        const cls = delta === null ? '' : (delta < 0 ? 'down' : delta > 0 ? 'up' : 'same');
+        const [y,m,d] = entry.d.split('-');
+        return `<div class="weight-history-row">
+            <div class="weight-history-date"><strong>${d}/${m}/${y}</strong><span>${index === 0 ? 'Mais recente' : 'Registro'}</span></div>
+            <div class="weight-history-value"><strong>${Number(entry.w).toFixed(1)} kg</strong>${delta === null ? '' : `<small class="${cls}">${deltaText}</small>`}</div>
+        </div>`;
+    }).join('');
+}
+
+function renderEvolutionOverview(){
+ const c=document.getElementById('evolutionOverview'); if(!c) return;
+ const weights=[...(db.weight||[])].sort((a,b)=>a.d.localeCompare(b.d));
+ const current=weights.length?weights[weights.length-1].w:null;
+ const first=weights.length?weights[0].w:null;
+ const thirtyCut=new Date(); thirtyCut.setDate(thirtyCut.getDate()-30);
+ const recent=weights.filter(x=>new Date(x.d+'T23:59:59')>=thirtyCut);
+ const firstRecent=recent.length?recent[0].w:null;
+ const deltaFirst=current!==null&&first!==null?current-first:null;
+ const delta30=current!==null&&firstRecent!==null?current-firstRecent:null;
+ const workouts=(db.training||[]).length;
+ const totalVolume=(db.training||[]).reduce((a,t)=>a+calculateTrainingVolume(t),0);
+ const fmtDelta=v=>v===null?'—':`${v>0?'+':''}${v.toFixed(1)} kg`;
+ c.innerHTML=`<div class="evo-stat accent"><span class="label">Peso atual</span><strong>${current===null?'—':current.toFixed(1)+' kg'}</strong><small>${weights.length} pesagem${weights.length===1?'':'ens'}</small></div><div class="evo-stat"><span class="label">Desde o início</span><strong>${fmtDelta(deltaFirst)}</strong><small>primeiro → atual</small></div><div class="evo-stat blue"><span class="label">Últimos 30 dias</span><strong>${fmtDelta(delta30)}</strong><small>variação de peso</small></div><div class="evo-stat purple"><span class="label">Treinos</span><strong>${workouts}</strong><small>${formatVolume(totalVolume)} kg de volume total</small></div>`;
+}
+function renderPersonalRecords(){const c=document.getElementById('personalRecordsOverview');if(!c)return;const map={};(db.training||[]).forEach(t=>(t.exercises||[]).forEach(ex=>{const key=normalizeExerciseName(ex.name);if(!map[key])map[key]={name:ex.name,maxWeight:0,maxReps:0,maxVolume:0};(ex.sets||[]).forEach(set=>{const w=Number(set.weight)||0,r=Number(set.reps)||0;map[key].maxWeight=Math.max(map[key].maxWeight,w);map[key].maxReps=Math.max(map[key].maxReps,r);map[key].maxVolume=Math.max(map[key].maxVolume,w*r);});}));const rows=Object.values(map).sort((a,b)=>b.maxVolume-a.maxVolume).slice(0,8);c.innerHTML=rows.length?`<div class="evo-section-title">Recordes pessoais</div><div class="pr-card">${rows.map(r=>`<div class="pr-row"><div><strong>${r.name}</strong><small>Maior carga • ${formatWeight(r.maxWeight)} kg • Mais reps • ${r.maxReps}</small></div><span>${formatVolume(r.maxVolume)} kg</span></div>`).join('')}</div>`:'<div class="evo-section-title">Recordes pessoais</div><div class="pr-empty">Registre seus primeiros treinos para os recordes aparecerem aqui.</div>';}
+
+function renderWeightChart() {
+
+    const canvas =
+        document.getElementById('chartWeight');
+
+    if (!canvas) return;
+
+    const ctx =
+        canvas.getContext('2d');
+
+    if (weightChart)
+        weightChart.destroy();
+
+    const labels =
+        db.weight.map(e => e.d);
+
+    const data =
+        db.weight.map(e => e.w);
+
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js não carregou; gráfico de peso desativado.');
+        return;
+    }
+
+    weightChart =
+        new Chart(ctx,{
+
+            type:'line',
+
+            data:{
+
+                labels,
+
+                datasets:[{
+
+                    label:'Peso (kg)',
+
+                    data,
+
+                    borderColor:'#00e676',
+
+                    tension:.3
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                plugins:{
+                    legend:{
+                        display:false
+                    }
+                }
+
+            }
+
+        });
+
+}
+
+/* =========================================================
+   TREINO — REGISTRO REAL
+========================================================= */
+
+function initTrainingDate() {
+
+    const input =
+        document.getElementById('trainingDate');
+
+    if (input && !input.value)
+        input.value = getToday();
+
+}
+
+function normalizeExerciseName(name) {
+
+    return name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .toLowerCase()
+        .replace(/\s+/g,' ')
+        .trim();
+
+}
+
+function formatTrainingDate(date) {
+
+    if (!date) return '';
+
+    const parts =
+        date.split('-');
+
+    if (parts.length !== 3)
+        return date;
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+
+}
+
+function formatWeight(weight) {
+
+    const n = Number(weight);
+
+    if (Number.isInteger(n))
+        return n;
+
+    return parseFloat(n.toFixed(2));
+
+}
+
+/* ---------------------------------------------------------
+   COMEÇAR TREINO
+--------------------------------------------------------- */
+
+function getDraftSets() {
+
+    return [...document.querySelectorAll(
+        '#trainingSets .set-row'
+    )].map(row => ({
+        weight:
+            row.querySelector('.training-weight')?.value ?? '',
+        reps:
+            row.querySelector('.training-reps')?.value ?? ''
+    }));
+
+}
+
+function saveTrainingDraft() {
+
+    if (!currentTraining) {
+        localStorage.removeItem(TRAINING_DRAFT_KEY);
+        return;
+    }
+
+    const draft = {
+
+        currentTraining:
+            JSON.parse(JSON.stringify(currentTraining)),
+
+        exerciseName:
+            document.getElementById('exerciseName')?.value ?? '',
+
+        sets:
+            getDraftSets(),
+
+        trainingDate:
+            document.getElementById('trainingDate')?.value ?? '',
+
+        trainingName:
+            document.getElementById('trainingName')?.value ?? ''
+
+    };
+
+    localStorage.setItem(
+        TRAINING_DRAFT_KEY,
+        JSON.stringify(draft)
+    );
+
+}
+
+function clearTrainingDraft() {
+
+    localStorage.removeItem(
+        TRAINING_DRAFT_KEY
+    );
+
+}
+
+function restoreTrainingDraft() {
+
+    const raw =
+        localStorage.getItem(TRAINING_DRAFT_KEY);
+
+    if (!raw) return;
+
+    try {
+
+        const draft = JSON.parse(raw);
+
+        if (
+            !draft ||
+            !draft.currentTraining ||
+            !Array.isArray(
+                draft.currentTraining.exercises
+            )
+        ) {
+            clearTrainingDraft();
+            return;
+        }
+
+        currentTraining =
+            JSON.parse(
+                JSON.stringify(
+                    draft.currentTraining
+                )
+            );
+
+        document.getElementById(
+            'trainingStartCard'
+        ).style.display = 'none';
+
+        document.getElementById(
+            'trainingEditor'
+        ).style.display = 'block';
+
+        document.getElementById(
+            'trainingDate'
+        ).value =
+            draft.trainingDate ||
+            currentTraining.date ||
+            getToday();
+
+        document.getElementById(
+            'trainingName'
+        ).value =
+            draft.trainingName ||
+            currentTraining.name ||
+            'Treino';
+
+        document.getElementById(
+            'trainingEditorTitle'
+        ).textContent =
+            `${currentTraining.name} • ${formatTrainingDate(
+                currentTraining.date
+            )}`;
+
+        document.getElementById(
+            'exerciseName'
+        ).value =
+            draft.exerciseName || '';
+
+        document.getElementById(
+            'trainingSets'
+        ).innerHTML = '';
+
+        if (
+            Array.isArray(draft.sets) &&
+            draft.sets.length > 0
+        ) {
+
+            draft.sets.forEach(set => {
+
+                addTrainingSet(
+                    set.weight ?? '',
+                    set.reps ?? ''
+                );
+
+            });
+
+        } else {
+
+            addTrainingSet();
+
+        }
+
+        document.getElementById(
+            'lastExerciseBox'
+        ).style.display = 'none';
+
+        renderCurrentTraining();
+
+        if (
+            document.getElementById(
+                'exerciseName'
+            ).value.trim()
+        ) {
+            showLastExercise();
+        }
+
+        setTimeout(() => {
+
+            showNotification(
+                '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4"/></svg> Treino em andamento restaurado</span>'
+            );
+
+        }, 300);
+
+    } catch (error) {
+
+        console.error(
+            'Erro ao restaurar rascunho do treino:',
+            error
+        );
+
+        clearTrainingDraft();
+
+    }
+
+}
+
+const TRAINING_ROUTINES = {
+    A1: [
+        ['Desenvolvimento de ombros',2],['Remada Pendlay',2],['Supino máquina',2],['Puxada alta',2],
+        ['Elevação lateral unilateral',2],['Face pull',2],['Tríceps no cabo/máquina',2],['Rosca no cabo',2]
+    ],
+    B1: [
+        ['Agachamento livre',2],['Leg press',2],['Cadeira extensora',2],['Mesa flexora',2],['Panturrilha em pé',2],['Abdominal',2]
+    ],
+    A2: [
+        ['Barra fixa / puxada',2],['Supino inclinado com halteres',2],['Remada baixa',2],['Peck deck',2],
+        ['Elevação lateral unilateral',2],['Face pull',2],['Tríceps',2],['Rosca Bayesiana',2]
+    ],
+    B2: [
+        ['Levantamento terra',1],['Leg press',2],['Mesa flexora',2],['Cadeira extensora',2],['Adutora',2],['Panturrilha sentada',2],['Abdominal',2]
+    ]
+};
+
+let activeRoutine = null;
+let routineIndex = 0;
+let restTimerSeconds = 120;
+let restTimerInterval = null;
+
+function formatTimer(sec) {
+    sec=Math.max(0,Math.round(sec));
+    return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+}
+function updateRestTimer() {
+    const el=document.getElementById('restTimerDisplay'); if(el) el.textContent=formatTimer(restTimerSeconds);
+}
+function setRestTime(sec) { stopRestTimer(); restTimerSeconds=sec; updateRestTimer(); }
+function startRestTimer(seconds) {
+    if(seconds !== undefined) {
+        stopRestTimer();
+        restTimerSeconds = seconds;
+    }
+    if(restTimerInterval) return;
+    if(restTimerSeconds<=0) restTimerSeconds=120;
+    updateRestTimer();
+    restTimerInterval=setInterval(()=>{
+        restTimerSeconds--; updateRestTimer();
+        if(restTimerSeconds<=0){ stopRestTimer(); if(navigator.vibrate) navigator.vibrate([200,100,200]); showNotification('<span class="icon-text"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M9 3h6"/></svg> Descanso acabou!</span>'); }
+    },1000);
+}
+function stopRestTimer() { if(restTimerInterval){clearInterval(restTimerInterval);restTimerInterval=null;} }
+
+function loadRoutineExercise() {
+    const routine=TRAINING_ROUTINES[activeRoutine];
+    if(!routine || routineIndex>=routine.length) return;
+    const ex=routine[routineIndex];
+    document.getElementById('exerciseName').value=ex[0];
+    document.getElementById('trainingSets').innerHTML='';
+    for(let i=0;i<ex[1];i++) addTrainingSet();
+    showLastExercise();
+    document.getElementById('exerciseName').focus();
+    document.getElementById('trainingEditorTitle').textContent=`${currentTraining.name} • ${routineIndex+1}/${routine.length}`;
+}
+
+function startTraining() {
+
+    const date =
+        document.getElementById('trainingDate')
+            .value || getToday();
+
+    const name =
+        document.getElementById('trainingName')
+            .value.trim();
+
+    const selectedRoutine = document.getElementById('trainingRoutine')?.value || '';
+    activeRoutine = selectedRoutine || null;
+    routineIndex = 0;
+
+    currentTraining = {
+        id:Date.now(),
+        date,
+        name:name || (selectedRoutine ? `${selectedRoutine} — ${selectedRoutine==='A1'?'Upper 1':selectedRoutine==='B1'?'Lower 1':selectedRoutine==='A2'?'Upper 2':'Lower 2'}` : 'Treino'),
+        routine:selectedRoutine || '',
+        startedAt:new Date().toISOString(),
+        exercises:[]
+    };
+
+    document.getElementById(
+        'trainingStartCard'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'trainingEditor'
+    ).style.display = 'block';
+
+    document.getElementById(
+        'trainingEditorTitle'
+    ).textContent =
+        `${currentTraining.name} • ${formatTrainingDate(date)}`;
+
+    document.getElementById(
+        'exerciseName'
+    ).value = '';
+
+    document.getElementById(
+        'trainingSets'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'currentTrainingExercises'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'lastExerciseBox'
+    ).style.display = 'none';
+
+    if (activeRoutine) loadRoutineExercise();
+    else { addTrainingSet(); document.getElementById('exerciseName').focus(); }
+
+}
+
+/* ---------------------------------------------------------
+   ADICIONAR SÉRIE
+--------------------------------------------------------- */
+
+function addTrainingSet(weight='', reps='') {
+
+    const container =
+        document.getElementById('trainingSets');
+
+    const index =
+        container.children.length + 1;
+
+    const row =
+        document.createElement('div');
+
+    row.className = 'set-row';
+
+    row.innerHTML = `
+
+        <div class="set-number">
+            S${index}
+        </div>
+
+        <input
+            type="number"
+            class="training-weight"
+            placeholder="Carga"
+            value="${weight}"
+            step="0.1"
+            min="0"
+            inputmode="decimal"
+            autocomplete="off">
+
+        <input
+            type="number"
+            class="training-reps"
+            placeholder="Reps"
+            value="${reps}"
+            min="1"
+            inputmode="numeric"
+            autocomplete="off">
+
+        <button
+            type="button"
+            class="btn-del set-delete"
+            onclick="removeTrainingSet(this)">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+
+    `;
+
+    container.appendChild(row);
+
+    saveTrainingDraft();
+
+}
+
+/* ---------------------------------------------------------
+   REMOVER SÉRIE
+--------------------------------------------------------- */
+
+function removeTrainingSet(button) {
+
+    button
+        .parentElement
+        .remove();
+
+    renumberTrainingSets();
+    saveTrainingDraft();
+
+}
+
+/* ---------------------------------------------------------
+   RENOMEAR SÉRIES
+--------------------------------------------------------- */
+
+function renumberTrainingSets() {
+
+    const rows =
+        document.querySelectorAll(
+            '#trainingSets .set-row'
+        );
+
+    rows.forEach((row,index) => {
+
+        row.querySelector(
+            '.set-number'
+        ).textContent =
+            `S${index+1}`;
+
+    });
+
+}
+
+/* ---------------------------------------------------------
+   LER SÉRIES
+--------------------------------------------------------- */
+
+function getCurrentSets() {
+
+    const rows =
+        document.querySelectorAll(
+            '#trainingSets .set-row'
+        );
+
+    const sets = [];
+
+    rows.forEach(row => {
+
+        const weight =
+            parseFloat(
+                row.querySelector(
+                    '.training-weight'
+                ).value
+            );
+
+        const reps =
+            parseInt(
+                row.querySelector(
+                    '.training-reps'
+                ).value
+            );
+
+        if (
+            !isNaN(weight) &&
+            weight >= 0 &&
+            !isNaN(reps) &&
+            reps > 0
+        ) {
+
+            sets.push({
+                weight,
+                reps
+            });
+
+        }
+
+    });
+
+    return sets;
+
+}
+
+/* ---------------------------------------------------------
+   ENCONTRAR ÚLTIMO EXERCÍCIO
+--------------------------------------------------------- */
+
+function getLastExercise(exerciseName) {
+
+    const normalized =
+        normalizeExerciseName(exerciseName);
+
+    const matches = [];
+
+    db.training.forEach(training => {
+
+        training.exercises.forEach(exercise => {
+
+            if (
+                normalizeExerciseName(
+                    exercise.name
+                ) === normalized
+            ) {
+
+                matches.push({
+
+                    date:training.date,
+
+                    trainingName:training.name,
+
+                    id:training.id,
+
+                    sets:exercise.sets
+
+                });
+
+            }
+
+        });
+
+    });
+
+    if (matches.length === 0)
+        return null;
+
+    matches.sort((a,b) => {
+
+        if (a.date !== b.date)
+            return b.date.localeCompare(a.date);
+
+        return b.id - a.id;
+
+    });
+
+    return matches[0];
+
+}
+
+/* ---------------------------------------------------------
+   MOSTRAR ÚLTIMO TREINO
+--------------------------------------------------------- */
+
+function showLastExercise() {
+
+    const name =
+        document.getElementById(
+            'exerciseName'
+        ).value.trim();
+
+    const box =
+        document.getElementById(
+            'lastExerciseBox'
+        );
+
+    if (!name) {
+
+        box.style.display = 'none';
+
+        return;
+
+    }
+
+    const last =
+        getLastExercise(name);
+
+    box.style.display = 'block';
+
+    if (!last) {
+
+        box.innerHTML = `
+
+            <div class="last-title">
+                <span class="ui-icon"><svg viewBox="0 0 24 24"><path d="M8 4h8l2 2v14H6V4z"/><path d="M9 4v3h6V4M9 11h6M9 15h4"/></svg></span><span>Último registro</span>
+            </div>
+
+            <div style="color:#777;margin-top:7px;">
+                Nenhum registro encontrado.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    let html = `
+
+        <div class="last-title">
+            <span class="ui-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span>Último treino • ${formatTrainingDate(last.date)}
+        </div>
+
+        <div class="last-training-name">
+            ${last.trainingName}
+        </div>
+
+    `;
+
+    last.sets.forEach((set,index) => {
+
+        html += `
+
+            <div class="last-set">
+
+                <span>
+                    Série ${index+1}
+                </span>
+
+                <strong>
+                    ${formatWeight(set.weight)} kg × ${set.reps}
+                </strong>
+
+            </div>
+
+        `;
+
+    });
+
+    box.innerHTML = html;
+
+}
+
+/* ---------------------------------------------------------
+   ADICIONAR EXERCÍCIO AO TREINO
+--------------------------------------------------------- */
+
+function addExerciseToTraining() {
+
+    if (!currentTraining) {
+
+        showNotification(
+            'Comece um novo treino primeiro!'
+        );
+
+        return;
+
+    }
+
+    const exerciseName =
+        document.getElementById(
+            'exerciseName'
+        ).value.trim();
+
+    if (!exerciseName) {
+
+        showNotification(
+            'Digite o nome do exercício!'
+        );
+
+        return;
+
+    }
+
+    const sets =
+        getCurrentSets();
+
+    if (sets.length === 0) {
+
+        showNotification(
+            'Preencha pelo menos uma série!'
+        );
+
+        return;
+
+    }
+
+    currentTraining.exercises.push({ name:exerciseName, sets });
+
+    renderCurrentTraining();
+
+    if (activeRoutine && routineIndex < TRAINING_ROUTINES[activeRoutine].length - 1) {
+        routineIndex++;
+        loadRoutineExercise();
+        startRestTimer();
+        showNotification(`<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> ${exerciseName} salvo • próximo: ${TRAINING_ROUTINES[activeRoutine][routineIndex][0]}`);
+        return;
+    }
+
+    if (activeRoutine && routineIndex === TRAINING_ROUTINES[activeRoutine].length - 1) {
+        activeRoutine = null;
+        showNotification('<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 5c5-3 8 3 14 0v9c-6 3-9-3-14 0"/></svg></span> Rotina completa! Revise e salve o treino.');
+    }
+
+    document.getElementById(
+        'exerciseName'
+    ).value = '';
+
+    document.getElementById(
+        'trainingSets'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'lastExerciseBox'
+    ).style.display = 'none';
+
+    addTrainingSet();
+
+    document.getElementById(
+        'exerciseName'
+    ).focus();
+
+    saveTrainingDraft();
+
+    showNotification(
+        `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> ${exerciseName} adicionado`
+    );
+
+}
+
+/* ---------------------------------------------------------
+   MOSTRAR EXERCÍCIOS DO TREINO ATUAL
+--------------------------------------------------------- */
+
+function renderCurrentTraining() {
+
+    const container =
+        document.getElementById(
+            'currentTrainingExercises'
+        );
+
+    if (
+        !currentTraining ||
+        currentTraining.exercises.length === 0
+    ) {
+
+        container.innerHTML = '';
+
+        return;
+
+    }
+
+    let html = `
+
+        <div style="
+            color:#00e676;
+            font-weight:800;
+            margin-bottom:10px;
+            font-size:1.05rem;">
+            Exercícios adicionados
+        </div>
+
+    `;
+
+    currentTraining.exercises.forEach(
+        (exercise,index) => {
+
+            html += `
+
+                <div class="current-exercise">
+
+                    <div class="current-exercise-header">
+
+                        <div class="current-exercise-name">
+                            ${exercise.name}
+                        </div>
+
+                        <button
+                            class="btn-del"
+                            onclick="removeCurrentExercise(${index})">
+                            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                        </button>
+
+                    </div>
+
+            `;
+
+            exercise.sets.forEach(
+                (set,setIndex) => {
+
+                    html += `
+
+                        <div class="compact-set">
+
+                            <span>
+                                Série ${setIndex+1}
+                            </span>
+
+                            <strong>
+                                ${formatWeight(set.weight)} kg × ${set.reps}
+                            </strong>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+            html += `</div>`;
+
+        }
+    );
+
+    container.innerHTML = html;
+
+}
+
+/* ---------------------------------------------------------
+   REMOVER EXERCÍCIO DO TREINO ATUAL
+--------------------------------------------------------- */
+
+function removeCurrentExercise(index) {
+
+    if (!currentTraining) return;
+
+    currentTraining.exercises
+        .splice(index,1);
+
+    renderCurrentTraining();
+    saveTrainingDraft();
+
+}
+
+/* ---------------------------------------------------------
+   EDITAR TREINO EXISTENTE
+--------------------------------------------------------- */
+
+function editTraining(id) {
+
+    const training =
+        db.training.find(
+            t => t.id === id
+        );
+
+    if (!training) {
+
+        showNotification(
+            'Treino não encontrado!'
+        );
+
+        return;
+
+    }
+
+    /*
+       Cria uma cópia completa.
+       Assim o histórico original só é alterado
+       quando o usuário clicar em SALVAR.
+    */
+
+    currentTraining =
+        JSON.parse(
+            JSON.stringify(training)
+        );
+
+    document.getElementById(
+        'trainingStartCard'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'trainingEditor'
+    ).style.display = 'block';
+
+    document.getElementById(
+        'trainingDate'
+    ).value =
+        currentTraining.date;
+
+    document.getElementById(
+        'trainingName'
+    ).value =
+        currentTraining.name;
+
+    document.getElementById(
+        'trainingEditorTitle'
+    ).textContent =
+        `<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M4 20l4.2-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M13.5 7.5l3 3"/></svg> Editando • ${currentTraining.name} • ${formatTrainingDate(currentTraining.date)}</span>`;
+
+    /*
+       Mostra os exercícios que já pertencem
+       ao treino que está sendo editado.
+    */
+
+    renderCurrentTraining();
+
+    /*
+       Limpa o formulário para permitir
+       adicionar um novo exercício.
+    */
+
+    document.getElementById(
+        'exerciseName'
+    ).value = '';
+
+    document.getElementById(
+        'trainingSets'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'lastExerciseBox'
+    ).style.display = 'none';
+
+    addTrainingSet();
+    saveTrainingDraft();
+
+    /*
+       Rola até o editor no iPhone.
+    */
+
+    setTimeout(() => {
+
+        document.getElementById(
+            'trainingEditor'
+        ).scrollIntoView({
+            behavior:'smooth',
+            block:'start'
+        });
+
+    },100);
+
+    showNotification(
+        '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M4 20l4.2-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M13.5 7.5l3 3"/></svg> Treino carregado para edição</span>'
+    );
+
+}
+
+/* ---------------------------------------------------------
+   RESUMO DO TREINO + COMPARAÇÃO
+--------------------------------------------------------- */
+function findPreviousComparableTraining(training){const c=(db.training||[]).filter(t=>t.id!==training.id&&t.date<=training.date&&((training.routine&&t.routine===training.routine)||(!training.routine&&t.name===training.name)));c.sort((a,b)=>a.date===b.date?b.id-a.id:b.date.localeCompare(a.date));return c[0]||null;}
+function formatDuration(sec){const s=Math.max(0,Math.round(Number(sec)||0)),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;return h?`${h}h ${String(m).padStart(2,'0')}min`:`${m}min ${String(ss).padStart(2,'0')}s`;}
+function showTrainingSaveSummary(t,p){const c=document.getElementById('trainingSaveSummary');if(!c)return;const v=calculateTrainingVolume(t),sets=(t.exercises||[]).reduce((a,e)=>a+(e.sets||[]).length,0),d=t.durationSec?formatDuration(t.durationSec):'—';let cmp='Primeiro registro deste treino.';if(p){const pv=calculateTrainingVolume(p),delta=v-pv;cmp=`${delta>0?'+':''}${formatVolume(delta)} kg de volume em relação ao último treino (${formatVolume(pv)} → ${formatVolume(v)} kg).`;}c.innerHTML=`<div class="data-heading"><div><h3>Treino concluído</h3><p>${t.name} • ${formatTrainingDate(t.date)}</p></div><span class="data-chip">RESUMO</span></div><div class="training-summary-grid"><div><span>EXERCÍCIOS</span><strong>${t.exercises.length}</strong></div><div><span>SÉRIES VÁLIDAS</span><strong>${sets}</strong></div><div><span>VOLUME</span><strong>${formatVolume(v)} kg</strong></div><div><span>DURAÇÃO</span><strong>${d}</strong></div></div><div class="training-comparison"><span>COMPARAÇÃO</span><strong>${cmp}</strong></div>`;c.style.display='block';c.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* ---------------------------------------------------------
+   SALVAR TREINO
+--------------------------------------------------------- */
+
+function saveTraining() {
+
+    if (!currentTraining) {
+
+        showNotification(
+            'Nenhum treino em andamento!'
+        );
+
+        return;
+
+    }
+
+    /*
+       Se estiver editando, atualiza o treino existente.
+       Se for um treino novo, adiciona normalmente.
+    */
+
+    const existingIndex =
+        db.training.findIndex(
+            training =>
+                training.id === currentTraining.id
+        );
+
+    /*
+       Se o usuário começou um exercício novo
+       mas não adicionou, simplesmente ignoramos
+       os campos vazios e salvamos os exercícios
+       que já foram adicionados.
+    */
+
+    if (
+        !currentTraining.exercises ||
+        currentTraining.exercises.length === 0
+    ) {
+
+        showNotification(
+            'Adicione pelo menos um exercício!'
+        );
+
+        return;
+
+    }
+
+    const previousComparable=existingIndex===-1?findPreviousComparableTraining(currentTraining):null;
+    if(currentTraining.startedAt&&existingIndex===-1)currentTraining.durationSec=Math.max(0,Math.round((Date.now()-new Date(currentTraining.startedAt).getTime())/1000));
+
+    if (existingIndex !== -1) {
+
+        /*
+           EDIÇÃO:
+           substitui o registro antigo pelo atualizado.
+        */
+
+        db.training[existingIndex] =
+            JSON.parse(
+                JSON.stringify(currentTraining)
+            );
+
+    } else {
+
+        /*
+           NOVO TREINO
+        */
+
+        db.training.push(
+            JSON.parse(
+                JSON.stringify(currentTraining)
+            )
+        );
+
+    }
+
+    db.training.sort((a,b) => {
+
+        if (a.date !== b.date)
+            return a.date.localeCompare(b.date);
+
+        return a.id - b.id;
+
+    });
+
+    saveDB();
+    clearTrainingDraft();
+    renderPersonalRecords();
+    if(existingIndex===-1)showTrainingSaveSummary(currentTraining,previousComparable);
+
+    showNotification(
+        existingIndex !== -1
+        ? '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4M8 20v-6h8v6"/></svg> Treino atualizado!</span>'
+        : '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4M8 20v-6h8v6"/></svg> Treino salvo!</span>'
+    );
+
+    currentTraining = null;
+
+    document.getElementById(
+        'trainingEditor'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'trainingStartCard'
+    ).style.display = 'block';
+
+    document.getElementById(
+        'trainingName'
+    ).value = '';
+
+    document.getElementById(
+        'exerciseName'
+    ).value = '';
+
+    document.getElementById(
+        'trainingSets'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'currentTrainingExercises'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'lastExerciseBox'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'trainingDate'
+    ).value = getToday();
+
+    renderTrainingHistory();
+
+}
+
+/* ---------------------------------------------------------
+   CANCELAR TREINO
+--------------------------------------------------------- */
+
+function cancelTraining() {
+
+    clearTrainingDraft();
+
+    currentTraining = null;
+
+    document.getElementById(
+        'trainingEditor'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'trainingStartCard'
+    ).style.display = 'block';
+
+    document.getElementById(
+        'trainingName'
+    ).value = '';
+
+    document.getElementById(
+        'exerciseName'
+    ).value = '';
+
+    document.getElementById(
+        'trainingSets'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'currentTrainingExercises'
+    ).innerHTML = '';
+
+    document.getElementById(
+        'lastExerciseBox'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'trainingDate'
+    ).value = getToday();
+
+}
+
+/* ---------------------------------------------------------
+   HISTÓRICO DOS TREINOS
+--------------------------------------------------------- */
+
+function calculateExerciseVolume(exercise) {
+
+    if (!exercise || !Array.isArray(exercise.sets)) return 0;
+
+    return exercise.sets.reduce((total, set) => {
+
+        const weight = parseFloat(set.weight);
+        const reps = parseInt(set.reps);
+
+        if (!Number.isFinite(weight) || !Number.isFinite(reps) || weight < 0 || reps <= 0) {
+            return total;
+        }
+
+        return total + (weight * reps);
+
+    }, 0);
+
+}
+
+function calculateTrainingVolume(training) {
+
+    if (!training || !Array.isArray(training.exercises)) return 0;
+
+    return training.exercises.reduce(
+        (total, exercise) => total + calculateExerciseVolume(exercise),
+        0
+    );
+
+}
+
+function formatVolume(value) {
+
+    return Number(value).toLocaleString('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+
+}
+
+function renderTrainingHistory() {
+
+    const container =
+        document.getElementById(
+            'trainingHistory'
+        );
+
+    if (!container) return;
+
+    if (
+        !db.training ||
+        db.training.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="training-empty">
+
+                <span class="ui-icon"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 5c5-3 8 3 14 0v9c-6 3-9-3-14 0"/></svg></span><br><br>
+
+                Nenhum treino registrado ainda.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    const sorted =
+        [...db.training].sort((a,b) => {
+
+            if (a.date !== b.date)
+                return b.date.localeCompare(a.date);
+
+            return b.id - a.id;
+
+        });
+
+    let html = '';
+
+    sorted.forEach(training => {
+
+        html += `
+
+            <div
+                class="history-training"
+                onclick="toggleTrainingHistory(${training.id})">
+
+                <div class="history-training-top">
+
+                    <div>
+
+                        <div class="history-training-date">
+                            ${formatTrainingDate(training.date)}
+                        </div>
+
+                        <div class="history-training-name">
+                            ${training.name}
+                        </div>
+
+                    </div>
+
+                    <div class="history-count">
+                        ${training.exercises.length} ex.
+                    </div>
+
+                </div>
+
+                <div
+                    id="training-history-${training.id}"
+                    class="training-history-content"
+                    style="display:none;">
+
+        `;
+
+        let trainingVolume = 0;
+
+        training.exercises.forEach(
+            exercise => {
+
+                const exerciseVolume =
+                    calculateExerciseVolume(exercise);
+
+                trainingVolume += exerciseVolume;
+
+                html += `
+
+                    <div
+                        style="
+                            background:#1c1c1c;
+                            padding:12px;
+                            border-radius:12px;
+                            margin-bottom:8px;">
+
+                        <strong>
+                            ${exercise.name}
+                        </strong>
+
+                `;
+
+                exercise.sets.forEach(
+                    (set,index) => {
+
+                        html += `
+
+                            <div style="
+                                display:flex;
+                                justify-content:space-between;
+                                padding:5px 0;
+                                color:#ccc;">
+
+                                <span>
+                                    Série ${index+1}
+                                </span>
+
+                                <strong>
+                                    ${formatWeight(set.weight)} kg × ${set.reps}
+                                </strong>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+                html += `
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:center;
+                            margin-top:8px;
+                            padding-top:8px;
+                            border-top:1px solid #333;
+                            color:#aaa;">
+
+                            <span><span class="ui-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/><path d="M3 19h18"/></svg></span><span>Volume do exercício</span></span>
+
+                            <strong style="color:var(--accent);">
+                                ${formatVolume(exerciseVolume)} kg
+                            </strong>
+
+                        </div>
+
+                    </div>`;
+
+            }
+        );
+
+        html += `
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        margin:12px 0 10px;
+                        padding:12px;
+                        border-radius:12px;
+                        background:rgba(255,255,255,0.04);
+                        border:1px solid #333;">
+
+                        <strong><span class="ui-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-8M22 19H2"/></svg></span><span>Volume total do treino</span></strong>
+
+                        <strong style="color:var(--accent); font-size:1.05rem;">
+                            ${formatVolume(trainingVolume)} kg
+                        </strong>
+
+                    </div>
+
+        `;
+
+        /*
+           AGORA É EDITAR, NÃO APAGAR
+        */
+
+        html += `
+
+                    <button
+                        type="button"
+                        class="edit-training-button"
+                        onclick="
+                            event.stopPropagation();
+                            editTraining(${training.id})
+                        ">
+                        <span class="ui-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="m5 16-1 4 4-1 10-10a2.1 2.1 0 0 0-3-3L5 16z"/><path d="m13.5 7.5 3 3"/></svg></span><span>Editar treino</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+    container.innerHTML = html;
+
+}
+
+/* ---------------------------------------------------------
+   ABRIR/FECHAR HISTÓRICO
+--------------------------------------------------------- */
+
+function toggleTrainingHistory(id) {
+
+    const element =
+        document.getElementById(
+            `training-history-${id}`
+        );
+
+    if (!element) return;
+
+    element.style.display =
+        element.style.display === 'none'
+        ? 'block'
+        : 'none';
+
+}
+
+/* =========================================================
+   CALCULADORA + METAS
+========================================================= */
+
+function calcularMetas() {
+
+    const sexo =
+        document.getElementById('sexo').value;
+
+    const idade =
+        parseFloat(
+            document.getElementById('idade').value
+        ) || 28;
+
+    const peso =
+        parseFloat(
+            document.getElementById('peso').value
+        ) || 85;
+
+    const altura =
+        parseFloat(
+            document.getElementById('altura').value
+        ) || 178;
+
+    const atividade =
+        parseFloat(
+            document.getElementById('atividade').value
+        );
+
+    const objetivo =
+        parseFloat(
+            document.getElementById('objetivo').value
+        );
+
+    let TMB =
+        sexo === 'M'
+        ? 88.362 +
+          (13.397 * peso) +
+          (4.799 * altura) -
+          (5.677 * idade)
+
+        : 447.593 +
+          (9.247 * peso) +
+          (3.098 * altura) -
+          (4.330 * idade);
+
+    const TDEE =
+        TMB * atividade;
+
+    const calorias =
+        Math.round(
+            TDEE * (1 + objetivo)
+        );
+
+    const proteina =
+        Math.round(peso * 2);
+
+    const res =
+        document.getElementById(
+            'resultadoCalc'
+        );
+
+    res.style.display = 'block';
+
+    res.innerHTML = `
+
+        TMB:
+        <b>${Math.round(TMB)}</b> kcal
+
+        <br>
+
+        TDEE:
+        <b>${Math.round(TDEE)}</b> kcal
+
+        <br><br>
+
+        <span style="
+            color:var(--accent);
+            font-size:1.3rem;">
+            <span class="icon-text"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3"/></svg> ${calorias} kcal • ${proteina}g proteína</span>
+        </span>
+
+    `;
+
+    META_K = calorias;
+    META_P = proteina;
+
+    document.getElementById('metaK')
+        .value = META_K;
+
+    document.getElementById('metaP')
+        .value = META_P;
+
+    localStorage.setItem(
+        'metaK',
+        META_K
+    );
+
+    localStorage.setItem(
+        'metaP',
+        META_P
+    );
+    touchAutoBackup();
+
+    renderDashboard();
+
+    showNotification(
+        '<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Metas calculadas!'
+    );
+
+}
+
+function savePhases(){localStorage.setItem(PHASES_KEY,JSON.stringify(phases));if(currentPhaseId)localStorage.setItem('currentPhaseIdV1',currentPhaseId);}
+function renderPhases(){const c=document.getElementById('currentPhaseBox'),h=document.getElementById('phaseHistory');if(!c||!h)return;const p=phases.find(x=>x.id===currentPhaseId)||phases[phases.length-1]||null;c.innerHTML=p?`<div class="current-phase"><span class="phase-status">FASE ATUAL</span><strong>${p.name}</strong><small>${p.objective||'Sem objetivo definido'} • ${p.kcal} kcal • ${p.protein} g proteína${p.targetWeight?` • alvo ${p.targetWeight} kg`:''}</small></div>`:'<div class="phase-empty">Nenhuma fase criada ainda.</div>';h.innerHTML=phases.length?`<div class="evo-section-title">Histórico de fases</div>`+phases.slice().reverse().map(x=>`<div class="phase-history-row"><div><strong>${x.name}</strong><small>${x.startDate}${x.targetWeight?` • alvo ${x.targetWeight} kg`:''}</small></div><span>${x.id===currentPhaseId?'Atual':''}</span></div>`).join(''):'';}
+function startNewPhase(){const name=document.getElementById('phaseName')?.value.trim();if(!name){showNotification('Dê um nome para a fase!');return;}const p={id:Date.now().toString(),name,objective:document.getElementById('phaseObjective')?.value.trim()||'',kcal:Number(document.getElementById('phaseKcal')?.value)||META_K,protein:Number(document.getElementById('phaseProtein')?.value)||META_P,targetWeight:Number(document.getElementById('phaseTargetWeight')?.value)||null,startDate:getToday()};phases.push(p);currentPhaseId=p.id;savePhases();META_K=p.kcal;META_P=p.protein;localStorage.setItem('metaK',META_K);localStorage.setItem('metaP',META_P);touchAutoBackup();renderDashboard();renderPhases();showNotification('Nova fase iniciada!');}
+
+function saveMetas() {
+
+    META_K =
+        parseFloat(
+            document.getElementById('metaK').value
+        ) || 2800;
+
+    META_P =
+        parseFloat(
+            document.getElementById('metaP').value
+        ) || 170;
+
+    localStorage.setItem(
+        'metaK',
+        META_K
+    );
+
+    localStorage.setItem(
+        'metaP',
+        META_P
+    );
+
+    renderDashboard();
+
+    showNotification(
+        `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Metas salvas: ${META_K} kcal • ${META_P} g proteína`
+    );
+
+}
+
+/* =========================================================
+   BACKUP
+========================================================= */
+
+function exportData() {
+
+    const dataStr =
+        JSON.stringify(
+            {
+                ...db,
+                customFoods,
+                quickMeals,
+                phases,
+                currentPhaseId,
+                metaK: META_K,
+                metaP: META_P
+            },
+            null,
+            2
+        );
+
+    const blob =
+        new Blob(
+            [dataStr],
+            {type:'application/json'}
+        );
+
+    const a =
+        document.createElement('a');
+
+    a.href =
+        URL.createObjectURL(blob);
+
+    a.download =
+        `shapemaster-backup-${getToday()}.json`;
+
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+
+    showNotification(
+        '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 14v5h14v-5"/></svg> Backup baixado!</span>'
+    );
+
+}
+
+
+function importData(event) {
+
+    const file =
+        event.target.files?.[0];
+
+    // Permite escolher o mesmo arquivo novamente depois de uma importação.
+    event.target.value = '';
+
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.json')) {
+        showNotification(
+            '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span> Selecione um arquivo de backup .json'
+        );
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M12 3l9 17H3z"/><path d="M12 9v5M12 18h.01"/></svg></span>️ IMPORTAR BACKUP\n\n' +
+            'Os dados atuais do aplicativo serão substituídos pelos dados deste backup.\n\n' +
+            'Isso inclui treinos, dieta, peso, alimentos personalizados e demais dados salvos no backup.\n\n' +
+            'Deseja continuar?'
+        );
+
+    if (!confirmed) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        try {
+
+            const imported =
+                JSON.parse(e.target.result);
+
+            if (
+                !imported ||
+                typeof imported !== 'object' ||
+                Array.isArray(imported)
+            ) {
+                throw new Error('Formato inválido.');
+            }
+
+            /*
+             * O backup atual do Meu Shape é composto pelo conteúdo de
+             * "db" + "customFoods". Validamos os campos principais antes
+             * de substituir os dados atuais.
+             */
+            if (
+                !Array.isArray(imported.diet) ||
+                !Array.isArray(imported.weight) ||
+                !Array.isArray(imported.training)
+            ) {
+                throw new Error(
+                    'Este arquivo não parece ser um backup válido do Meu Shape.'
+                );
+            }
+
+            if (
+                imported.customFoods !== undefined &&
+                !Array.isArray(imported.customFoods)
+            ) {
+                throw new Error(
+                    'Os alimentos personalizados do backup estão inválidos.'
+                );
+            }
+
+            /*
+             * Cria uma cópia limpa dos dados importados para evitar
+             * referências inesperadas.
+             */
+            const restoredDB = {
+                diet:
+                    JSON.parse(
+                        JSON.stringify(imported.diet)
+                    ),
+
+                weight:
+                    JSON.parse(
+                        JSON.stringify(imported.weight)
+                    ),
+
+                training:
+                    JSON.parse(
+                        JSON.stringify(imported.training)
+                    )
+            };
+
+            const restoredCustomFoods =
+                imported.customFoods
+                    ? JSON.parse(
+                        JSON.stringify(
+                            imported.customFoods
+                        )
+                    )
+                    : [];
+
+            /*
+             * Salva primeiro no localStorage.
+             * Se alguma gravação falhar, o restante do app não é
+             * recarregado como se a importação tivesse terminado.
+             */
+            localStorage.setItem(
+                'shapeMasterDBv7',
+                JSON.stringify(restoredDB)
+            );
+
+            localStorage.setItem(
+                'customFoodsV1',
+                JSON.stringify(restoredCustomFoods)
+            );
+
+            /*
+             * Restaura as metas do backup quando elas existem.
+             * Também aceita nomes de campos de versões anteriores.
+             * Se o backup não tiver metas, mantém as metas atuais.
+             */
+            const importedMetaK = Number(
+                imported.metaK ??
+                imported.META_K ??
+                imported.metas?.kcal ??
+                imported.metas?.calorias
+            );
+
+            const importedMetaP = Number(
+                imported.metaP ??
+                imported.META_P ??
+                imported.metas?.prot ??
+                imported.metas?.proteina ??
+                imported.metas?.proteína
+            );
+
+            if (Number.isFinite(importedMetaK) && importedMetaK > 0) {
+                META_K = importedMetaK;
+                localStorage.setItem('metaK', String(META_K));
+            }
+
+            if (Number.isFinite(importedMetaP) && importedMetaP > 0) {
+                META_P = importedMetaP;
+                localStorage.setItem('metaP', String(META_P));
+            }
+
+            showNotification(
+                '<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Backup importado com sucesso! Recarregando...'
+            );
+
+            setTimeout(() => {
+                location.reload();
+            }, 700);
+
+        } catch (error) {
+
+            console.error(
+                'Erro ao importar backup:',
+                error
+            );
+
+            showNotification(
+                '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span> Não foi possível importar este backup.'
+            );
+
+            alert(
+                'Não foi possível importar o backup.\n\n' +
+                'Verifique se você selecionou um arquivo JSON ' +
+                'exportado pelo Meu Shape.'
+            );
+        }
+    };
+
+    reader.onerror = function() {
+
+        showNotification(
+            '<span class="icon-text"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span> Não foi possível ler o arquivo.'
+        );
+
+    };
+
+    reader.readAsText(file);
+}
+
+function clearAllData() {
+
+    if (
+        confirm(
+            'Apagar TODOS os dados?'
+        )
+    ) {
+
+        localStorage.clear();
+
+        location.reload();
+
+    }
+
+}
+
+/* =========================================================
+   HISTÓRICO DA DIETA
+========================================================= */
+
+function renderHistory() {
+
+    const container =
+        document.getElementById(
+            'historyList'
+        );
+
+    container.innerHTML = '';
+
+    const grouped =
+        db.diet.reduce(
+            (acc,meal) => {
+
+                if (!acc[meal.d])
+                    acc[meal.d] = [];
+
+                acc[meal.d].push(meal);
+
+                return acc;
+
+            },
+            {}
+        );
+
+    Object.keys(grouped)
+        .sort()
+        .reverse()
+        .forEach(date => {
+
+            const totalK =
+                grouped[date].reduce(
+                    (s,m) => s + m.k,
+                    0
+                );
+
+            const totalP =
+                grouped[date].reduce(
+                    (s,m) => s + m.p,
+                    0
+                );
+
+            let html = `
+
+                <div
+                    class="history-day"
+                    onclick="
+                        this.nextElementSibling
+                            .classList.toggle('hidden')
+                    ">
+
+                    <strong>
+                        ${formatTrainingDate(date)}
+                    </strong>
+
+                    —
+                    ${totalK} kcal •
+                    ${totalP.toFixed(1)}g prot
+
+                </div>
+
+                <div class="history-content hidden">
+
+            `;
+
+            grouped[date].forEach(meal => {
+
+                const u =
+                    meal.unit === 'gramas' ||
+                    meal.unit === '100g'
+                    ? 'g'
+                    : meal.unit;
+
+                html += `
+
+                    • ${meal.qty}${u}
+                    ${meal.name}
+                    —
+                    ${meal.k} kcal •
+                    ${meal.p}g
+
+                    <br>
+
+                `;
+
+            });
+
+            html += `</div>`;
+
+            container.innerHTML += html;
+
+        });
+
+    if (
+        container.innerHTML === ''
+    ) {
+
+        container.innerHTML = `
+
+            <p style="
+                text-align:center;
+                color:#666;
+                padding:40px;">
+                Nenhum registro ainda.
+            </p>
+
+        `;
+
+    }
+
+}
+
+/* =========================================================
+   RASCUNHO AUTOMÁTICO DO TREINO
+========================================================= */
+
+document.addEventListener(
+    'input',
+    event => {
+
+        if (
+            event.target.closest(
+                '#trainingEditor'
+            )
+        ) {
+            saveTrainingDraft();
+        }
+
+    }
+);
+
+document.addEventListener(
+    'change',
+    event => {
+
+        if (
+            event.target.closest(
+                '#trainingEditor'
+            )
+        ) {
+            saveTrainingDraft();
+        }
+
+    }
+);
+
+/* =========================================================
+   PWA
+========================================================= */
+
+if ('serviceWorker' in navigator) {
+
+    window.addEventListener(
+        'load',
+        () => {
+
+            navigator.serviceWorker
+                .register('./sw.js')
+                .catch(error =>
+                    console.error(
+                        'Falha ao registrar Service Worker:',
+                        error
+                    )
+                );
+
+        }
+    );
+
+}
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+function init() {
+
+    document.getElementById(
+        'metaK'
+    ).value = META_K;
+
+    document.getElementById(
+        'metaP'
+    ).value = META_P;
+
+    renderDashboard();
+    renderWeightHistory();
+
+    filterFoods();
+
+    renderCustomFoodsList();
+    renderQuickMeals();
+    renderNextMealSuggestion();
+    renderEvolutionOverview();
+    renderPersonalRecords();
+    renderPhases();
+    const phaseK=document.getElementById('phaseKcal'), phaseP=document.getElementById('phaseProtein');
+    if(phaseK && !phaseK.value) phaseK.value=META_K;
+    if(phaseP && !phaseP.value) phaseP.value=META_P;
+    touchAutoBackup();
+
+    updateCustomLabels();
+
+    initTrainingDate();
+
+    renderTrainingHistory();
+
+    restoreTrainingDraft();
+
+    initAppNavigation();
+
+    console.log(
+        '%cMeu Shape — Registro de treinos ativo!',
+        'color:#00e676;font-size:16px'
+    );
+
+}
+
+init();
+
+</script>
+
+</body>
+</html>
