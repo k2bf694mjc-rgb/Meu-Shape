@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Meu Shape v7.3 — Texto maior no Android</title>
+<title>Meu Shape v18.1 — Interface fluida</title>
 <meta name="theme-color" content="#121212">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1057,6 +1057,14 @@ h3{font-size:clamp(1.05rem, .94rem + .45vw, 1.35rem)}
 }
 </style>
 
+<style id="mobile-fluid-final-v181">
+/* V18.1 — escala fluida final para celulares */
+@media (max-width:600px){
+  html{font-size:clamp(15px,calc(13.8px + 0.55vw),17px);}
+  .container{width:calc(100% - clamp(18px,5vw,28px));max-width:540px;}
+  .home-metrics-single .macro-value strong{font-size:clamp(2rem,calc(1.78rem + 1.15vw),2.45rem)!important;}
+}
+</style>
 </head>
 
 <body>
@@ -1846,15 +1854,31 @@ function showNotification(text) {
     const notif =
         document.getElementById('notification');
 
-    notif.textContent = text;
+    /* As mensagens podem conter SVG inline. textContent exibia o código literal. */
+    const holder = document.createElement('div');
+    holder.innerHTML = String(text ?? '');
+
+    const allowedTags = new Set(['SPAN','SVG','PATH','CIRCLE','LINE','POLYLINE','POLYGON']);
+    holder.querySelectorAll('*').forEach(el => {
+        if (!allowedTags.has(el.tagName)) {
+            el.replaceWith(document.createTextNode(el.textContent || ''));
+            return;
+        }
+        [...el.attributes].forEach(attr => {
+            const name = attr.name.toLowerCase();
+            if (name.startsWith('on') || name === 'href' || name === 'xlink:href' || name === 'src') {
+                el.removeAttribute(attr.name);
+            }
+        });
+    });
+
+    notif.replaceChildren(...Array.from(holder.childNodes));
     notif.style.display = 'block';
 
     clearTimeout(window.notificationTimer);
-
-    window.notificationTimer =
-        setTimeout(() => {
-            notif.style.display = 'none';
-        },2200);
+    window.notificationTimer = setTimeout(() => {
+        notif.style.display = 'none';
+    },2200);
 
 }
 
@@ -2398,14 +2422,14 @@ function renderDashboard() {
     const proteinRemaining = document.getElementById('proteinRemaining');
 
     if (kcalRemaining) {
-        kcalRemaining.textContent =
+        kcalRemaining.innerHTML =
             totalK >= META_K
             ? `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Meta atingida${totalK > META_K ? ` • +${Math.round(totalK - META_K)} kcal` : ''}`
             : `Faltam ${Math.round(Math.max(0, META_K - totalK))} kcal`;
     }
 
     if (proteinRemaining) {
-        proteinRemaining.textContent =
+        proteinRemaining.innerHTML =
             totalP >= META_P
             ? `<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span> Meta atingida${totalP > META_P ? ` • +${(totalP - META_P).toFixed(1)} g` : ''}`
             : `Faltam ${Math.max(0, META_P - totalP).toFixed(1)} g`;
