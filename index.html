@@ -788,6 +788,11 @@ body{background:#070908!important;color:#f5f7f6!important;}
 /* V13 additions */
 .quick-meal-builder{margin-top:12px;padding:14px;border-radius:17px;background:#0f1512;border:1px solid rgba(141,255,184,.13)}.quick-builder-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.quick-builder-items{display:grid;gap:7px;margin:10px 0}.quick-builder-item{display:flex;gap:9px;padding:10px;border-radius:13px;background:#151c18}.quick-builder-item input{width:18px;height:18px}.quick-builder-item strong{display:block;font-size:.82rem}.quick-builder-item small{display:block;margin-top:3px;color:#718078}.suggestion-card{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:17px;background:linear-gradient(145deg,#121b16,#0d120f);border:1px solid rgba(141,255,184,.14)}.suggestion-card>div{min-width:0}.suggestion-label{display:block;font-size:.62rem;color:#6f7d75;letter-spacing:.1em;font-weight:800}.suggestion-card strong{display:block;margin-top:5px}.suggestion-card small{display:block;margin-top:4px;color:#78857e;font-size:.72rem;line-height:1.4}.suggestion-card button{width:44px!important;min-width:44px;padding:0!important}.suggestion-empty,.suggestion-done{padding:5px 0}.suggestion-empty small,.suggestion-done small{display:block;margin-top:5px;color:#718078;line-height:1.4}.pr-card{margin-top:12px;padding:14px;border-radius:17px;background:#101613;border:1px solid rgba(255,255,255,.07)}.pr-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.pr-row:last-child{border-bottom:0}.pr-row strong{display:block;font-size:.82rem}.pr-row small{display:block;margin-top:4px;color:#718078;font-size:.67rem}.pr-row>span{font-weight:800;font-size:.75rem}.pr-empty,.phase-empty{color:#718078;font-size:.78rem;padding:14px 2px}.training-summary-card{border-color:rgba(141,255,184,.18)}.training-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.training-summary-grid>div{padding:12px;border-radius:14px;background:#101613;border:1px solid rgba(255,255,255,.06)}.training-summary-grid span,.training-comparison>span{display:block;color:#68756d;font-size:.61rem;letter-spacing:.1em;font-weight:800}.training-summary-grid strong{display:block;margin-top:5px;font-size:.95rem}.training-comparison{margin-top:10px;padding:12px;border-radius:14px;background:rgba(141,255,184,.045)}.training-comparison strong{display:block;margin-top:5px;font-size:.78rem;line-height:1.45}.current-phase{padding:14px;border-radius:16px;background:linear-gradient(145deg,#121a16,#0d120f);border:1px solid rgba(141,255,184,.14)}.phase-status{display:block;color:#718078;font-size:.62rem;letter-spacing:.1em;font-weight:800}.current-phase>strong{display:block;margin-top:6px}.current-phase small{display:block;margin-top:5px;color:#718078;line-height:1.4}.phase-form{margin-top:14px}.phase-history{margin-top:12px}.phase-history-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.phase-history-row strong{display:block;font-size:.8rem}.phase-history-row small{display:block;margin-top:3px;color:#718078}.phase-history-row>span{font-size:.68rem;color:#8dffb8;font-weight:800}.diet-history-toggle{margin-top:0!important}
 .section-collapse-toggle{width:100%;display:flex;align-items:center;gap:10px;text-align:left;margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:48px;color:var(--text);}.section-collapse-toggle .data-chip{margin-left:auto;}.section-collapse-toggle .toggle-chevron{margin-left:auto;transition:transform .18s ease;}.section-collapse-toggle.open .toggle-chevron{transform:rotate(180deg);}.collapsible-card{overflow:hidden;}.collapsible-card>.custom-foods-panel{padding-top:0;}.collapsible-card>.custom-foods-panel.open{padding-top:12px;}
+
+/* ===== PWA UPDATE / STABILITY ===== */
+.update-banner{position:fixed;left:12px;right:12px;bottom:14px;z-index:9999;display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;background:linear-gradient(145deg,#132019,#0d1410);border:1px solid rgba(141,255,184,.28);box-shadow:0 14px 40px rgba(0,0,0,.42);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.update-banner.show{display:flex}.update-banner strong{display:block;font-size:.82rem}.update-banner small{display:block;margin-top:3px;color:#78857e;font-size:.68rem}.update-banner button{width:auto!important;min-width:92px!important;padding:0 14px!important;min-height:40px!important;background:linear-gradient(135deg,#8dffb8,#24e878)!important;color:#04130b!important;border:0!important;border-radius:12px!important;font-weight:850}
+.app-error-banner{position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:10000;display:none;padding:12px 14px;border-radius:15px;background:#241216;border:1px solid rgba(255,107,122,.28);box-shadow:0 12px 30px rgba(0,0,0,.4);font-size:.76rem;color:#ffdce0}.app-error-banner.show{display:block}
 </style>
 
 <style>
@@ -864,9 +869,66 @@ body{background:#070908!important;color:#f5f7f6!important;}
 .data-overview{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.evo-stat{padding:15px;border-radius:17px;background:linear-gradient(145deg,#121916,#0c110f);border:1px solid rgba(255,255,255,.07)}.evo-stat .label{font-size:.62rem;color:#718078;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.evo-stat strong{display:block;margin-top:7px;font-size:1.3rem;letter-spacing:-.03em}.evo-stat small{display:block;margin-top:4px;color:#718078;font-size:.68rem}.evo-stat.accent strong{color:#8dffb8}.evo-stat.blue{background:linear-gradient(145deg,#111821,#0c1015)}.evo-stat.blue strong{color:#9abfff}.evo-stat.purple{background:linear-gradient(145deg,#17121e,#0e0b12)}.evo-stat.purple strong{color:#d1a7ff}.evo-section-title{margin:22px 2px 10px;color:#87938c;font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;font-weight:850}.recent-foods{margin-top:12px}.recent-foods-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.recent-foods-head span{font-size:.68rem;color:#78857e;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.recent-foods-list{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}.recent-food{flex:0 0 auto;width:150px;text-align:left;padding:11px 12px;border-radius:15px;background:#111815;border:1px solid rgba(255,255,255,.07)}.recent-food strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.82rem}.recent-food small{display:block;margin-top:4px;color:#718078;font-size:.66rem}.quick-meals-grid{display:grid;gap:9px}.quick-meal{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px;border-radius:16px;background:#101613;border:1px solid rgba(255,255,255,.07)}.quick-meal-info{min-width:0}.quick-meal-info strong{display:block;font-size:.9rem}.quick-meal-info small{display:block;margin-top:4px;color:#718078}.quick-meal-actions{display:flex;gap:6px}.quick-meal-actions button{min-width:42px;width:auto!important;padding:0 11px!important;min-height:40px}.autosave-status{display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:15px;background:rgba(141,255,184,.045);border:1px solid rgba(141,255,184,.11);color:#aebbb3;font-size:.76rem}.autosave-status strong{color:#8dffb8}.weight-history-empty{padding:28px 10px;text-align:center;color:#69766e}.weight-history-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.055)}.weight-history-row:last-child{border-bottom:0}.weight-history-date strong{display:block;font-size:.88rem}.weight-history-date span{display:block;margin-top:3px;color:#68756d;font-size:.66rem}.weight-history-value{text-align:right}.weight-history-value strong{display:block;font-size:1rem}.weight-history-value small{display:block;margin-top:3px;font-weight:800}.weight-history-value small.down{color:#8dffb8}.weight-history-value small.up{color:#ff9a9a}.weight-history-value small.same{color:#89958e}.exercise-progress-card{margin-top:12px;padding:14px;border-radius:17px;background:#101613;border:1px solid rgba(255,255,255,.07)}.exercise-progress-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.045)}.exercise-progress-row:last-child{border-bottom:0}.exercise-progress-row span{color:#8d9992;font-size:.78rem}.exercise-progress-row strong{font-size:.8rem}.
 @media(max-width:430px){.data-overview{gap:8px}.evo-stat{padding:13px}.evo-stat strong{font-size:1.15rem}.recent-food{width:140px}}
 </style>
+
+<style id="android-readability-fix">
+/* Android readability: keep the Home macro panel legible on small screens.
+   This block intentionally comes last so it wins over earlier responsive rules. */
+@media (max-width: 500px){
+  .home-metrics-single .daily-macro-row{
+    grid-template-columns:42px minmax(0,1fr) auto !important;
+    column-gap:12px !important;
+    min-height:78px !important;
+  }
+  .home-metrics-single .macro-icon{
+    width:42px !important;
+    height:42px !important;
+  }
+  .home-metrics-single .macro-title{
+    font-size:.76rem !important;
+    letter-spacing:.11em !important;
+    margin-bottom:4px !important;
+  }
+  .home-metrics-single .macro-value strong{
+    font-size:1.82rem !important;
+    line-height:1 !important;
+  }
+  .home-metrics-single .macro-value span{
+    font-size:.88rem !important;
+  }
+  .home-metrics-single .macro-goal{
+    min-width:112px !important;
+  }
+  .home-metrics-single .macro-goal span{
+    font-size:.72rem !important;
+  }
+  .home-metrics-single .macro-goal strong{
+    font-size:.96rem !important;
+  }
+  .home-metrics-single .macro-goal small{
+    font-size:.74rem !important;
+    line-height:1.25 !important;
+  }
+  .home-metrics-single .macro-progress{
+    left:54px !important;
+    right:112px !important;
+    height:5px !important;
+  }
+  .home-metrics-single .home-date{font-size:1.08rem !important;}
+  .home-metrics-single .home-goal-label{font-size:.72rem !important;}
+}
+</style>
+
 </head>
 
 <body>
+<div id="updateBanner" class="update-banner" aria-live="polite">
+  <div>
+    <strong>Nova versão disponível</strong>
+    <small>Seus dados locais serão preservados.</small>
+  </div>
+  <button type="button" onclick="applyAppUpdate()">Atualizar</button>
+</div>
+<div id="appErrorBanner" class="app-error-banner" aria-live="assertive"></div>
 
 
 
@@ -4280,30 +4342,6 @@ document.addEventListener(
 );
 
 /* =========================================================
-   PWA
-========================================================= */
-
-if ('serviceWorker' in navigator) {
-
-    window.addEventListener(
-        'load',
-        () => {
-
-            navigator.serviceWorker
-                .register('./sw.js')
-                .catch(error =>
-                    console.error(
-                        'Falha ao registrar Service Worker:',
-                        error
-                    )
-                );
-
-        }
-    );
-
-}
-
-/* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
@@ -4350,6 +4388,71 @@ function init() {
 
 init();
 
+
+/* =========================================================
+   PWA — ATUALIZAÇÃO AUTOMÁTICA SEGURA
+========================================================= */
+let pendingAppUpdate = null;
+let appReloadingForUpdate = false;
+
+function showPendingUpdate(reg){
+  if(reg && reg.waiting){
+    pendingAppUpdate = reg.waiting;
+    document.getElementById('updateBanner')?.classList.add('show');
+  }
+}
+
+function applyAppUpdate(){
+  if(!pendingAppUpdate) return;
+  try{ if(typeof touchAutoBackup === 'function') touchAutoBackup(); }catch(e){}
+  pendingAppUpdate.postMessage({type:'SKIP_WAITING'});
+}
+
+function showAppError(message){
+  const el=document.getElementById('appErrorBanner');
+  if(!el) return;
+  el.textContent='O app encontrou um erro e protegeu seus dados locais. '+message;
+  el.classList.add('show');
+  clearTimeout(window.appErrorTimer);
+  window.appErrorTimer=setTimeout(()=>el.classList.remove('show'),6000);
+}
+
+window.addEventListener('error',e=>{
+  console.error(e.error||e.message);
+  showAppError('Tente voltar para o Início e continuar.');
+});
+window.addEventListener('unhandledrejection',e=>{
+  console.error(e.reason);
+  showAppError('Tente novamente.');
+});
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', async ()=>{
+    try{
+      const reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+      await reg.update();
+      showPendingUpdate(reg);
+
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        if(!nw) return;
+        nw.addEventListener('statechange',()=>{
+          if(nw.state==='installed' && navigator.serviceWorker.controller){
+            showPendingUpdate(reg);
+          }
+        });
+      });
+
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{
+        if(appReloadingForUpdate) return;
+        appReloadingForUpdate=true;
+        window.location.reload();
+      });
+    }catch(error){
+      console.error('Falha ao registrar Service Worker:',error);
+    }
+  });
+}
 </script>
 
 </body>

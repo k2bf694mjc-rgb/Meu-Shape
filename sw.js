@@ -1,16 +1,17 @@
-const CACHE_NAME = 'meu-shape-v14-2026-10-04';
+const CACHE_NAME = 'meu-shape-v17';
 const APP_SHELL = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './icon-180.png',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
   );
-  // Intentionally do not skipWaiting automatically.
-  // The page shows an update button first so the user can finish/save safely.
 });
 
 self.addEventListener('activate', event => {
@@ -22,33 +23,43 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('message', event => {
-  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', event => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
+  if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) return;
 
-  // Navigation: network-first so a published update is picked up without reinstalling.
-  if (req.mode === 'navigate') {
+  // HTML navigations use the network first so a published GitHub Pages
+  // version is discovered quickly; cache remains the offline fallback.
+  if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(req).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
-        return response;
-      }).catch(() => caches.match('./index.html'))
+      fetch(event.request, {cache:'no-store'})
+        .then(response => {
+          if (response && response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
     );
     return;
   }
 
-  // Local app assets: cache-first with network fallback.
   event.respondWith(
-    caches.match(req).then(cached => cached || fetch(req).then(response => {
-      if (new URL(req.url).origin === self.location.origin) {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
-      }
-      return response;
-    }))
+    caches.match(event.request).then(cached => {
+      const network = fetch(event.request).then(response => {
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        }
+        return response;
+      }).catch(() => cached);
+      return cached || network;
+    })
   );
 });
