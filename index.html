@@ -918,6 +918,145 @@ body{background:#070908!important;color:#f5f7f6!important;}
 }
 </style>
 
+
+<style id="responsive-fluid-interface-v18">
+/* =========================================================
+   V18 — INTERFACE FLUIDA / RESPONSIVA
+   A interface se adapta ao viewport sem usar zoom/transform.
+   A escala cresce suavemente entre celulares, tablets e desktop.
+========================================================= */
+:root{
+  --ui-font: clamp(15px, calc(14.2px + 0.28vw), 18px);
+  --ui-gap: clamp(9px, 1.25vw, 18px);
+  --ui-card-pad: clamp(14px, 1.7vw, 24px);
+  --ui-control-h: clamp(48px, 4.2vw, 58px);
+}
+
+html{
+  font-size: var(--ui-font);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body{
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.container{
+  width: min(calc(100% - clamp(18px, 3vw, 48px)), 980px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card,
+.panel,
+.section-card,
+.training-card{
+  padding: var(--ui-card-pad);
+  border-radius: clamp(12px, 1.35vw, 20px);
+}
+
+button,
+.btn,
+input,
+select,
+textarea{
+  min-height: var(--ui-control-h);
+  border-radius: clamp(9px, 1vw, 14px);
+}
+
+button,
+.btn{
+  padding-left: clamp(13px, 1.5vw, 22px);
+  padding-right: clamp(13px, 1.5vw, 22px);
+}
+
+/* Menus, títulos e textos principais acompanham a largura da tela. */
+h1{font-size:clamp(1.45rem, 1.15rem + 1vw, 2rem)}
+h2{font-size:clamp(1.25rem, 1.02rem + .8vw, 1.7rem)}
+h3{font-size:clamp(1.05rem, .94rem + .45vw, 1.35rem)}
+
+.nav-grid,
+.home-grid,
+.menu-grid,
+.action-grid{
+  gap: var(--ui-gap);
+}
+
+/* Home — macros: legíveis no celular e sem ficarem gigantes no desktop. */
+.home-metrics-single .daily-macro-row{
+  grid-template-columns:clamp(42px, 4.4vw, 50px) minmax(0,1fr) auto !important;
+  column-gap:clamp(11px, 1.2vw, 18px) !important;
+  min-height:clamp(78px, 8vw, 98px) !important;
+  padding-top:clamp(14px, 1.5vw, 20px) !important;
+  padding-bottom:clamp(17px, 1.8vw, 23px) !important;
+}
+
+.home-metrics-single .macro-icon{
+  width:clamp(42px, 4.4vw, 50px) !important;
+  height:clamp(42px, 4.4vw, 50px) !important;
+  font-size:clamp(22px, 2.1vw, 28px) !important;
+}
+
+.home-metrics-single .macro-title{
+  font-size:clamp(.76rem, .68rem + .22vw, .9rem) !important;
+}
+
+.home-metrics-single .macro-value strong{
+  font-size:clamp(1.95rem, 1.55rem + 1.15vw, 2.45rem) !important;
+  line-height:1 !important;
+}
+
+.home-metrics-single .macro-value span{
+  font-size:clamp(.88rem, .78rem + .25vw, 1.05rem) !important;
+}
+
+.home-metrics-single .macro-goal{
+  min-width:clamp(104px, 11vw, 136px) !important;
+}
+
+.home-metrics-single .macro-goal span{
+  font-size:clamp(.70rem, .64rem + .18vw, .82rem) !important;
+}
+
+.home-metrics-single .macro-goal strong{
+  font-size:clamp(.98rem, .88rem + .28vw, 1.14rem) !important;
+}
+
+.home-metrics-single .macro-goal small{
+  font-size:clamp(.74rem, .68rem + .18vw, .86rem) !important;
+}
+
+.home-metrics-single .macro-progress{
+  left:clamp(53px, 5.5vw, 64px) !important;
+  right:clamp(104px, 11vw, 136px) !important;
+  height:clamp(5px, .45vw, 7px) !important;
+}
+
+.home-metrics-single .home-date{
+  font-size:clamp(1.05rem, .98rem + .25vw, 1.25rem) !important;
+}
+
+.home-metrics-single .home-goal-label{
+  font-size:clamp(.72rem, .66rem + .18vw, .82rem) !important;
+}
+
+/* No desktop gigantesco: o conteúdo ganha espaço, mas continua centralizado. */
+@media (min-width: 700px){
+  .container{padding-left:clamp(4px, 1vw, 16px);padding-right:clamp(4px, 1vw, 16px)}
+}
+
+/* Celulares estreitos: preserva leitura sem quebrar a linha de metas. */
+@media (max-width: 360px){
+  .container{width:calc(100% - 16px)}
+  .home-metrics-single .daily-macro-row{grid-template-columns:40px minmax(0,1fr) 96px !important;column-gap:9px !important}
+  .home-metrics-single .macro-icon{width:40px !important;height:40px !important}
+  .home-metrics-single .macro-goal{min-width:96px !important}
+  .home-metrics-single .macro-progress{left:49px !important;right:96px !important}
+}
+</style>
+
 </head>
 
 <body>

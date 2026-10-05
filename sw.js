@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meu-shape-v17';
+const CACHE_NAME = 'meu-shape-v18';
 const APP_SHELL = [
   './',
   './index.html',
