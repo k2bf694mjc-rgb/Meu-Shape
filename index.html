@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Meu Shape v7.3</title>
+<title>Meu Shape v7.3 — Texto maior no Android</title>
 <meta name="theme-color" content="#121212">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,7 +11,6 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-180.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<div id="updateBanner" class="update-banner"><div><strong>Nova versão disponível</strong><small>Seus dados locais serão preservados.</small></div><button type="button" onclick="applyAppUpdate()">Atualizar</button></div><div id="appErrorBanner" class="app-error-banner"></div>
 
 <style>
 :root {
@@ -678,7 +677,28 @@ body{background:#070908!important;color:#f5f7f6!important;}
 .home-card-v5.food{background:linear-gradient(145deg,#14241b,#0e1511)!important}.home-card-v5.workout{background:linear-gradient(145deg,#151c28,#0e1218)!important}.home-card-v5.data{background:linear-gradient(145deg,#19161f,#111016)!important}.home-card-v5.profile{background:linear-gradient(145deg,#1a1d19,#111410)!important}
 .home-card-v5 .card-icon{position:absolute;top:17px;left:18px;width:39px;height:39px;border-radius:13px;display:grid;place-items:center;font-size:21px;background:rgba(255,255,255,.06);color:#8dffb8;border:1px solid rgba(255,255,255,.07);}.home-card-v5.workout .card-icon{color:#8eb7ff}.home-card-v5.data .card-icon{color:#d2a7ff}.home-card-v5.profile .card-icon{color:#d7e69d}
 .card-arrow{position:absolute;right:16px;top:17px;color:#59645e;font-size:19px;}.home-card-v5 strong{font-size:1.08rem;letter-spacing:-.02em;position:relative}.home-card-v5 span:not(.card-icon){font-size:.72rem;line-height:1.4;color:#87938c;margin-top:5px;position:relative;}
-@media(max-width:430px){.home-hero h1{font-size:1.75rem}.home-card-v5{min-height:145px!important;padding:16px!important}.home-grid-v5{gap:10px}.daily-strip strong{font-size:1.18rem}}
+@media(max-width:430px){
+    .home-hero h1{font-size:1.75rem}
+    .home-card-v5{min-height:145px!important;padding:16px!important}
+    .home-grid-v5{gap:10px}
+    .daily-strip strong{font-size:1.18rem}
+
+    /* Acessibilidade — telas Android menores */
+    .home-metrics-single .home-metrics-head{padding-bottom:15px}
+    .home-metrics-single .home-goal-label{font-size:.70rem;letter-spacing:.10em}
+    .home-metrics-single .home-date{font-size:1.06rem}
+    .home-metrics-single .daily-macro-row{grid-template-columns:44px minmax(0,1fr) auto;column-gap:13px;padding:14px 2px 19px}
+    .home-metrics-single .macro-icon{width:44px;height:44px;font-size:23px}
+    .home-metrics-single .macro-title{font-size:.70rem;letter-spacing:.12em;margin-bottom:4px}
+    .home-metrics-single .macro-value strong{font-size:1.82rem}
+    .home-metrics-single .macro-value span{font-size:.82rem}
+    .home-metrics-single .macro-goal{min-width:112px}
+    .home-metrics-single .macro-goal span{font-size:.68rem;letter-spacing:.08em}
+    .home-metrics-single .macro-goal strong{font-size:.90rem;margin-top:3px}
+    .home-metrics-single .macro-goal small{font-size:.70rem;margin-top:5px}
+    .home-metrics-single .macro-progress{left:57px;bottom:7px;height:4px}
+}
+
 
 /* ================= HOME V7 — METAS DO DIA ================= */
 .home-metrics{padding:20px 0 0}
@@ -767,12 +787,7 @@ body{background:#070908!important;color:#f5f7f6!important;}
 
 /* V13 additions */
 .quick-meal-builder{margin-top:12px;padding:14px;border-radius:17px;background:#0f1512;border:1px solid rgba(141,255,184,.13)}.quick-builder-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.quick-builder-items{display:grid;gap:7px;margin:10px 0}.quick-builder-item{display:flex;gap:9px;padding:10px;border-radius:13px;background:#151c18}.quick-builder-item input{width:18px;height:18px}.quick-builder-item strong{display:block;font-size:.82rem}.quick-builder-item small{display:block;margin-top:3px;color:#718078}.suggestion-card{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:17px;background:linear-gradient(145deg,#121b16,#0d120f);border:1px solid rgba(141,255,184,.14)}.suggestion-card>div{min-width:0}.suggestion-label{display:block;font-size:.62rem;color:#6f7d75;letter-spacing:.1em;font-weight:800}.suggestion-card strong{display:block;margin-top:5px}.suggestion-card small{display:block;margin-top:4px;color:#78857e;font-size:.72rem;line-height:1.4}.suggestion-card button{width:44px!important;min-width:44px;padding:0!important}.suggestion-empty,.suggestion-done{padding:5px 0}.suggestion-empty small,.suggestion-done small{display:block;margin-top:5px;color:#718078;line-height:1.4}.pr-card{margin-top:12px;padding:14px;border-radius:17px;background:#101613;border:1px solid rgba(255,255,255,.07)}.pr-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.pr-row:last-child{border-bottom:0}.pr-row strong{display:block;font-size:.82rem}.pr-row small{display:block;margin-top:4px;color:#718078;font-size:.67rem}.pr-row>span{font-weight:800;font-size:.75rem}.pr-empty,.phase-empty{color:#718078;font-size:.78rem;padding:14px 2px}.training-summary-card{border-color:rgba(141,255,184,.18)}.training-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.training-summary-grid>div{padding:12px;border-radius:14px;background:#101613;border:1px solid rgba(255,255,255,.06)}.training-summary-grid span,.training-comparison>span{display:block;color:#68756d;font-size:.61rem;letter-spacing:.1em;font-weight:800}.training-summary-grid strong{display:block;margin-top:5px;font-size:.95rem}.training-comparison{margin-top:10px;padding:12px;border-radius:14px;background:rgba(141,255,184,.045)}.training-comparison strong{display:block;margin-top:5px;font-size:.78rem;line-height:1.45}.current-phase{padding:14px;border-radius:16px;background:linear-gradient(145deg,#121a16,#0d120f);border:1px solid rgba(141,255,184,.14)}.phase-status{display:block;color:#718078;font-size:.62rem;letter-spacing:.1em;font-weight:800}.current-phase>strong{display:block;margin-top:6px}.current-phase small{display:block;margin-top:5px;color:#718078;line-height:1.4}.phase-form{margin-top:14px}.phase-history{margin-top:12px}.phase-history-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.phase-history-row strong{display:block;font-size:.8rem}.phase-history-row small{display:block;margin-top:3px;color:#718078}.phase-history-row>span{font-size:.68rem;color:#8dffb8;font-weight:800}.diet-history-toggle{margin-top:0!important}
-
-/* ===== V14 — ESTABILIDADE / ATUALIZAÇÃO ===== */
-.update-banner{position:fixed;left:12px;right:12px;bottom:14px;z-index:9999;display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;background:linear-gradient(145deg,#132019,#0d1410);border:1px solid rgba(141,255,184,.28);box-shadow:0 14px 40px rgba(0,0,0,.42);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.update-banner.show{display:flex}.update-banner strong{display:block;font-size:.82rem}.update-banner small{display:block;margin-top:3px;color:#78857e;font-size:.68rem}.update-banner button{width:auto!important;min-width:92px!important;padding:0 14px!important;min-height:40px!important;background:linear-gradient(135deg,#8dffb8,#24e878)!important;color:#04130b!important;border:0!important;border-radius:12px!important;font-weight:850}
-.app-error-banner{position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:10000;display:none;padding:12px 14px;border-radius:15px;background:#241216;border:1px solid rgba(255,107,122,.28);box-shadow:0 12px 30px rgba(0,0,0,.4);font-size:.76rem;color:#ffdce0}.app-error-banner.show{display:block}
-.training-history-toggle{margin-top:0!important}
+.section-collapse-toggle{width:100%;display:flex;align-items:center;gap:10px;text-align:left;margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:48px;color:var(--text);}.section-collapse-toggle .data-chip{margin-left:auto;}.section-collapse-toggle .toggle-chevron{margin-left:auto;transition:transform .18s ease;}.section-collapse-toggle.open .toggle-chevron{transform:rotate(180deg);}.collapsible-card{overflow:hidden;}.collapsible-card>.custom-foods-panel{padding-top:0;}.collapsible-card>.custom-foods-panel.open{padding-top:12px;}
 </style>
 
 <style>
@@ -904,19 +919,19 @@ body{background:#070908!important;color:#f5f7f6!important;}
     <div class="home-label">Acesso rápido</div>
 
     <div class="home-grid-v5">
-        <button class="home-card-v5 food" type="button" onclick="showTabWithHistory('diet')">
+        <button class="home-card-v5 food" type="button" onclick="showTab('diet')">
             <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 6h14v12H5z"/><path d="M8 3v4M16 3v4M8 11h8M8 15h5"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
             <strong>Alimentação</strong><span>Registrar refeições<br>e acompanhar macros</span>
         </button>
-        <button class="home-card-v5 workout" type="button" onclick="showTabWithHistory('training')">
+        <button class="home-card-v5 workout" type="button" onclick="showTab('training')">
             <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M7 6v12M17 6v12M4 9v6M20 9v6M7 12h10"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
             <strong>Treino</strong><span>A1 · B1 · A2 · B2<br>e histórico de cargas</span>
         </button>
-        <button class="home-card-v5 data" type="button" onclick="showTabWithHistory('data')">
+        <button class="home-card-v5 data" type="button" onclick="showTab('data')">
             <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 3-3 3 2 5-6"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
             <strong>Dados</strong><span>Peso, evolução<br>e histórico completo</span>
         </button>
-        <button class="home-card-v5 profile" type="button" onclick="showTabWithHistory('profile')">
+        <button class="home-card-v5 profile" type="button" onclick="showTab('profile')">
             <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-3.4 3.2-5 7-5s6.2 1.6 7 5"/></svg></div><div class="card-arrow"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h12"/><path d="m13 6 6 6-6 6"/></svg></div>
             <strong>Perfil</strong><span>Metas, informações<br>e configurações</span>
         </button>
@@ -927,7 +942,7 @@ body{background:#070908!important;color:#f5f7f6!important;}
 <!-- ================= DIETA ================= -->
 
 <div id="diet" class="tab">
-    <button type="button" class="tab-back-home" onclick="showTabWithHistory('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
 
     <div class="card">
         <div class="data-heading">
@@ -1094,12 +1109,9 @@ body{background:#070908!important;color:#f5f7f6!important;}
 
     </div>
 
-    <div class="card">
-
-        <h3>Refeições de Hoje</h3>
-
-        <div id="mealsToday"></div>
-
+    <div class="card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="mealsTodayToggle" onclick="toggleSectionPanel('mealsTodayPanel','mealsTodayToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3v8M9 3v8M12 3v8M9 11v10"/><path d="M17 3v18"/><path d="M14 3c4 0 5 3 5 6h-5"/></svg></span><span>Refeições de Hoje</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="mealsTodayPanel" class="custom-foods-panel"><div id="mealsToday"></div></div>
     </div>
 
     <div class="card"><div id="nextMealSuggestion"></div></div>
@@ -1109,7 +1121,7 @@ body{background:#070908!important;color:#f5f7f6!important;}
 <!-- ================= TREINO ================= -->
 
 <div id="training" class="tab">
-    <button type="button" class="tab-back-home" onclick="showTabWithHistory('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
 
     <!-- INICIAR TREINO -->
 
@@ -1257,62 +1269,54 @@ body{background:#070908!important;color:#f5f7f6!important;}
 
     <div id="trainingSaveSummary" class="card training-summary-card" style="display:none"></div>
 
+    <!-- HISTÓRICO -->
+
+    <div class="card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="trainingHistoryToggle" onclick="toggleSectionPanel('trainingHistoryPanel','trainingHistoryToggle')">
+            <span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 5v5h5"/><path d="M12 8v5l3 2"/></svg></span><span>Histórico de Treinos</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div id="trainingHistoryPanel" class="custom-foods-panel"><div id="trainingHistory"></div></div>
+    </div>
+
 </div>
 
 <!-- ================= HISTÓRICO DA DIETA ================= -->
 
 <div id="data" class="tab">
-    <button type="button" class="tab-back-home" onclick="showTabWithHistory('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
 
-    <div class="card">
-        <div class="data-heading"><div><h3>Central de evolução</h3><p>Resumo do seu progresso registrado no app.</p></div><span class="data-chip">EVOLUÇÃO</span></div>
-        <div id="evolutionOverview" class="data-overview"></div>
-        <div id="personalRecordsOverview"></div>
+    <div class="card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="evolutionOverviewToggle" onclick="toggleSectionPanel('evolutionOverviewPanel','evolutionOverviewToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 18 9 13l4 3 7-9"/><path d="M15 7h5v5"/></svg></span><span>Central de evolução</span><span class="data-chip">EVOLUÇÃO</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="evolutionOverviewPanel" class="custom-foods-panel"><div id="evolutionOverview" class="data-overview"></div></div>
     </div>
 
-    <div class="card data-chart-card">
-        <div class="data-heading">
-            <div>
-                <h3>Evolução</h3>
-                <p>Seu peso ao longo do tempo.</p>
-            </div>
-            <span class="data-chip">PROGRESSO</span>
-        </div>
-
-        <canvas id="chartWeight" height="180"></canvas>
-
-        <div class="weight-entry">
-            <input type="number" id="newWeight" placeholder="Peso atual (kg)" step="0.1" inputmode="decimal">
-            <button type="button" onclick="addWeight()">Adicionar</button>
-        </div>
+    <div class="card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="personalRecordsToggle" onclick="toggleSectionPanel('personalRecordsPanel','personalRecordsToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3z"/></svg></span><span>Recordes pessoais</span><span class="data-chip">PRs</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="personalRecordsPanel" class="custom-foods-panel"><div id="personalRecordsOverview"></div></div>
     </div>
 
-    <div class="card weight-history-card">
-        <div class="data-heading">
-            <div>
-                <h3>Histórico completo</h3>
-                <p>Cada pesagem registrada, da mais recente à mais antiga.</p>
-            </div>
-            <span class="data-chip">PESAGENS</span>
-        </div>
-        <div id="weightHistoryList"></div>
+    <div class="card data-chart-card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="weightChartToggle" onclick="toggleSectionPanel('weightChartPanel','weightChartToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M4 18h16"/><path d="m7 14 4-4 3 2 5-6"/></svg></span><span>Evolução</span><span class="data-chip">PROGRESSO</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="weightChartPanel" class="custom-foods-panel"><div class="data-heading"><div><p>Seu peso ao longo do tempo.</p></div></div><canvas id="chartWeight" height="180"></canvas><div class="weight-entry"><input type="number" id="newWeight" placeholder="Peso atual (kg)" step="0.1" inputmode="decimal"><button type="button" onclick="addWeight()">Adicionar</button></div></div>
+    </div>
+
+    <div class="card weight-history-card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="weightHistoryToggle" onclick="toggleSectionPanel('weightHistoryPanel','weightHistoryToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span>Histórico completo</span><span class="data-chip">PESAGENS</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="weightHistoryPanel" class="custom-foods-panel"><div class="data-heading"><div><p>Cada pesagem registrada, da mais recente à mais antiga.</p></div></div><div id="weightHistoryList"></div></div>
     </div>
 
     <div class="card"><button type="button" class="custom-foods-card-toggle diet-history-toggle" id="dietHistoryToggle" onclick="toggleDietHistory()"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span>Histórico da alimentação</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div id="dietHistoryPanel" class="custom-foods-panel"><div id="historyList"></div></div></div>
-
-    <div class="card"><button type="button" class="custom-foods-card-toggle training-history-toggle" id="trainingHistoryToggle" onclick="toggleTrainingHistoryPanel()"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 5v5h5"/><path d="M12 8v5l3 2"/></svg></span><span>Histórico de treinos</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div id="trainingHistoryPanel" class="custom-foods-panel"><div id="trainingHistory"></div></div></div>
 
 </div>
 
 <!-- ================= PERFIL ================= -->
 
 <div id="profile" class="tab">
-    <button type="button" class="tab-back-home" onclick="showTabWithHistory('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
+    <button type="button" class="tab-back-home" onclick="showTab('dash')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg><span>Início</span></button>
 
-    <div class="card">
-
-        <h3>Calculadora Inteligente de Dieta</h3>
-
+    <div class="card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="dietCalculatorToggle" onclick="toggleSectionPanel('dietCalculatorPanel','dietCalculatorToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></span><span>Calculadora Inteligente de Dieta</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="dietCalculatorPanel" class="custom-foods-panel">
         <label>Sexo</label>
 
         <select id="sexo">
@@ -1414,16 +1418,21 @@ body{background:#070908!important;color:#f5f7f6!important;}
         </div>
 
     </div>
+    </div>
 
-    <div class="card phase-card">
-        <div class="data-heading"><div><h3>Fase atual</h3><p>Guarde objetivo, metas e peso-alvo sem perder o histórico.</p></div><span class="data-chip">FASES</span></div>
+    <div class="card phase-card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="phaseToggle" onclick="toggleSectionPanel('phasePanel','phaseToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4z"/><path d="M9 12l2 2 4-4"/></svg></span><span>Fase atual</span><span class="data-chip">FASES</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="phasePanel" class="custom-foods-panel">
+        <div class="data-heading"><div><p>Guarde objetivo, metas e peso-alvo sem perder o histórico.</p></div></div>
         <div id="currentPhaseBox"></div>
         <div class="phase-form"><label>Nome da fase</label><input type="text" id="phaseName" placeholder="Ex: Cut até 72 kg"><label>Objetivo</label><input type="text" id="phaseObjective" placeholder="Ex: Secar mantendo massa"><label>Calorias</label><input type="number" id="phaseKcal" step="1"><label>Proteína (g)</label><input type="number" id="phaseProtein" step="1"><label>Peso-alvo (kg)</label><input type="number" id="phaseTargetWeight" step="0.1" placeholder="Ex: 72"><button type="button" onclick="startNewPhase()"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>Iniciar nova fase</span></button></div>
         <div id="phaseHistory"></div>
     </div>
+    </div>
 
-    <div class="card">
-
+    <div class="card collapsible-card">
+        <button type="button" class="custom-foods-card-toggle section-collapse-toggle" id="currentGoalsToggle" onclick="toggleSectionPanel('currentGoalsPanel','currentGoalsToggle')"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h16"/></svg></span><span>Metas Atuais</span><svg class="icon-svg toggle-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div id="currentGoalsPanel" class="custom-foods-panel">
         <h3>Metas Atuais</h3>
 
         <label>Calorias diárias</label>
@@ -1443,7 +1452,7 @@ body{background:#070908!important;color:#f5f7f6!important;}
         <button onclick="saveMetas()">
             <span class="icon-button-wrap"><span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h8V4"/><path d="M8 20v-6h8v6"/></svg></span><span>Salvar Metas</span></span>
         </button>
-
+        </div>
     </div>
 
     <div class="card">
@@ -1540,32 +1549,16 @@ try { quickMeals = JSON.parse(localStorage.getItem(QUICK_MEALS_KEY) || '[]') || 
 try { recentFoods = JSON.parse(localStorage.getItem(RECENT_FOODS_KEY) || '[]') || []; } catch(e) {}
 try { phases = JSON.parse(localStorage.getItem(PHASES_KEY) || '[]') || []; } catch(e) {}
 try { currentPhaseId = localStorage.getItem('currentPhaseIdV1') || null; } catch(e) {}
-function buildAutoBackupSnapshot(){
-  const keys=['shapeMasterDBv7','customFoodsV1','metaK','metaP','quickMealsV1','recentFoodsV1','shapePhasesV1','currentPhaseIdV1','trainingDraftV1'];
-  const state={};
-  keys.forEach(k=>{ const v=localStorage.getItem(k); if(v!==null) state[k]=v; });
-  return {schema:'MeuShapeAutoBackupV2',savedAt:new Date().toISOString(),state};
-}
 function touchAutoBackup(){
   try {
-    const snapshot=buildAutoBackupSnapshot();
+    const snapshot={db,customFoods,META_K,META_P,savedAt:new Date().toISOString()};
     localStorage.setItem(AUTOBACKUP_KEY,JSON.stringify(snapshot));
     const el=document.getElementById('autosaveStatus');
     if(el){ const d=new Date(snapshot.savedAt); el.innerHTML=`<span class="icon-pill"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg></span><span>Salvamento automático ativo. <strong>Último: ${d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}</strong></span>`; }
   } catch(e) { console.warn('Falha no backup local automático',e); }
 }
-function restoreFromAutoBackup(){
-  try{
-    const raw=localStorage.getItem(AUTOBACKUP_KEY);
-    if(!raw) return false;
-    const snap=JSON.parse(raw);
-    if(!snap || !snap.state) return false;
-    Object.entries(snap.state).forEach(([k,v])=>localStorage.setItem(k,v));
-    return true;
-  }catch(e){ console.warn('Falha ao restaurar backup local automático',e); return false; }
-}
-function saveQuickMeals(){ localStorage.setItem(QUICK_MEALS_KEY,JSON.stringify(quickMeals)); touchAutoBackup(); }
-function saveRecentFoods(){ localStorage.setItem(RECENT_FOODS_KEY,JSON.stringify(recentFoods)); touchAutoBackup(); }
+function saveQuickMeals(){ localStorage.setItem(QUICK_MEALS_KEY,JSON.stringify(quickMeals)); }
+function saveRecentFoods(){ localStorage.setItem(RECENT_FOODS_KEY,JSON.stringify(recentFoods)); }
 
 /* =========================================================
    FUNÇÕES GERAIS
@@ -1652,7 +1645,7 @@ function showNotification(text) {
     const notif =
         document.getElementById('notification');
 
-    notif.innerHTML = text;
+    notif.textContent = text;
     notif.style.display = 'block';
 
     clearTimeout(window.notificationTimer);
@@ -1693,6 +1686,7 @@ function showTab(tab) {
 
     if (tab === 'training') {
         initTrainingDate();
+        renderTrainingHistory();
     }
 
     if (tab === 'data') {
@@ -1872,8 +1866,9 @@ function cancelAddFood() {
    ALIMENTOS PERSONALIZADOS
 ========================================================= */
 
-function toggleDietHistory(){const p=document.getElementById('dietHistoryPanel'),b=document.getElementById('dietHistoryToggle');if(!p||!b)return;p.classList.toggle('open');b.classList.toggle('open');}
-function toggleTrainingHistoryPanel(){const p=document.getElementById('trainingHistoryPanel'),b=document.getElementById('trainingHistoryToggle');if(!p||!b)return;p.classList.toggle('open');b.classList.toggle('open');}
+function toggleSectionPanel(panelId,buttonId){const p=document.getElementById(panelId),b=document.getElementById(buttonId);if(!p||!b)return;const open=p.classList.toggle('open');b.classList.toggle('open',open);b.setAttribute('aria-expanded',open?'true':'false');}
+
+function toggleDietHistory(){toggleSectionPanel('dietHistoryPanel','dietHistoryToggle');}
 
 function toggleCustomFoodsList() {
 
@@ -2473,7 +2468,6 @@ function saveTrainingDraft() {
         TRAINING_DRAFT_KEY,
         JSON.stringify(draft)
     );
-    touchAutoBackup();
 
 }
 
@@ -3858,7 +3852,7 @@ function calcularMetas() {
 
 }
 
-function savePhases(){localStorage.setItem(PHASES_KEY,JSON.stringify(phases));if(currentPhaseId)localStorage.setItem('currentPhaseIdV1',currentPhaseId);touchAutoBackup();}
+function savePhases(){localStorage.setItem(PHASES_KEY,JSON.stringify(phases));if(currentPhaseId)localStorage.setItem('currentPhaseIdV1',currentPhaseId);}
 function renderPhases(){const c=document.getElementById('currentPhaseBox'),h=document.getElementById('phaseHistory');if(!c||!h)return;const p=phases.find(x=>x.id===currentPhaseId)||phases[phases.length-1]||null;c.innerHTML=p?`<div class="current-phase"><span class="phase-status">FASE ATUAL</span><strong>${p.name}</strong><small>${p.objective||'Sem objetivo definido'} • ${p.kcal} kcal • ${p.protein} g proteína${p.targetWeight?` • alvo ${p.targetWeight} kg`:''}</small></div>`:'<div class="phase-empty">Nenhuma fase criada ainda.</div>';h.innerHTML=phases.length?`<div class="evo-section-title">Histórico de fases</div>`+phases.slice().reverse().map(x=>`<div class="phase-history-row"><div><strong>${x.name}</strong><small>${x.startDate}${x.targetWeight?` • alvo ${x.targetWeight} kg`:''}</small></div><span>${x.id===currentPhaseId?'Atual':''}</span></div>`).join(''):'';}
 function startNewPhase(){const name=document.getElementById('phaseName')?.value.trim();if(!name){showNotification('Dê um nome para a fase!');return;}const p={id:Date.now().toString(),name,objective:document.getElementById('phaseObjective')?.value.trim()||'',kcal:Number(document.getElementById('phaseKcal')?.value)||META_K,protein:Number(document.getElementById('phaseProtein')?.value)||META_P,targetWeight:Number(document.getElementById('phaseTargetWeight')?.value)||null,startDate:getToday()};phases.push(p);currentPhaseId=p.id;savePhases();META_K=p.kcal;META_P=p.protein;localStorage.setItem('metaK',META_K);localStorage.setItem('metaP',META_P);touchAutoBackup();renderDashboard();renderPhases();showNotification('Nova fase iniciada!');}
 
@@ -3884,7 +3878,6 @@ function saveMetas() {
         META_P
     );
 
-    touchAutoBackup();
     renderDashboard();
 
     showNotification(
@@ -4287,71 +4280,34 @@ document.addEventListener(
 );
 
 /* =========================================================
-   NAVEGAÇÃO / PWA / ESTABILIDADE
+   PWA
 ========================================================= */
-let appHistoryReady=false;
-let pendingAppUpdate=null;
-function tabFromLocation(){ const h=(location.hash||'').replace('#',''); return ['dash','diet','training','data','profile'].includes(h)?h:'dash'; }
-function showTabWithHistory(tab, push=true){
-  if(!document.getElementById(tab)) tab='dash';
-  showTab(tab);
-  if(push){
-    const state={app:true,tab};
-    history.pushState(state,'',`#${tab}`);
-  }
-}
-window.addEventListener('popstate',()=>{ showTab(tabFromLocation()); });
-window.addEventListener('hashchange',()=>{ if(location.hash) showTab(tabFromLocation()); });
 
-function showAppError(message){
-  const el=document.getElementById('appErrorBanner');
-  if(!el)return;
-  el.textContent='O app encontrou um erro e protegeu seus dados locais. '+message;
-  el.classList.add('show');
-  clearTimeout(window.appErrorTimer);
-  window.appErrorTimer=setTimeout(()=>el.classList.remove('show'),6000);
-}
-window.addEventListener('error',e=>{ console.error(e.error||e.message); showAppError('Tente voltar para o Início e continuar.'); });
-window.addEventListener('unhandledrejection',e=>{ console.error(e.reason); showAppError('Tente novamente.'); });
-
-function applyAppUpdate(){
-  if(!pendingAppUpdate)return;
-  try{ touchAutoBackup(); }catch(e){}
-  pendingAppUpdate.postMessage({type:'SKIP_WAITING'});
-}
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async ()=>{
-    try{
-      const reg=await navigator.serviceWorker.register('./sw.js');
-      await reg.update();
-      const checkWaiting=()=>{ if(reg.waiting){ pendingAppUpdate=reg.waiting; document.getElementById('updateBanner')?.classList.add('show'); } };
-      checkWaiting();
-      reg.addEventListener('updatefound',()=>{
-        const nw=reg.installing;
-        if(!nw)return;
-        nw.addEventListener('statechange',()=>{ if(nw.state==='installed' && navigator.serviceWorker.controller) checkWaiting(); });
-      });
-      navigator.serviceWorker.addEventListener('controllerchange',()=>{ window.location.reload(); });
-    }catch(error){ console.error('Falha ao registrar Service Worker:',error); }
-  });
+
+    window.addEventListener(
+        'load',
+        () => {
+
+            navigator.serviceWorker
+                .register('./sw.js')
+                .catch(error =>
+                    console.error(
+                        'Falha ao registrar Service Worker:',
+                        error
+                    )
+                );
+
+        }
+    );
+
 }
 
 /* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
-function recoverLocalStateIfNeeded(){
-  let bad=false;
-  try{ const raw=localStorage.getItem('shapeMasterDBv7'); if(raw){ const parsed=JSON.parse(raw); if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.diet) || !Array.isArray(parsed.weight) || !Array.isArray(parsed.training)) bad=true; } }catch(e){ bad=true; }
-  if(bad && restoreFromAutoBackup()){
-    try{ const restored=JSON.parse(localStorage.getItem('shapeMasterDBv7')||'null'); if(restored&&typeof restored==='object') db=restored; }catch(e){}
-    showNotification('<span class="icon-text"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg> Dados locais recuperados do salvamento automático</span>');
-  }
-}
-
 function init() {
-
-    recoverLocalStateIfNeeded();
 
     document.getElementById(
         'metaK'
@@ -4381,8 +4337,7 @@ function init() {
 
     initTrainingDate();
 
-    if(!history.state || !history.state.app){ history.replaceState({app:true,tab:tabFromLocation()},'',`#${tabFromLocation()}`); }
-    showTab(tabFromLocation());
+    renderTrainingHistory();
 
     restoreTrainingDraft();
 
