@@ -1135,6 +1135,175 @@ h3{font-size:clamp(1.05rem, .94rem + .45vw, 1.35rem)}
 }
 </style>
 
+
+<style id="iphone-compact-typography-v21">
+/* V21 — tipografia compacta para iPhone / celulares estreitos.
+   Reduz textos sem alterar a estrutura ou os dados do app. */
+@media (max-width:430px){
+  html{font-size:14px !important;}
+
+  /* Títulos e textos gerais */
+  h1{font-size:1.45rem !important;}
+  h2{font-size:1.25rem !important;}
+  h3{font-size:15px !important;}
+  p{font-size:.88rem;}
+  label{font-size:10px !important;}
+
+  /* Cabeçalhos e navegação */
+  .brand-copy strong{font-size:13px !important;}
+  .brand-copy small{font-size:8px !important;}
+  .home-section-label,.home-label{font-size:.64rem !important;}
+  .modern-nav small{font-size:.55rem !important;}
+
+  /* Cards da Home */
+  .home-card-v5 strong{font-size:.98rem !important;}
+  .home-card-v5 span{font-size:.70rem !important;}
+  .home-card-v5 .card-icon{width:36px !important;height:36px !important;}
+  .home-card-v5{padding:16px !important;}
+
+  /* Resumo do dia */
+  .home-metrics-single .home-date{font-size:.92rem !important;}
+  .home-metrics-single .home-goal-label{font-size:.62rem !important;}
+  .home-metrics-single .macro-title{font-size:.62rem !important;}
+  .home-metrics-single .macro-value strong{font-size:1.48rem !important;}
+  .home-metrics-single .macro-value span{font-size:.68rem !important;}
+  .home-metrics-single .macro-goal span{font-size:.58rem !important;}
+  .home-metrics-single .macro-goal strong{font-size:.76rem !important;}
+  .home-metrics-single .macro-goal small{font-size:.59rem !important;}
+
+  /* Card semanal */
+  .weekly-home-title{font-size:.82rem !important;}
+  .weekly-home-period{font-size:.60rem !important;}
+  .weekly-home-label{font-size:.62rem !important;}
+  .weekly-home-value{font-size:1.02rem !important;}
+  .weekly-home-meta{font-size:.68rem !important;}
+  .weekly-home-status{font-size:.68rem !important;}
+  .weekly-home-foot{font-size:.61rem !important;}
+
+  /* Dados / Treino / Alimentação / Perfil */
+  .data-heading p{font-size:.72rem !important;}
+  .data-chip{font-size:.58rem !important;}
+  .evo-stat strong{font-size:1.05rem !important;}
+  .evo-stat small{font-size:.66rem !important;}
+  .food-search-count{font-size:.70rem !important;}
+  .food-search-empty strong{font-size:.88rem !important;}
+  .food-search-empty small{font-size:.72rem !important;}
+  .quick-meal-builder{font-size:.84rem;}
+  .section-title-icon{font-size:.86rem !important;}
+  .action-card-button{font-size:.84rem !important;}
+  .timer-heading{font-size:.64rem !important;}
+
+  /* Campos e botões */
+  button,input,select,textarea{font-size:.88rem;}
+  input,select,textarea{min-height:44px;}
+}
+
+/* iPhones/celulares pequenos: ainda mais compacto sem cortar conteúdo. */
+@media (max-width:360px){
+  html{font-size:13.5px !important;}
+  .home-card-v5 strong{font-size:.94rem !important;}
+  .home-card-v5 span{font-size:.67rem !important;}
+  .home-metrics-single .macro-value strong{font-size:1.40rem !important;}
+}
+</style>
+
+
+<style id="iphone-compact-blocks-v22">
+/* V22 — compacta os BLOCOS da Home sem reduzir a tipografia.
+   Objetivo: menos altura, menos espaço vazio e menor distância entre cards. */
+@media (max-width:430px){
+  /* Resumo do dia */
+  .home-metrics-single{
+    padding:13px 14px 3px !important;
+    border-radius:21px !important;
+  }
+  .home-metrics-single .home-metrics-head{
+    padding-bottom:4px !important;
+  }
+  .home-metrics-single .daily-macro-row{
+    min-height:52px !important;
+    padding-top:5px !important;
+    padding-bottom:8px !important;
+    column-gap:9px !important;
+  }
+  .home-metrics-single .macro-icon{
+    width:34px !important;
+    height:34px !important;
+  }
+  .home-metrics-single .macro-progress{
+    left:43px !important;
+    right:91px !important;
+    height:3px !important;
+    bottom:3px !important;
+  }
+  .home-metrics-single .macro-goal{
+    min-width:91px !important;
+  }
+
+  /* Card semanal */
+  .weekly-home-card{
+    margin-top:9px !important;
+    padding:11px 12px 10px !important;
+    border-radius:18px !important;
+  }
+  .weekly-home-head{
+    min-height:39px !important;
+  }
+
+  /* Espaço entre título e os quatro atalhos */
+  .home-label{
+    margin-top:12px !important;
+    margin-bottom:7px !important;
+  }
+
+  /* Quatro blocos de acesso rápido */
+  .home-grid-v5{
+    gap:7px !important;
+  }
+  .home-card-v5{
+    min-height:120px !important;
+    padding:13px !important;
+    border-radius:19px !important;
+  }
+  .home-card-v5 .card-icon{
+    top:12px !important;
+    left:13px !important;
+    width:33px !important;
+    height:33px !important;
+    border-radius:11px !important;
+  }
+  .home-card-v5 .card-icon .icon-svg{
+    width:20px !important;
+    height:20px !important;
+  }
+  .home-card-v5 .card-arrow{
+    top:12px !important;
+    right:12px !important;
+  }
+  .home-card-v5 .card-arrow .icon-svg{
+    width:15px !important;
+    height:15px !important;
+  }
+}
+
+/* Em celulares muito estreitos, comprime um pouco mais a estrutura. */
+@media (max-width:360px){
+  .home-metrics-single{
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+  .home-metrics-single .daily-macro-row{
+    min-height:49px !important;
+    padding-top:4px !important;
+    padding-bottom:7px !important;
+  }
+  .home-card-v5{
+    min-height:112px !important;
+    padding:12px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
