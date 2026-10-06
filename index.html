@@ -1071,6 +1071,70 @@ h3{font-size:clamp(1.05rem, .94rem + .45vw, 1.35rem)}
   .home-metrics-single .macro-value strong{font-size:clamp(2rem,calc(1.78rem + 1.15vw),2.45rem)!important;}
 }
 </style>
+
+<style id="home-daily-proportional-v20">
+/* V20 — resumo do dia proporcional ao restante da Home em celulares */
+@media (max-width:600px){
+  .home-metrics-single{
+    padding:17px 15px 6px !important;
+    border-radius:24px !important;
+  }
+  .home-metrics-single .home-metrics-head{
+    padding-bottom:8px !important;
+  }
+  .home-metrics-single .home-date{
+    font-size:1rem !important;
+  }
+  .home-metrics-single .home-goal-label{
+    font-size:.68rem !important;
+  }
+  .home-metrics-single .daily-macro-row{
+    grid-template-columns:38px minmax(0,1fr) auto !important;
+    column-gap:10px !important;
+    min-height:64px !important;
+    padding-top:9px !important;
+    padding-bottom:12px !important;
+  }
+  .home-metrics-single .macro-icon{
+    width:38px !important;
+    height:38px !important;
+    font-size:20px !important;
+  }
+  .home-metrics-single .macro-title{
+    font-size:.67rem !important;
+    letter-spacing:.10em !important;
+    margin-bottom:3px !important;
+  }
+  .home-metrics-single .macro-value strong{
+    font-size:clamp(1.55rem,calc(1.42rem + .45vw),1.75rem) !important;
+    line-height:1 !important;
+  }
+  .home-metrics-single .macro-value span{
+    font-size:.74rem !important;
+  }
+  .home-metrics-single .macro-goal{
+    min-width:94px !important;
+  }
+  .home-metrics-single .macro-goal span{
+    font-size:.63rem !important;
+  }
+  .home-metrics-single .macro-goal strong{
+    font-size:.82rem !important;
+    margin-top:2px !important;
+  }
+  .home-metrics-single .macro-goal small{
+    font-size:.64rem !important;
+    margin-top:3px !important;
+  }
+  .home-metrics-single .macro-progress{
+    left:48px !important;
+    right:94px !important;
+    height:4px !important;
+    bottom:5px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
