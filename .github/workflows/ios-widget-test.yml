@@ -1,9 +1,15 @@
-name: Test
+name: iOS Widget Test
 
-on: push
+'on':
+  push:
+    branches:
+      - feature/ios-widgets
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
-      - run: echo "Workflow funcionando"
+      - name: Check macOS and Xcode
+        run: |
+          sw_vers
+          xcodebuild -version
