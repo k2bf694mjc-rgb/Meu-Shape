@@ -1,13 +1,15 @@
 name: iOS Widget Test
 
 on:
-  workflow_dispatch:
+push:
+branches:
+- ‘feature/ios-widgets’
 
 jobs:
-  test:
-    runs-on: macos-latest
-    steps:
-      - name: Check macOS and Xcode
-        run: |
-          sw_vers
-          xcodebuild -version
+test:
+runs-on: macos-latest
+steps:
+- name: Check macOS and Xcode
+run: |
+sw_vers
+xcodebuild -version
