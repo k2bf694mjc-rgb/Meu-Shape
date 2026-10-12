@@ -1,15 +1,10 @@
 name: iOS Widget Test
 
-on:
-push:
-branches:
-- ‘feature/ios-widgets’
+on: push
 
 jobs:
 test:
 runs-on: macos-latest
 steps:
 - name: Check macOS and Xcode
-run: |
-sw_vers
-xcodebuild -version
+run: sw_vers && xcodebuild -version
